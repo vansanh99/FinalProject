@@ -5,20 +5,15 @@
 package beans;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
+import java.util.ArrayList;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  *
  * @author vansa
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class Profile {
-    @JsonProperty("Name")
-    private String name;
-    @JsonProperty("Age")
-    private String age;
+    @JsonProperty("audit")
+    private ArrayList<Audit> audits;
 }

@@ -44,7 +44,7 @@ public class mainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jsonField.setText("E:\\final project\\benchmark\\test.json");
+        jsonField.setText("E:\\final project\\FinalProject\\SourceCode\\benchmark\\test.json");
         jsonField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jsonFieldActionPerformed(evt);
@@ -114,7 +114,7 @@ public class mainFrame extends javax.swing.JFrame {
         try {
             Profile p = new ObjectMapper().readValue(jsonString, new TypeReference<Profile>() {
             });
-            jsonPrint.setText("Name: " + p.getName() + " \nAge:" + p.getAge());
+            jsonPrint.setText("Name: " + p.getAudits().get(0).getChapters().get(0).getCategories().get(0).getReports().get(0).getDescription());
         } catch (JsonProcessingException ex) {
             Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
