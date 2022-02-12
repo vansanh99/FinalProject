@@ -4,6 +4,7 @@
  */
 package beans;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
@@ -23,4 +24,8 @@ public class Report {
     private String pattern;
     @JsonProperty("path")
     private String path;
+    @JsonProperty("type")
+    private int type;
+    @JsonProperty("status")
+    private boolean status;
 }

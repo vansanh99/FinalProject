@@ -7,15 +7,51 @@
                     "name": "one",
                     "categories": [
                         {
-                            "id": 1.1,
+                            "id": "1.1",
                             "name": "filesystem configuration",
                             "report": [
                                 {
                                     "id": "1.1.0",
                                     "description": "Ensure mounting of cramfs is disabled",
-                                    "permission": "Scored",
-                                    "pattern": "Null",
-                                    "path": ""
+                                    "permission": "",
+                                    "pattern": "",
+                                    "path": "",
+                                    "type":1
+                                },
+                                {
+                                    "id": "1.1.1",
+                                    "description": "Ensure mounting of cramfs is disabled",
+                                    "permission": "",
+                                    "pattern": "",
+                                    "path": "",
+                                    "type":2
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "two",
+                    "categories": [
+                        {
+                            "id": "2.1",
+                            "name": "filesystem configuration",
+                            "report": [
+                                {
+                                    "id": "1.1.0",
+                                    "description": "Ensure mounting of cramfs is disabled",
+                                    "permission": "",
+                                    "pattern": "",
+                                    "path": "",
+                                    "type":1
+                                },
+                                {
+                                    "id": "1.1.1",
+                                    "description": "Ensure mounting of cramfs is disabled",
+                                    "permission": "",
+                                    "pattern": "",
+                                    "path": "",
+                                    "type":2
                                 }
                             ]
                         }

@@ -5,15 +5,19 @@
 package com.fptu.benchmark.benchmark;
 
 import beans.Profile;
+import business.CommonUtils;
+import business.Constants;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
@@ -112,9 +116,39 @@ public class mainFrame extends javax.swing.JFrame {
             e1.printStackTrace();
         }
         try {
-            Profile p = new ObjectMapper().readValue(jsonString, new TypeReference<Profile>() {
+            Profile p = new ObjectMapper().readValue(jsonString
+                    , new TypeReference<Profile>() {});
+            p.getAudits().forEach(audit -> {
+                if(audit.getLevel() == 1) {
+                    audit.getChapters().forEach(chap -> {
+                        chap.getCategories().forEach(cat -> {
+                            cat.getReports().forEach(report -> {
+                                String pathToCheck = report.getPath();
+                                if(report.getType() == 1) {//check file exists
+                                    File tempFile = new File(pathToCheck);
+                                    report.setStatus(tempFile.exists());
+                                }
+                                if(report.getType() == 2) {//check file pattern
+                                    String filePattern = report.getPattern();
+                                    try {
+                                        String fileString = new String(Files.readAllBytes(Paths.get(pathToCheck)), StandardCharsets.UTF_8);
+                                        if(CommonUtils.ismatchPattern(fileString, filePattern)) {
+                                            report.setStatus(Constants.TRUE);
+                                        } else {
+                                            report.setStatus(Constants.FALSE);
+                                        }
+                                    } catch (IOException ex) {
+                                        report.setStatus(Constants.FALSE);
+                                    }
+                                }
+                            });
+                        });
+                    });
+                }
             });
-            jsonPrint.setText("Name: " + p.getAudits().get(0).getChapters().get(0).getCategories().get(0).getReports().get(0).getDescription());
+            ObjectMapper obm = new ObjectMapper();
+            String jsonText = obm.writeValueAsString(p);
+            jsonPrint.setText(jsonText);
         } catch (JsonProcessingException ex) {
             Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
