@@ -4,7 +4,8 @@
             "level": 1,
             "chapters": [
                 {
-                    "name": "one",
+                    "id": "1",
+                    "name": "Initial Setup",
                     "categories": [
                         {
                             "id": "1.1",
