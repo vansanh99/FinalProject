@@ -2,12 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package com.fptu.benchmark.benchmark;
+package com.fptu.benchmarks.view;
 
-import beans.Profile;
-import business.CommonUtils;
-import business.Constants;
-import business.PdfUtils;
+import com.fptu.benchmarks.beans.Profile;
+import com.fptu.benchmarks.business.CommonUtils;
+import com.fptu.benchmarks.business.Constants;
+import com.fptu.benchmarks.business.PdfUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,12 +19,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.thymeleaf.context.Context;
 
 /**
  *
  * @author vansa
  */
+@Log4j2
 public class mainFrame extends javax.swing.JFrame {
 
     /**
@@ -111,6 +113,7 @@ public class mainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        log.info("mouse click");
         String path = jsonField.getText();
         String jsonString = "";
         try {
@@ -128,6 +131,7 @@ public class mainFrame extends javax.swing.JFrame {
                         chap.getCategories().forEach(cat -> {
                             cat.getReports().forEach(report -> {
                                 String pathToCheck = report.getPath();
+                                log.debug("file path: " + pathToCheck);
                                 if(report.getType() == 1) {//check file exists
                                     File tempFile = new File(pathToCheck);
                                     report.setStatus(tempFile.exists());

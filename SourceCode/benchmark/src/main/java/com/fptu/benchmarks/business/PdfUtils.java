@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package business;
+package com.fptu.benchmarks.business;
 
 import org.thymeleaf.context.Context;
 import java.io.File;
@@ -14,11 +14,13 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.FileTemplateResolver;
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
+import lombok.extern.log4j.Log4j2;
 
 /**
  *
  * @author vansa
  */
+@Log4j2
 public class PdfUtils {
 
     /**
@@ -31,6 +33,7 @@ public class PdfUtils {
      * @throws IOException
      */
     public static File generatePdfFromHtml(Context context, String templateFileName, String pdfFile) throws IOException {
+        log.info("geneate pdf from html starts");
         File file = new File(pdfFile);
         try (OutputStream outputStream = new FileOutputStream(file)) {
             // create pdf file
@@ -39,10 +42,12 @@ public class PdfUtils {
         } catch (IOException e) {
             throw new IOException(e);
         }
+        log.info("geneate pdf from html Ends");
         return file;
     }
 
     public static String generateHtmlStr(String templateFileName, Context context) {
+        log.info("geneate html string starts");
         TemplateEngine templateEngine = new TemplateEngine();
         FileTemplateResolver resolver = new FileTemplateResolver();
         resolver.setCacheable(false);
@@ -51,6 +56,7 @@ public class PdfUtils {
         resolver.setCharacterEncoding(CommonUtils.getConfigValue("templateCharset"));
         resolver.setTemplateMode(TemplateMode.HTML);
         templateEngine.setTemplateResolver(resolver);
+        log.info("geneate html string ends");
         return templateEngine.process(templateFileName, (context == null ? new Context() : context));
     }
 }
