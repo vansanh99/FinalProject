@@ -2561,6 +2561,31 @@
                            <a href="#detail-w4583aad353b5b5">1.1.1 Disable unused filesystems</a>
                         </td>
                      </tr>
+                     <th:block th:each="chapter : ${chapters}">
+                        <th:block th:if="${chapter.id} == '1'">
+                           <th:block th:each="cat : ${chapter.categories}">
+                              <th:block th:if="${cat.id} == '1.1'">
+                                 <th:block th:each="rep : ${cat.reports}">
+                                    <tr class="">
+                                       <td>
+                                          <span class="weight">1.0</span>
+                                       </td>
+                                       <td>
+                                          <a href="#detail-w107aad365d174" th:text="${rep.id + ' ' + rep.description}"></a>
+                                       </td>
+                                       <td class="numeric">
+                                          <span>
+                                             <a href="#detail-w107aad365d174">
+                                                <span th:class="${rep.status == false} ? 'fail' : (${rep.status == true} ? 'pass' : 'unknown')" th:text="${rep.status == false} ? 'Fail' : (${rep.status == true} ? 'Pass' : 'Unknown')"></span>
+                                             </a>
+                                          </span>
+                                       </td>
+                                    </tr>
+                                 </th:block>
+                              </th:block>
+                           </th:block>
+                        </th:block>
+                     </th:block>
                      <tr>
                         <td id="checklist-w4583aad353b7" class="group sect" colspan="3">
                            <a href="#detail-w4583aad353b7">1.2 Configure Software Updates</a>

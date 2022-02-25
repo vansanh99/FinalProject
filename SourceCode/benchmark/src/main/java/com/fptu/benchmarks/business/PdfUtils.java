@@ -12,9 +12,13 @@ import java.io.OutputStream;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.FileTemplateResolver;
-import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.io.FileUtils;
 
 /**
  *
@@ -46,7 +50,7 @@ public class PdfUtils {
         return file;
     }
 
-    public static String generateHtmlStr(String templateFileName, Context context) {
+    public static String generateHtmlStr(String templateFileName, Context context) throws IOException{
         log.info("geneate html string starts");
         TemplateEngine templateEngine = new TemplateEngine();
         FileTemplateResolver resolver = new FileTemplateResolver();
@@ -56,7 +60,11 @@ public class PdfUtils {
         resolver.setCharacterEncoding(CommonUtils.getConfigValue("templateCharset"));
         resolver.setTemplateMode(TemplateMode.HTML);
         templateEngine.setTemplateResolver(resolver);
+        String html = templateEngine.process(templateFileName, (context == null ? new Context() : context));
+        log.info("start saving html");
+        FileUtils.write(new File(CommonUtils.getConfigValue("templateFolder") + "test.html"), html, StandardCharsets.UTF_8, false);
+        log.info("save file html");
         log.info("geneate html string ends");
-        return templateEngine.process(templateFileName, (context == null ? new Context() : context));
+        return html;
     }
 }

@@ -12,6 +12,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fptu.benchmarks.beans.Audit;
+import com.fptu.benchmarks.beans.Chapter;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -19,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import lombok.extern.log4j.Log4j2;
 import org.thymeleaf.context.Context;
 
@@ -159,8 +162,12 @@ public class mainFrame extends javax.swing.JFrame {
             
             XmlMapper xmlMapper = new XmlMapper();
             String xmlText = xmlMapper.writeValueAsString(p);
+            Audit audit = p.getAudits().stream()
+                        .filter(a -> a.getLevel() == 1)//set lever
+                        .findAny()
+                        .orElse(null);
             Context context = new Context();
-            context.setVariable("data", p);
+            context.setVariable("chapters", audit.getChapters());
             File f = PdfUtils.generatePdfFromHtml(context, "CIS_Ubuntu_Linux_18.04_LTS_Benchmark_v2.0.1-xccdf", CommonUtils.getConfigValue("templateFolder") + "test.pdf");
             jsonPrint.setText("file report được lưu tại " + f.getAbsolutePath() + "\n" + jsonText);
         } catch (JsonProcessingException ex) {
@@ -171,35 +178,35 @@ public class mainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1MouseClicked
 
     /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(mainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(mainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(mainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(mainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
+        * @param args the command line arguments
+        */
+       public static void main(String args[]) {
+           /* Set the Nimbus look and feel */
+           //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+           /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+            * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+            */
+           try {
+               for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                   if ("Nimbus".equals(info.getName())) {
+                       javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                       break;
+                   }
+               }
+           } catch (ClassNotFoundException ex) {
+               java.util.logging.Logger.getLogger(mainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+           } catch (InstantiationException ex) {
+               java.util.logging.Logger.getLogger(mainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+           } catch (IllegalAccessException ex) {
+               java.util.logging.Logger.getLogger(mainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+           } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+               java.util.logging.Logger.getLogger(mainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+           }
+           //</editor-fold>
+           //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
+           /* Create and display the form */
+           java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new mainFrame().setVisible(true);
             }

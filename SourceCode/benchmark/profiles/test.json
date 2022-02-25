@@ -15,13 +15,13 @@
                                     "id": "1.1.0",
                                     "description": "Ensure mounting of cramfs is disabled",
                                     "permission": "",
-                                    "pattern": "",
-                                    "path": "",
-                                    "type":1
+                                    "pattern": "hello",
+                                    "path": "e:/a.txt",
+                                    "type":2
                                 },
                                 {
                                     "id": "1.1.1",
-                                    "description": "Ensure mounting of cramfs is disabled",
+                                    "description": "Ensure mounting of cramfs is disabled2",
                                     "permission": "",
                                     "pattern": "",
                                     "path": "",
