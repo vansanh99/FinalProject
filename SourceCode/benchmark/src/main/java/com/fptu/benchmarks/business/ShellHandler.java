@@ -26,10 +26,8 @@ public class ShellHandler {
         //read the output
         InputStreamReader inputStreamReader = new InputStreamReader(process.getInputStream());
         try (BufferedReader rd = new BufferedReader(inputStreamReader)) {
-            output = rd.lines().collect(Collectors.joining());;
-//            while ((output = bufferedReader.readLine()) != null) {
-//                System.out.println(output);
-//            }   //wait for the process to complete
+            output = rd.lines().collect(Collectors.joining());
+            log.debug("command output: {}", output);
             process.waitFor();
             //close the resources
         }

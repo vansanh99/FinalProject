@@ -14,6 +14,10 @@ import lombok.Data;
  */
 @Data
 public class Profile {
+    @JsonProperty("name")
+    private String name;
+    @JsonProperty("version")
+    private String version;
     @JsonProperty("audit")
     private ArrayList<Audit> audits;
 }

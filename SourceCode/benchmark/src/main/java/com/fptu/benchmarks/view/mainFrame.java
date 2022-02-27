@@ -46,35 +46,17 @@ public class mainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jsonField = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jsonPrint = new javax.swing.JTextPane();
-        jButton1 = new javax.swing.JButton();
         lblOS = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        cbbProfile = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        btnNext1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jsonPrint = new javax.swing.JTextPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jsonField.setText("profiles/test.json");
-        jsonField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jsonFieldActionPerformed(evt);
-            }
-        });
-
-        jScrollPane1.setViewportView(jsonPrint);
-
-        jButton1.setText("jButton1");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
-            }
-        });
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
 
         lblOS.setText("platform");
         lblOS.setText("Platform: " + System.getProperty("os.name"));
@@ -82,27 +64,85 @@ public class mainFrame extends javax.swing.JFrame {
         jLabel1.setText("osver");
         jLabel1.setText("version: " + System.getProperty("os.version"));
 
+        jLabel2.setText("runtimejv");
+        jLabel2.setText("JRE : " + System.getProperty("java.runtime.version"));
+
+        cbbProfile.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "please select" }));
+        File[] files = new File("profiles").listFiles();
+        for(File f : files) {
+            cbbProfile.addItem(f.getName());
+        }
+        cbbProfile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbProfileActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Benchmark Profiles");
+
+        btnNext1.setText("Start");
+        btnNext1.setEnabled(false);
+        btnNext1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnNext1MouseClicked(evt);
+            }
+        });
+        btnNext1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNext1ActionPerformed(evt);
+            }
+        });
+
+        jScrollPane1.setViewportView(jsonPrint);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(18, 18, 18)
+                                .addComponent(cbbProfile, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnNext1, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addGap(32, 32, 32))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(cbbProfile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addComponent(btnNext1)
+                .addGap(21, 21, 21))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 771, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(131, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jsonField)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
-                        .addGap(56, 56, 56))))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(lblOS)
                 .addGap(173, 173, 173)
                 .addComponent(jLabel1)
+                .addGap(231, 231, 231)
+                .addComponent(jLabel2)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,49 +150,43 @@ public class mainFrame extends javax.swing.JFrame {
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblOS)
-                    .addComponent(jLabel1))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jsonField, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addGap(45, 45, 45)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jsonFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jsonFieldActionPerformed
+    private void btnNext1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNext1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jsonFieldActionPerformed
+    }//GEN-LAST:event_btnNext1ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        log.info("mouse click");
-        String path = jsonField.getText();
-        String jsonString = "";
-        try {
-            jsonString = new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
-        } catch (IOException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-        try {
-            Profile p = new ObjectMapper().readValue(jsonString,
-                new TypeReference<Profile>() {
+    private void btnNext1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNext1MouseClicked
+        if (btnNext1.isEnabled()) {
+            log.info("btnNext1 clicked");
+            String path = "profiles/" + cbbProfile.getSelectedItem().toString();
+            String jsonString = "";
+            try {
+                jsonString = new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                log.error(e1);
+            }
+            try {
+                Profile p = new ObjectMapper().readValue(jsonString,
+                        new TypeReference<Profile>() {
                 });
                 ProfileHandler ph = new ProfileHandler();
                 p = ph.proccessProfile(p);
                 ObjectMapper obm = new ObjectMapper();
                 String jsonText = obm.writerWithDefaultPrettyPrinter().writeValueAsString(p);
                 Audit audit = p.getAudits().stream()
-                .filter(a -> a.getLevel() == 1)//set lever
-                .findAny()
-                .orElse(null);
+                        .filter(a -> a.getLevel() == 1)//set lever
+                        .findAny()
+                        .orElse(null);
                 Context context = new Context();
                 context.setVariable("chapters", audit.getChapters());
                 File f = PdfUtils.generatePdfFromHtml(context, "CIS_Ubuntu_Linux_18.04_LTS_Benchmark_v2.0.1-xccdf", CommonUtils.getConfigValue("templateFolder") + "test.pdf");
@@ -162,7 +196,18 @@ public class mainFrame extends javax.swing.JFrame {
             } catch (IOException ex) {
                 Logger.getLogger(mainFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
-    }//GEN-LAST:event_jButton1MouseClicked
+        }
+        
+            log.info("btnNext1 done");
+    }//GEN-LAST:event_btnNext1MouseClicked
+
+    private void cbbProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbProfileActionPerformed
+        if (cbbProfile.getSelectedIndex() == 0) {
+            btnNext1.setEnabled(false);
+        } else {
+            btnNext1.setEnabled(true);
+        }
+    }//GEN-LAST:event_cbbProfileActionPerformed
 
     /**
      * @param args the command line arguments
@@ -199,10 +244,13 @@ public class mainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnNext1;
+    private javax.swing.JComboBox<String> cbbProfile;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jsonField;
     private javax.swing.JTextPane jsonPrint;
     private javax.swing.JLabel lblOS;
     // End of variables declaration//GEN-END:variables
