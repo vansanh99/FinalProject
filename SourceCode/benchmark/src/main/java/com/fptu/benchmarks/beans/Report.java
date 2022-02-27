@@ -25,7 +25,11 @@ public class Report {
     @JsonProperty("path")
     private String path;
     @JsonProperty("type")
-    private int type;
+    private String type;
     @JsonProperty("status")
     private boolean status;
+    @JsonProperty("command")
+    private String command;
+    @JsonProperty("expectationPattern")
+    private String expectationPattern;
 }

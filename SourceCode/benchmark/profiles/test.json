@@ -12,20 +12,27 @@
                             "name": "filesystem configuration",
                             "report": [
                                 {
-                                    "id": "1.1.0",
+                                    "id": "1.1.1.1",
                                     "description": "Ensure mounting of cramfs is disabled",
                                     "permission": "",
-                                    "pattern": "hello",
-                                    "path": "e:/a.txt",
-                                    "type":2
+                                    "pattern": "^\\s*install\\s+cramfs\\s+\/bin\/true\\s*$",
+                                    "path": "/etc/modprobe.d/cramfs.conf",
+                                    "type": "FILE_PATTERN"
                                 },
                                 {
-                                    "id": "1.1.1",
-                                    "description": "Ensure mounting of cramfs is disabled2",
+                                    "id": "1.1.1.2",
+                                    "description": "Ensure mounting of freevxfs filesystems is disabled",
                                     "permission": "",
-                                    "pattern": "",
-                                    "path": "",
-                                    "type":2
+                                    "pattern": "^\\s*install\\s+freevxfs\\s+\/bin\/true\\s*$",
+                                    "path": "/etc/modprobe.d/freevxfs.conf",
+                                    "type": "FILE_PATTERN"
+                                },
+                                {
+                                    "id": "1.1.2",
+                                    "description": "Ensure \/tmp is configured",
+                                    "command": "findmnt,-n,\/tmp",
+                                    "expectationPattern": "^\\s*\/tmp\\s+tmpfs\\s+tmpfs\\s+rw,nosuid,nodev,noexec\\s*$",
+                                    "type": "SHELL_RUN"
                                 }
                             ]
                         }
@@ -44,7 +51,7 @@
                                     "permission": "",
                                     "pattern": "",
                                     "path": "",
-                                    "type":1
+                                    "type": "FILE_EXISTENCE"
                                 },
                                 {
                                     "id": "1.1.1",
@@ -52,7 +59,7 @@
                                     "permission": "",
                                     "pattern": "",
                                     "path": "",
-                                    "type":2
+                                    "type": 2
                                 }
                             ]
                         }
