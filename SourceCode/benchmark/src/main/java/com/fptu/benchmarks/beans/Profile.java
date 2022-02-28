@@ -18,6 +18,8 @@ public class Profile {
     private String name;
     @JsonProperty("version")
     private String version;
+    @JsonProperty("templateReport")
+    private String templateReport;
     @JsonProperty("audit")
     private ArrayList<Audit> audits;
 }

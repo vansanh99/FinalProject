@@ -1,9 +1,10 @@
 {
     "name": "",
     "version": "",
+    "templateReport": "CIS_Ubuntu_Linux_18.04_LTS_Benchmark_v2.0.1-xccdf",
     "audit": [
         {
-            "level": 1,
+            "level": "1 - Workstation",
             "chapters": [
                 {
                     "id": "1",

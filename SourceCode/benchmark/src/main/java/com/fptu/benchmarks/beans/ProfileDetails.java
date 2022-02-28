@@ -4,20 +4,15 @@
  */
 package com.fptu.benchmarks.beans;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.ArrayList;
 import lombok.Data;
 
 /**
  *
- * @author vansa
+ * @author sanh
  */
 @Data
-public class Audit {
-    @JsonProperty("level")
-    private String level;
-    @JsonProperty("chapters")
-    private ArrayList<Chapter> chapters;
-    
-    
+public class ProfileDetails {
+    Profile profile;
+    String profileLevel;
+    String name;
 }
