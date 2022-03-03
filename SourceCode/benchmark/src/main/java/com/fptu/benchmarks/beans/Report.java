@@ -4,7 +4,6 @@
  */
 package com.fptu.benchmarks.beans;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
@@ -26,10 +25,12 @@ public class Report {
     private String path;
     @JsonProperty("type")
     private String type;
-    @JsonProperty("status")
-    private boolean status;
     @JsonProperty("command")
     private String command;
     @JsonProperty("expectationPattern")
     private String expectationPattern;
+    @JsonProperty("required")
+    private boolean required; 
+    @JsonProperty("status")
+    private boolean status;
 }

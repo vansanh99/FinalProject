@@ -4,15 +4,39 @@
  */
 package com.fptu.benchmarks.beans;
 
-import lombok.Data;
-
 /**
  *
  * @author sanh
  */
-@Data
 public class ProfileDetails {
-    Profile profile;
-    String profileLevel;
-    String name;
+    public static Profile profile;
+    public static String profileLevel;
+    public static String name;
+
+    public static Profile getProfile() {
+        return profile;
+    }
+
+    public static void setProfile(Profile profile) {
+        ProfileDetails.profile = profile;
+    }
+
+    public static String getProfileLevel() {
+        return profileLevel;
+    }
+
+    public static void setProfileLevel(String profileLevel) {
+        ProfileDetails.profileLevel = profileLevel;
+    }
+
+    public static String getName() {
+        return name;
+    }
+
+    public static void setName(String name) {
+        ProfileDetails.name = name;
+    }
+
+    public ProfileDetails() {
+    }
 }

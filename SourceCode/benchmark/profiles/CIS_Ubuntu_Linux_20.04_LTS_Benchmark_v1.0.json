@@ -13,56 +13,76 @@
                         {
                             "id": "1.1",
                             "name": "filesystem configuration",
-                            "report": [
+                            "groups": [
                                 {
-                                    "id": "1.1.1.1",
-                                    "description": "Ensure mounting of cramfs is disabled",
-                                    "permission": "",
-                                    "pattern": "^\\s*install\\s+cramfs\\s+\/bin\/true\\s*$",
-                                    "path": "/etc/modprobe.d/cramfs.conf",
-                                    "type": "FILE_PATTERN"
-                                },
-                                {
-                                    "id": "1.1.1.2",
-                                    "description": "Ensure mounting of freevxfs filesystems is disabled",
-                                    "permission": "",
-                                    "pattern": "^\\s*install\\s+freevxfs\\s+\/bin\/true\\s*$",
-                                    "path": "/etc/modprobe.d/freevxfs.conf",
-                                    "type": "FILE_PATTERN"
-                                },
-                                {
-                                    "id": "1.1.2",
-                                    "description": "Ensure \/tmp is configured",
-                                    "command": "findmnt,-n,\/tmp",
-                                    "expectationPattern": "^\\s*\/tmp\\s+tmpfs\\s+tmpfs\\s+rw,nosuid,nodev,noexec\\s*$",
-                                    "type": "SHELL_RUN"
+                                    "id": "1.1.1",
+                                    "name": "Disable unused filesystems",
+                                    "report": [
+                                        {
+                                            "id": "1.1.1.1",
+                                            "description": "Ensure mounting of cramfs is disabled",
+                                            "permission": "",
+                                            "pattern": "^\\s*install\\s+cramfs\\s+\/bin\/true\\s*$",
+                                            "path": "/etc/modprobe.d/cramfs.conf",
+                                            "type": "FILE_PATTERN"
+                                        },
+                                        {
+                                            "id": "1.1.1.2",
+                                            "description": "Ensure mounting of freevxfs filesystems is disabled",
+                                            "permission": "",
+                                            "pattern": "^\\s*install\\s+freevxfs\\s+\/bin\/true\\s*$",
+                                            "path": "/etc/modprobe.d/freevxfs.conf",
+                                            "type": "FILE_PATTERN"
+                                        },
+                                        {
+                                            "id": "1.1.2",
+                                            "description": "Ensure \/tmp is configured",
+                                            "command": "findmnt,-n,\/tmp",
+                                            "expectationPattern": "^\\s*\/tmp\\s+tmpfs\\s+tmpfs\\s+rw,nosuid,nodev,noexec\\s*$",
+                                            "type": "SHELL_RUN"
+                                        },
+                                        {
+                                            "id": "1.1.2",
+                                            "description": "Ensure \/tmp is configured",
+                                            "path": "/etc/modprobe.d/cramfs.conf",
+                                            "required": true,
+                                            "type": "FILE_EXISTENCE"
+                                        }
+                                    ]
                                 }
                             ]
                         }
                     ]
                 },
                 {
+                    "id": "2",
                     "name": "two",
                     "categories": [
                         {
                             "id": "2.1",
                             "name": "filesystem configuration",
-                            "report": [
+                            "groups": [
                                 {
-                                    "id": "1.1.0",
-                                    "description": "Ensure mounting of cramfs is disabled",
-                                    "permission": "",
-                                    "pattern": "",
-                                    "path": "",
-                                    "type": "FILE_EXISTENCE"
-                                },
-                                {
-                                    "id": "1.1.1",
-                                    "description": "Ensure mounting of cramfs is disabled",
-                                    "permission": "",
-                                    "pattern": "",
-                                    "path": "",
-                                    "type": 2
+                                    "id": "2.1.1",
+                                    "name": "Disable unused filesystems",
+                                    "report": [
+                                        {
+                                            "id": "2.1.0",
+                                            "description": "Ensure mounting of cramfs is disabled",
+                                            "permission": "",
+                                            "pattern": "",
+                                            "path": "",
+                                            "type": "FILE_EXISTENCE"
+                                        },
+                                        {
+                                            "id": "2.1.1",
+                                            "description": "Ensure mounting of cramfs is disabled",
+                                            "permission": "",
+                                            "pattern": "",
+                                            "path": "",
+                                            "type": "FILE_EXISTENCE"
+                                        }
+                                    ]
                                 }
                             ]
                         }

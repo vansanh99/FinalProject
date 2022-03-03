@@ -13,11 +13,11 @@ import lombok.Data;
  * @author vansa
  */
 @Data
-public class Category {
+public class Group {
     @JsonProperty("id")
     private String id;
     @JsonProperty("name")
     private String name;
-    @JsonProperty("groups")
-    private ArrayList<Group> groups;
+    @JsonProperty("report")
+    private ArrayList<Report> reports;
 }

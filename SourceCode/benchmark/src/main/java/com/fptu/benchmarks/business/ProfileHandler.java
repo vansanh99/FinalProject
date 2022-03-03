@@ -23,43 +23,45 @@ public class ProfileHandler {
     public Audit proccessProfile(Audit audit) {
         audit.getChapters().forEach(chap -> {
             chap.getCategories().forEach(cat -> {
-                cat.getReports().forEach(report -> {
-                    String pathToCheck = report.getPath();
-                    switch (report.getType()) {
-                        case Constants.FILE_EXISTENCE -> {//check file exists
-                            log.debug("file path: " + pathToCheck + " type: " + report.getType());
-                            File tempFile = new File(pathToCheck);
-                            report.setStatus(tempFile.exists());
-                        }
-                        case Constants.FILE_PATTERN -> {//check file pattern
-                            log.debug("file path: " + pathToCheck + " type: " + report.getType());
-                            String filePattern = report.getPattern();
-                            try {
-                                String fileString = new String(Files.readAllBytes(Paths.get(pathToCheck)), StandardCharsets.UTF_8);
-                                log.debug("fie:" + filePattern);
-                                if (CommonUtils.ismatchPattern(fileString, filePattern)) {
-                                    report.setStatus(Constants.TRUE);
-                                } else {
-                                    report.setStatus(Constants.FALSE);
-                                }
-                            } catch (IOException ex) {
-                                report.setStatus(Constants.FALSE);
-                                log.debug("file not exists type 2");
+                cat.getGroups().forEach(group -> {
+                    group.getReports().forEach(report -> {
+                        String pathToCheck = report.getPath();
+                        switch (report.getType()) {
+                            case Constants.FILE_EXISTENCE -> {//check file exists
+                                log.debug("file path: " + pathToCheck + " type: " + report.getType());
+                                File tempFile = new File(pathToCheck);
+                                report.setStatus(tempFile.exists() == report.isRequired());
                             }
-                        }
-                        case Constants.SHELL_RUN -> {//run shell
-                            String result = CommonUtils.runCommand(report.getCommand().split(","));
-                            log.debug("type: " + report.getType());
-                            if (result != null) {
-                                if (CommonUtils.ismatchPattern(result, report.getExpectationPattern())) {
-                                    report.setStatus(Constants.TRUE);
-                                } else {
+                            case Constants.FILE_PATTERN -> {//check file pattern
+                                log.debug("file path: " + pathToCheck + " type: " + report.getType());
+                                String filePattern = report.getPattern();
+                                try {
+                                    String fileString = new String(Files.readAllBytes(Paths.get(pathToCheck)), StandardCharsets.UTF_8);
+                                    log.debug("fie:" + filePattern);
+                                    if (CommonUtils.ismatchPattern(fileString, filePattern)) {
+                                        report.setStatus(Constants.TRUE);
+                                    } else {
+                                        report.setStatus(Constants.FALSE);
+                                    }
+                                } catch (IOException ex) {
                                     report.setStatus(Constants.FALSE);
+                                    log.debug("file not exists type 2");
                                 }
                             }
+                            case Constants.SHELL_RUN -> {//run shell
+                                String result = CommonUtils.runCommand(report.getCommand().split(","));
+                                log.debug("type: " + report.getType());
+                                if (result != null) {
+                                    if (CommonUtils.ismatchPattern(result, report.getExpectationPattern())) {
+                                        report.setStatus(Constants.TRUE);
+                                    } else {
+                                        report.setStatus(Constants.FALSE);
+                                    }
+                                }
+                            }
                         }
-                    }
 
+                    });
                 });
             });
         });
