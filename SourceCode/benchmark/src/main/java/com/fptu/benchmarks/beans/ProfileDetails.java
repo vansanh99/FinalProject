@@ -39,4 +39,9 @@ public class ProfileDetails {
 
     public ProfileDetails() {
     }
+    public static void clearProfileDetails() {
+        setName(null);
+        setProfile(null);
+        setProfileLevel(null);
+    }
 }

@@ -22,6 +22,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.UIManager;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
+import org.assertj.core.util.Lists;
 import org.thymeleaf.context.Context;
 
 /**
@@ -48,16 +49,19 @@ public class mainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblOS = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         cardContent = new javax.swing.JPanel();
         card1 = new javax.swing.JPanel();
         cbbBenchmark = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtDescpCard1 = new javax.swing.JEditorPane();
         card2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         cbbLevel = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        epProfile = new javax.swing.JEditorPane();
         card3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         chkbHtmlReport = new javax.swing.JCheckBox();
@@ -67,20 +71,16 @@ public class mainFrame extends javax.swing.JFrame {
         jsonPrint = new javax.swing.JTextPane();
         btnNext1 = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
+        lblOS = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        lblOS.setText("platform");
-        lblOS.setText("Platform: " + System.getProperty("os.name"));
-
-        jLabel1.setText("osver");
-        jLabel1.setText("version: " + System.getProperty("os.version"));
-
-        jLabel2.setText("runtimejv");
-        jLabel2.setText("JRE : " + System.getProperty("java.runtime.version"));
-
         cardContent.setLayout(new java.awt.CardLayout());
+
+        card1.setName("card1"); // NOI18N
 
         cbbBenchmark.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "please select" }));
         File[] files = new File("profiles").listFiles();
@@ -92,37 +92,47 @@ public class mainFrame extends javax.swing.JFrame {
                 cbbBenchmarkItemStateChanged(evt);
             }
         });
-        cbbBenchmark.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbbBenchmarkActionPerformed(evt);
-            }
-        });
 
         jLabel3.setText("Benchmark Profiles");
+
+        jLabel6.setText("Selection Description");
+
+        txtDescpCard1.setContentType("text/html"); // NOI18N
+        jScrollPane4.setViewportView(txtDescpCard1);
 
         javax.swing.GroupLayout card1Layout = new javax.swing.GroupLayout(card1);
         card1.setLayout(card1Layout);
         card1Layout.setHorizontalGroup(
             card1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(card1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addGap(18, 18, 18)
-                .addComponent(cbbBenchmark, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
+                .addGap(26, 26, 26)
+                .addGroup(card1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane4)
+                    .addGroup(card1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(cbbBenchmark, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel6))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
         card1Layout.setVerticalGroup(
             card1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(card1Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(card1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(cbbBenchmark, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(289, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(card1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cbbBenchmark, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         cardContent.add(card1, "card1");
         card1.getAccessibleContext().setAccessibleName("");
+
+        card2.setName("card2"); // NOI18N
 
         jLabel4.setText("Profile(s):");
 
@@ -138,29 +148,45 @@ public class mainFrame extends javax.swing.JFrame {
             }
         });
 
+        jLabel7.setText("Profile Description");
+
+        epProfile.setEditable(false);
+        epProfile.setContentType("text/html"); // NOI18N
+        jScrollPane2.setViewportView(epProfile);
+
         javax.swing.GroupLayout card2Layout = new javax.swing.GroupLayout(card2);
         card2.setLayout(card2Layout);
         card2Layout.setHorizontalGroup(
             card2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(card2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel4)
-                .addGap(42, 42, 42)
-                .addComponent(cbbLevel, 0, 732, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(25, 25, 25)
+                .addGroup(card2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2)
+                    .addGroup(card2Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(50, 50, 50)
+                        .addComponent(cbbLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 593, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel7))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
         card2Layout.setVerticalGroup(
             card2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(card2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addContainerGap()
                 .addGroup(card2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(cbbLevel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(285, Short.MAX_VALUE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbbLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         cardContent.add(card2, "card2");
         card2.getAccessibleContext().setAccessibleName("");
+
+        card3.setName("card3"); // NOI18N
 
         jLabel5.setText("Report Out Options:");
 
@@ -198,7 +224,7 @@ public class mainFrame extends javax.swing.JFrame {
                         .addGap(40, 40, 40)
                         .addComponent(chkbPdfReport))
                     .addComponent(jLabel5))
-                .addContainerGap(578, Short.MAX_VALUE))
+                .addContainerGap(539, Short.MAX_VALUE))
             .addGroup(card3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
@@ -242,44 +268,53 @@ public class mainFrame extends javax.swing.JFrame {
             }
         });
 
+        lblOS.setText("platform");
+        lblOS.setText("Platform: " + System.getProperty("os.name"));
+
+        jLabel1.setText("osver");
+        jLabel1.setText("version: " + System.getProperty("os.version"));
+
+        jLabel2.setText("runtimejv");
+        jLabel2.setText("JRE : " + System.getProperty("java.specification.vendor") + " " + System.getProperty("java.runtime.version"));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(lblOS)
-                .addGap(119, 119, 119)
-                .addComponent(jLabel1)
-                .addGap(192, 192, 192)
-                .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(cardContent, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 865, Short.MAX_VALUE)
+                .addComponent(cardContent, javax.swing.GroupLayout.PREFERRED_SIZE, 773, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnBack)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnNext1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(43, 43, 43))
+                        .addComponent(lblOS)
+                        .addGap(111, 111, 111)
+                        .addComponent(jLabel1)
+                        .addGap(157, 157, 157)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnNext1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(58, 58, 58))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
+                .addGap(107, 107, 107)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblOS)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addGap(63, 63, 63)
-                .addComponent(cardContent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2)
+                    .addComponent(lblOS))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardContent, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnNext1)
-                    .addComponent(btnBack))
-                .addContainerGap())
+                    .addComponent(btnBack)
+                    .addComponent(btnNext1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -294,49 +329,32 @@ public class mainFrame extends javax.swing.JFrame {
             log.info("btnNext1 clicked");
             CardLayout cardLayout = (CardLayout) cardContent.getLayout();
             if (cbbBenchmark.isShowing()) {
-                String path = "profiles/" + cbbBenchmark.getSelectedItem().toString();
-                Profile p = new Profile();
-                String jsonString = "";
-                try {
-                    jsonString = new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
-                    p = new ObjectMapper().readValue(jsonString,
-                            new TypeReference<Profile>() {
-                    });
-                } catch (JsonProcessingException e1) {
-                    log.error("loi json :: {}", e1);
-                } catch (IOException ex) {
-                    log.error("loi doc file :: {}", ex);
+                DefaultComboBoxModel dcbbm = new DefaultComboBoxModel();
+                cbbLevel.setModel(dcbbm);
+                cbbLevel.addItem("Please select...");
+                for (Audit a : ProfileDetails.getProfile().getAudits()) {
+                    cbbLevel.addItem(a.getLevel());
                 }
-                if (null != p) {
-                    ProfileDetails.setName(cbbBenchmark.getSelectedItem().toString());
-                    ProfileDetails.setProfile(p);
-                    log.info("profile loaded!!!");
-                    DefaultComboBoxModel dcbbm = new DefaultComboBoxModel();
-                    cbbLevel.setModel(dcbbm);
-                    cbbLevel.addItem("Please select...");
-                    for (Audit a : ProfileDetails.getProfile().getAudits()) {
-                        cbbLevel.addItem(a.getLevel());
-                    }
-                }
-                cardLayout.show(cardContent, "card2");
-                enableBtnNext("card2");
+                cardLayout.show(cardContent, card2.getName());
+                enableBtnNext(card2.getName());
                 btnBack.setEnabled(true);
             } else if (cbbLevel.isShowing()) {
                 String level = cbbLevel.getSelectedItem().toString();
                 ProfileDetails.setProfileLevel(level);
+                ProfileDetails.getProfile().setAudits(Lists.newArrayList(ProfileDetails.getProfile().getAudits().stream()
+                        .filter(a -> a.getLevel().equalsIgnoreCase(level))//set lever
+                        .findAny()
+                        .orElse(null)
+                ));
                 File file = new File("reports");
-                lblSaveReport.setText("Saving to " + (null != file ? file.getAbsolutePath() : "null"));
-                cardLayout.show(cardContent, "card3");
-                enableBtnNext("card3");
+                lblSaveReport.setText("Saving to " + file.getAbsolutePath());
+                cardLayout.show(cardContent, card3.getName());
+                enableBtnNext(card3.getName());
                 btnBack.setEnabled(true);
             } else if (lblSaveReport.isShowing()) {
                 ProfileHandler ph = new ProfileHandler();
                 ObjectMapper obm = new ObjectMapper();
-                Audit audit = ProfileDetails.getProfile().getAudits().stream()
-                        .filter(a -> a.getLevel().equalsIgnoreCase(ProfileDetails.getProfileLevel()))//set lever
-                        .findAny()
-                        .orElse(null);
-                ph.proccessProfile(audit);
+                ph.proccessProfile(ProfileDetails.getProfile().getAudits().get(0));
                 String jsonText = "";
                 try {
                     jsonText = obm.writerWithDefaultPrettyPrinter().writeValueAsString(ProfileDetails.getProfile());
@@ -344,61 +362,91 @@ public class mainFrame extends javax.swing.JFrame {
                     log.error("error json {}", ex);
                 }
                 Context context = new Context();
-                context.setVariable("chapters", audit.getChapters());
+                context.setVariable("chapters", ProfileDetails.getProfile().getAudits().get(0).getChapters());
                 context.setVariable("htmlReport", chkbHtmlReport.isSelected());
                 context.setVariable("pdfReport", chkbPdfReport.isSelected());
                 File f = PdfUtils.generatePdfFromHtml(context, ProfileDetails.getProfile().getTemplateReport(), "reports/test.pdf");
                 jsonPrint.setText(jsonText);
             }
+            log.info("btnNext1 done");
         }
-
-        log.info("btnNext1 done");
     }//GEN-LAST:event_btnNext1MouseClicked
 
-    private void cbbBenchmarkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbBenchmarkActionPerformed
-
-    }//GEN-LAST:event_cbbBenchmarkActionPerformed
-
-    private void cbbLevelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLevelActionPerformed
-        enableBtnNext("card2");
-    }//GEN-LAST:event_cbbLevelActionPerformed
-
     private void btnBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBackMouseClicked
-        enableBtnNext("card2");
+        enableBtnNext(card2.getName());
+        enableBtnNext(card1.getName());
         if (btnBack.isEnabled()) {
             log.info("btnBack clicked");
             CardLayout cardLayout = (CardLayout) cardContent.getLayout();
             if (cbbBenchmark.isShowing()) {
+                enableBtnNext(card1.getName());
                 btnBack.setEnabled(true);
             } else if (cbbLevel.isShowing()) {
-                cardLayout.show(cardContent, "card1");
+                cardLayout.show(cardContent, card1.getName());
                 btnBack.setEnabled(false);
             } else if (lblSaveReport.isShowing()) {
-                cardLayout.show(cardContent, "card2");
+                cardLayout.show(cardContent, card2.getName());
                 btnBack.setEnabled(true);
             }
         }
     }//GEN-LAST:event_btnBackMouseClicked
 
     private void chkbHtmlReportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chkbHtmlReportMouseClicked
-        enableBtnNext("card3");
+        enableBtnNext(card3.getName());
     }//GEN-LAST:event_chkbHtmlReportMouseClicked
 
     private void chkbPdfReportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chkbPdfReportMouseClicked
-        enableBtnNext("card3");
+        enableBtnNext(card3.getName());
     }//GEN-LAST:event_chkbPdfReportMouseClicked
 
-    private void cbbLevelItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbLevelItemStateChanged
-        enableBtnNext("card2");
-    }//GEN-LAST:event_cbbLevelItemStateChanged
-
     private void cbbBenchmarkItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbBenchmarkItemStateChanged
-        enableBtnNext("card1");        // TODO add your handling code here:
+        try {
+            String path = "profiles/" + cbbBenchmark.getSelectedItem().toString();
+            String jsonString = new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
+            Profile p = new ObjectMapper().readValue(jsonString,
+                    new TypeReference<Profile>() {
+            });
+            if (null != p) {
+                ProfileDetails.setName(cbbBenchmark.getSelectedItem().toString());
+                ProfileDetails.setProfile(p);
+                log.info("profile loaded!!!");
+                txtDescpCard1.setText(p.getDescription());
+            }
+            enableBtnNext(card1.getName());
+        } catch (JsonProcessingException e1) {
+            if (cbbBenchmark.getSelectedIndex() != 0) {
+                log.error("loi json :: {}", e1);
+            }
+        } catch (IOException ex) {
+            if (cbbBenchmark.getSelectedIndex() != 0) {
+                log.error("loi doc file :: {}", ex);
+            } else {
+                txtDescpCard1.setText(StringUtils.EMPTY);
+            }
+        } finally {
+            if (cbbBenchmark.getSelectedIndex() == 0) {
+                ProfileDetails.clearProfileDetails();
+            }
+            enableBtnNext(card1.getName());
+        }
     }//GEN-LAST:event_cbbBenchmarkItemStateChanged
+
+    private void cbbLevelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLevelActionPerformed
+        enableBtnNext(card2.getName());
+    }//GEN-LAST:event_cbbLevelActionPerformed
+
+    private void cbbLevelItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbLevelItemStateChanged
+        if (cbbLevel.getSelectedIndex() == 0) {
+            epProfile.setText("");
+        } else {
+            epProfile.setText(ProfileDetails.getProfile().getAudits().get(0).getDescription());
+        }
+        enableBtnNext(card2.getName());
+    }//GEN-LAST:event_cbbLevelItemStateChanged
     private void enableBtnNext(String card) {
-        if (card1.isShowing() && cbbBenchmark.getSelectedIndex() == 0 && StringUtils.equals(card, "card1")
-                || card3.isShowing() && !isReportTypeSelect() && StringUtils.equals(card, "card3")
-                || card2.isShowing() && cbbLevel.getSelectedIndex() == 0 && StringUtils.equals(card, "card2")) {
+        if (card1.isShowing() && cbbBenchmark.getSelectedIndex() == 0 && StringUtils.equals(card, card1.getName())
+                || card3.isShowing() && !isReportTypeSelect() && StringUtils.equals(card, card3.getName())
+                || card2.isShowing() && cbbLevel.getSelectedIndex() == 0 && StringUtils.equals(card, card2.getName())) {
             btnNext1.setEnabled(false);
         } else {
             btnNext1.setEnabled(true);
@@ -447,14 +495,20 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbbLevel;
     private javax.swing.JCheckBox chkbHtmlReport;
     private javax.swing.JCheckBox chkbPdfReport;
+    private javax.swing.JEditorPane epProfile;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextPane jsonPrint;
     private javax.swing.JLabel lblOS;
     private javax.swing.JLabel lblSaveReport;
+    private javax.swing.JEditorPane txtDescpCard1;
     // End of variables declaration//GEN-END:variables
 }

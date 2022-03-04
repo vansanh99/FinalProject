@@ -16,6 +16,8 @@ import lombok.Data;
 public class Audit {
     @JsonProperty("level")
     private String level;
+    @JsonProperty("description")
+    private String description;
     @JsonProperty("chapters")
     private ArrayList<Chapter> chapters;
     

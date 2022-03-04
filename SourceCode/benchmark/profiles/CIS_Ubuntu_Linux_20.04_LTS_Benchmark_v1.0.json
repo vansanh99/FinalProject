@@ -1,10 +1,100 @@
 {
     "name": "",
     "version": "",
+    "description": "This document provides prescriptive guidance for establishing a secure configuration posture for <b>Ubuntu Linux 18.04 <br></br>LTS<b> systems running on x86 and x64 platforms.",
     "templateReport": "CIS_Ubuntu_Linux_18.04_LTS_Benchmark_v2.0.1-xccdf",
     "audit": [
         {
             "level": "1 - Workstation",
+            "description": "this is for <b>Workstation</b>",
+            "chapters": [
+                {
+                    "id": "1",
+                    "name": "Initial Setup",
+                    "categories": [
+                        {
+                            "id": "1.1",
+                            "name": "filesystem configuration",
+                            "groups": [
+                                {
+                                    "id": "1.1.1",
+                                    "name": "Disable unused filesystems",
+                                    "report": [
+                                        {
+                                            "id": "1.1.1.1",
+                                            "description": "Ensure mounting of cramfs is disabled",
+                                            "permission": "",
+                                            "pattern": "^\\s*install\\s+cramfs\\s+\/bin\/true\\s*$",
+                                            "path": "/etc/modprobe.d/cramfs.conf",
+                                            "type": "FILE_PATTERN"
+                                        },
+                                        {
+                                            "id": "1.1.1.2",
+                                            "description": "Ensure mounting of freevxfs filesystems is disabled",
+                                            "permission": "",
+                                            "pattern": "^\\s*install\\s+freevxfs\\s+\/bin\/true\\s*$",
+                                            "path": "/etc/modprobe.d/freevxfs.conf",
+                                            "type": "FILE_PATTERN"
+                                        },
+                                        {
+                                            "id": "1.1.2",
+                                            "description": "Ensure \/tmp is configured",
+                                            "command": "findmnt,-n,\/tmp",
+                                            "expectationPattern": "^\\s*\/tmp\\s+tmpfs\\s+tmpfs\\s+rw,nosuid,nodev,noexec\\s*$",
+                                            "type": "SHELL_RUN"
+                                        },
+                                        {
+                                            "id": "1.1.2",
+                                            "description": "Ensure \/tmp is configured",
+                                            "path": "/etc/modprobe.d/cramfs.conf",
+                                            "required": true,
+                                            "type": "FILE_EXISTENCE"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "2",
+                    "name": "two",
+                    "categories": [
+                        {
+                            "id": "2.1",
+                            "name": "filesystem configuration",
+                            "groups": [
+                                {
+                                    "id": "2.1.1",
+                                    "name": "Disable unused filesystems",
+                                    "report": [
+                                        {
+                                            "id": "2.1.0",
+                                            "description": "Ensure mounting of cramfs is disabled",
+                                            "permission": "",
+                                            "pattern": "",
+                                            "path": "",
+                                            "type": "FILE_EXISTENCE"
+                                        },
+                                        {
+                                            "id": "2.1.1",
+                                            "description": "Ensure mounting of cramfs is disabled",
+                                            "permission": "",
+                                            "pattern": "",
+                                            "path": "",
+                                            "type": "FILE_EXISTENCE"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "level": "2 - Workstation",
+            "description": "this is for <b>Workstation</b>",
             "chapters": [
                 {
                     "id": "1",
