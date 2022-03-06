@@ -362,7 +362,7 @@ public class mainFrame extends javax.swing.JFrame {
                     log.error("error json {}", ex);
                 }
                 Context context = new Context();
-                context.setVariable("chapters", ProfileDetails.getProfile().getAudits().get(0).getChapters());
+                context.setVariable("audit", ProfileDetails.getProfile().getAudits().get(0));
                 context.setVariable("htmlReport", chkbHtmlReport.isSelected());
                 context.setVariable("pdfReport", chkbPdfReport.isSelected());
                 File f = PdfUtils.generatePdfFromHtml(context, ProfileDetails.getProfile().getTemplateReport(), "reports/test.pdf");

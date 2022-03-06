@@ -595,7 +595,7 @@
          </div>
          <div id="profiles" class="profiles">
             <h2 class="sectionTitle">Profiles</h2>
-            <p>This benchmark contains 4 profiles.No profile was selected for this assessment.</p>
+            <p th:utext="'This benchmark contains 4 profiles. The <b>' + ${audit.level} + '</b> profile was used for this assessment.'"></p>
             <table class="profile" width="100%">
                <thead>
                   <tr>
@@ -604,7 +604,7 @@
                   </tr>
                </thead>
                <tbody>
-                  <tr valign="top" class="">
+                  <tr valign="top" th:class="${audit.level == 'Level 1 - Server' ? ' selected-row' : ''} ">
                      <td>Level 1 - Server</td>
                      <td>
                         <p>Items in this profile intend to:</p>
@@ -625,7 +625,7 @@
                         <script type="text/javascript">setState('w4583aac13_xml', false);</script>
                      </td>
                   </tr>
-                  <tr valign="top" class="">
+                  <tr valign="top" th:class="${audit.level == 'Level 2 - Server' ? ' selected-row' : ''} ">
                      <td>Level 2 - Server</td>
                      <td>
                         <p>This profile extends the "Level 1 - Server" profile. Items in this profile exhibit one or
@@ -647,7 +647,7 @@
                         <script type="text/javascript">setState('w4583aac15_xml', false);</script>
                      </td>
                   </tr>
-                  <tr valign="top" class="">
+                  <tr valign="top" th:class="${audit.level == 'Level 1 - Workstation' ? ' selected-row' : ''} ">
                      <td>Level 1 - Workstation</td>
                      <td>
                         <p>Items in this profile intend to:</p>
@@ -668,7 +668,7 @@
                         <script type="text/javascript">setState('w4583aac17_xml', false);</script>
                      </td>
                   </tr>
-                  <tr valign="top" class="">
+                  <tr valign="top" th:class="${audit.level == 'Level 2 - Workstation' ? ' selected-row' : ''} ">
                      <td>Level 2 - Workstation</td>
                      <td>
                         <p>This profile extends the "Level 1 - Workstation" profile. Items in this profile exhibit one
@@ -712,7 +712,7 @@
                   </tr>
                </thead>
                <tbody>
-                  <th:block th:each="chapter : ${chapters}">
+                  <th:block th:each="chapter : ${audit.chapters}">
                      <tr>
                         <td id="checklist-w4583aad353" class="group sect" colspan="3">
                            <a href="#detail-w4583aad353" th:text="${chapter.id + ' ' + chapter.name}">1</a>
