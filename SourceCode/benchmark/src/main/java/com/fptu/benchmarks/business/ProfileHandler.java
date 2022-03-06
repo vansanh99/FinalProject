@@ -11,7 +11,10 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
@@ -28,16 +31,16 @@ public class ProfileHandler {
                         String pathToCheck = report.getPath();
                         switch (report.getType()) {
                             case Constants.FILE_EXISTENCE -> {//check file exists
-                                log.debug("file path: " + pathToCheck + " type: " + report.getType());
+                                log.debug("file path: {}, type: {}, required: {}", pathToCheck, report.getType(), report.isRequired());
                                 File tempFile = new File(pathToCheck);
                                 report.setStatus(tempFile.exists() == report.isRequired());
+                                log.debug("status: {}", report.isStatus());
                             }
                             case Constants.FILE_PATTERN -> {//check file pattern
-                                log.debug("file path: " + pathToCheck + " type: " + report.getType());
+                                log.debug("file path: {}, type: {}, file Pattrn: {}", pathToCheck, report.getType(), report.getPattern());
                                 String filePattern = report.getPattern();
                                 try {
                                     String fileString = new String(Files.readAllBytes(Paths.get(pathToCheck)), StandardCharsets.UTF_8);
-                                    log.debug("fie:" + filePattern);
                                     if (CommonUtils.ismatchPattern(fileString, filePattern)) {
                                         report.setStatus(Constants.TRUE);
                                     } else {
@@ -47,21 +50,42 @@ public class ProfileHandler {
                                     report.setStatus(Constants.FALSE);
                                     log.debug("file not exists type 2");
                                 }
+                                log.debug("status: {}", report.isStatus());
                             }
                             case Constants.SHELL_RUN -> {//run shell
-                                String result = CommonUtils.runCommand(report.getCommand().split(","));
-                                log.debug("type: " + report.getType());
-                                if (result != null) {
-                                    if (CommonUtils.ismatchPattern(result, report.getExpectationPattern())) {
-                                        report.setStatus(Constants.TRUE);
-                                    } else {
-                                        report.setStatus(Constants.FALSE);
+                                List<Boolean> statuss = new ArrayList<>();
+                                report.getCommandList().stream().forEach(cmd -> {
+                                    log.debug("command: {}, type: {}, expect: {}", cmd.getCommand(), report.getType(), cmd.getExpectationPattern());
+                                    String result = CommonUtils.runPipeCommand(cmd.getCommand());
+                                    if (result != null) {
+                                        if (CommonUtils.ismatchPattern(result, cmd.getExpectationPattern())) {
+                                            statuss.add(Constants.TRUE);
+                                        } else {
+                                            statuss.add(Constants.FALSE);
+                                        }
+                                    }
+                                });
+                                log.debug("status: {}", statuss.toString());
+                                for (Boolean s : statuss) {
+                                    report.setStatus(s);
+                                    if (StringUtils.equals(report.getOperator(), "OR")) {
+                                        if (s) {
+                                            report.setStatus(s);
+                                            break;
+                                        }
+                                    }
+                                    if (StringUtils.equals(report.getOperator(), "AND")) {
+                                        if (!s) {
+                                            report.setStatus(s);
+                                            break;
+                                        }
                                     }
                                 }
                             }
                         }
 
-                    });
+                    }
+                    );
                 });
             });
         });

@@ -1,11 +1,11 @@
 {
-    "name": "",
+    "name": "Linux",
     "version": "",
     "description": "This document provides prescriptive guidance for establishing a secure configuration posture for <b>Ubuntu Linux 18.04 <br></br>LTS<b> systems running on x86 and x64 platforms.",
     "templateReport": "CIS_Ubuntu_Linux_18.04_LTS_Benchmark_v2.0.1-xccdf",
     "audit": [
         {
-            "level": "1 - Workstation",
+            "level": "Level 1 - Workstation",
             "description": "this is for <b>Workstation</b>",
             "chapters": [
                 {
@@ -23,7 +23,6 @@
                                         {
                                             "id": "1.1.1.1",
                                             "description": "Ensure mounting of cramfs is disabled",
-                                            "permission": "",
                                             "pattern": "^\\s*install\\s+cramfs\\s+\/bin\/true\\s*$",
                                             "path": "/etc/modprobe.d/cramfs.conf",
                                             "type": "FILE_PATTERN"
@@ -37,52 +36,283 @@
                                             "type": "FILE_PATTERN"
                                         },
                                         {
-                                            "id": "1.1.2",
-                                            "description": "Ensure \/tmp is configured",
-                                            "command": "findmnt,-n,\/tmp",
-                                            "expectationPattern": "^\\s*\/tmp\\s+tmpfs\\s+tmpfs\\s+rw,nosuid,nodev,noexec\\s*$",
-                                            "type": "SHELL_RUN"
+                                            "id": "1.1.1.3",
+                                            "description": "Ensure mounting of jffs2 filesystems is disabled",
+                                            "permission": "",
+                                            "pattern": "^\\s*install\\s+jffs2\\s+\/bin\/true\\s*$",
+                                            "path": "/etc/modprobe.d/jffs2.conf",
+                                            "type": "FILE_PATTERN"
+                                        },
+                                        {
+                                            "id": "1.1.1.4",
+                                            "description": "Ensure mounting of hfs filesystems is disabled",
+                                            "permission": "",
+                                            "pattern": "^\\s*install\\s+hfs\\s+\/bin\/true\\s*$",
+                                            "path": "/etc/modprobe.d/hfs.conf",
+                                            "type": "FILE_PATTERN"
+                                        },
+                                        {
+                                            "id": "1.1.1.5",
+                                            "description": "Ensure mounting of hfsplus filesystems is disabled",
+                                            "permission": "",
+                                            "pattern": "^\\s*install\\s+hfsplus\\s+\/bin\/true\\s*$",
+                                            "path": "/etc/modprobe.d/hfsplus.conf",
+                                            "type": "FILE_PATTERN"
+                                        },
+                                        {
+                                            "id": "1.1.1.6",
+                                            "description": "Ensure mounting of udf filesystems is disabled",
+                                            "permission": "",
+                                            "pattern": "^\\s*install\\s+udf\\s+\/bin\/true\\s*$",
+                                            "path": "/etc/modprobe.d/udf.conf",
+                                            "type": "FILE_PATTERN"
                                         },
                                         {
                                             "id": "1.1.2",
-                                            "description": "Ensure \/tmp is configured",
-                                            "path": "/etc/modprobe.d/cramfs.conf",
-                                            "required": true,
-                                            "type": "FILE_EXISTENCE"
+                                            "description": "Ensure separate partition exists for \/tmp",
+                                            "command_list": [
+                                                {
+                                                    "command": "mount,|grep,\/tmp",
+                                                    "expectationPattern": "\\s*tmpfs on \/tmp type tmpfs\\s*"
+                                                }
+                                            ],
+                                            "type": "SHELL_RUN"
+                                        },
+                                        {
+                                            "id": "1.1.3",
+                                            "description": "Ensure nodev option set on \/tmp partition",
+                                            "command_list": [
+                                                {
+                                                    "command": "mount,|grep,\/tmp",
+                                                    "expectationPattern": "\\s*tmpfs on \/tmp type tmpfs \\(.*nodev.*\\)\\s*"
+                                                }
+                                            ],
+                                            "type": "SHELL_RUN"
+                                        },
+                                        {
+                                            "id": "1.1.4",
+                                            "description": "Ensure nosuid option set on \/tmp partition",
+                                            "command_list": [
+                                                {
+                                                    "command": "mount,|grep,\/tmp",
+                                                    "expectationPattern": "\\s*tmpfs on \/tmp type tmpfs \\(.*nosuid.*\\)\\s*"
+                                                }
+                                            ],
+                                            "type": "SHELL_RUN"
+                                        },
+                                        {
+                                            "id": "1.1.5",
+                                            "description": "Ensure noexec option set on \/tmp partition",
+                                            "command_list": [
+                                                {
+                                                    "command": "mount,|grep,\/tmp",
+                                                    "expectationPattern": "\\s*tmpfs on \/tmp type tmpfs \\(.*noexec.*\\)\\s*"
+                                                }
+                                            ],
+                                            "type": "SHELL_RUN"
+                                        },
+                                        {
+                                            "id": "1.1.8",
+                                            "description": "Ensure nodev option set on /var/tmp partition",
+                                            "command_list": [
+                                                {
+                                                    "command": "mount,|grep,\/var\/tmp,|grep,-v,nodev",
+                                                    "expectationPattern": "^$"
+                                                }
+                                            ],
+                                            "type": "SHELL_RUN"
+                                        },
+                                        {
+                                            "id": "1.1.9",
+                                            "description": "Ensure nosuid option set on /var/tmp partition",
+                                            "command_list": [
+                                                {
+                                                    "command": "mount,|grep,\/var\/tmp,|grep,-v,nosuid",
+                                                    "expectationPattern": "^$"
+                                                }
+                                            ],
+                                            "type": "SHELL_RUN"
+                                        },
+                                        {
+                                            "id": "1.1.10",
+                                            "description": "Ensure noexec option set on /var/tmp partition",
+                                            "command_list": [
+                                                {
+                                                    "command": "mount,|grep,\/var\/tmp,|grep,-v,noexec",
+                                                    "expectationPattern": "^$"
+                                                }
+                                            ],
+                                            "type": "SHELL_RUN"
+                                        },
+                                        {
+                                            "id": "1.1.14",
+                                            "description": "Ensure nodev option set on /home partition",
+                                            "command_list": [
+                                                {
+                                                    "command": "mount,|grep,\/home,|grep,-v,nodev",
+                                                    "expectationPattern": "^$"
+                                                }
+                                            ],
+                                            "type": "SHELL_RUN"
+                                        },
+                                        {
+                                            "id": "1.1.15",
+                                            "description": "Ensure nodev option set on /dev/shm partition",
+                                            "command_list": [
+                                                {
+                                                    "command": "mount,|grep,\/dev/shm,|grep,-v,nodev",
+                                                    "expectationPattern": "^$"
+                                                }
+                                            ],
+                                            "type": "SHELL_RUN"
+                                        },
+                                        {
+                                            "id": "1.1.16",
+                                            "description": "Ensure nosuid option set on /dev/shm partition",
+                                            "command_list": [
+                                                {
+                                                    "command": "mount,|grep,\/dev/shm,|grep,-v,nosuid",
+                                                    "expectationPattern": "^$"
+                                                }
+                                            ],
+                                            "type": "SHELL_RUN"
+                                        },
+                                        {
+                                            "id": "1.1.17",
+                                            "description": "Ensure noexec option set on /dev/shm partition",
+                                            "command_list": [
+                                                {
+                                                    "command": "mount,|grep,\/dev/shm,|grep,-v,noexec",
+                                                    "expectationPattern": "^$"
+                                                }
+                                            ],
+                                            "type": "SHELL_RUN"
+                                        },
+                                        {
+                                            "id": "1.1.22",
+                                            "description": "Disable Automounting",
+                                            "command_list": [
+                                                {
+                                                    "command": "systemctl,is-enabled,autofs",
+                                                    "expectationPattern": "^disabled$"
+                                                },
+                                                {
+                                                    "command": "dpkg,-s,autofs",
+                                                    "expectationPattern": "\\s*package 'autofs' is not installed\\s*"
+                                                }
+                                            ],
+                                            "operator": "OR",
+                                            "type": "SHELL_RUN"
+                                        },
+                                        {
+                                            "id": "1.1.23",
+                                            "description": "Disable USB Storage",
+                                            "pattern": "^\\s*install\\s+usb-storage\\s+\/bin\/true\\s*$",
+                                            "path": "/etc/modprobe.d/usb_storage.conf",
+                                            "type": "FILE_PATTERN"
                                         }
                                     ]
                                 }
                             ]
-                        }
-                    ]
-                },
-                {
-                    "id": "2",
-                    "name": "two",
-                    "categories": [
+                        },
                         {
-                            "id": "2.1",
-                            "name": "filesystem configuration",
+                            "id": "1.2",
+                            "name": "Configure Software Updates",
+                            "groups": []
+                        },
+                        {
+                            "id": "1.3",
+                            "name": "Configure sudo",
                             "groups": [
                                 {
-                                    "id": "2.1.1",
-                                    "name": "Disable unused filesystems",
+                                    "id": "1.3",
                                     "report": [
                                         {
-                                            "id": "2.1.0",
-                                            "description": "Ensure mounting of cramfs is disabled",
-                                            "permission": "",
-                                            "pattern": "",
-                                            "path": "",
-                                            "type": "FILE_EXISTENCE"
+                                            "id": "1.3.1",
+                                            "description": "Ensure sudo is installed",
+                                            "command_list": [
+                                                {
+                                                    "command": "dpkg,-s,sudo",
+                                                    "expectationPattern": "\\s*Status: install ok installed\\s*"
+                                                },
+                                                {
+                                                    "command": "dpkg,-s,sudo-ldap",
+                                                    "expectationPattern": "\\s*Status: install ok installed\\s*"
+                                                }
+                                            ],
+                                            "operator": "OR",
+                                            "type": "SHELL_RUN"
                                         },
                                         {
-                                            "id": "2.1.1",
-                                            "description": "Ensure mounting of cramfs is disabled",
-                                            "permission": "",
-                                            "pattern": "",
-                                            "path": "",
-                                            "type": "FILE_EXISTENCE"
+                                            "id": "1.3.2",
+                                            "description": "Ensure sudo commands use pty",
+                                            "command_list": [
+                                                {
+                                                    "command": "grep,-Ei,^\\s*Defaults use_pty\\s*$,/etc/sudoers",
+                                                    "expectationPattern": "\\s*Defaults use_pty\\s*"
+                                                },
+                                                {
+                                                    "command": "grep,-Ei,^\\s*Defaults use_pty\\s*$,/etc/sudoers.d/README",
+                                                    "expectationPattern": "\\s*Defaults use_pty\\s*"
+                                                }
+                                            ],
+                                            "operator": "OR",
+                                            "type": "SHELL_RUN"
+                                        },
+                                        {
+                                            "id": "1.3.3",
+                                            "description": "Ensure sudo log file exists",
+                                            "command_list": [
+                                                {
+                                                    "command": "grep,-Ei,^\\s*Defaults\\s+logfile=\\S+,/etc/sudoers,/etc/sudoers.d/README",
+                                                    "expectationPattern": "\\s*Defaults logfile=\\s*"
+                                                }
+                                            ],
+                                            "type": "SHELL_RUN"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "id": "1.4",
+                            "name": "Configure sudo",
+                            "groups": [
+                                {
+                                    "id": "1.4",
+                                    "report": [
+                                        {
+                                            "id": "1.4.1",
+                                            "description": "Ensure sudo is installed",
+                                            "command_list": [
+                                                {
+                                                    "command": "dpkg,-s,aide",
+                                                    "expectationPattern": "\\s*Status: install ok installed\\s*"
+                                                }
+                                            ],
+                                            "type": "SHELL_RUN"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "id": "1.5",
+                            "name": "Secure Boot Settings",
+                            "groups": [
+                                {
+                                    "id": "1.5",
+                                    "report": [
+                                        {
+                                            "id": "1.5.1",
+                                            "description": "Ensure permissions on bootloader config are configured",
+                                            "command_list": [
+                                                {
+                                                    "command": "stat,/boot/grub/grub.cfg",
+                                                    "expectationPattern": "\\s*Access:\\s+\\(0400\/-r--------\\)\\s+Uid:\\s+\\(\\s+0\\/\\s+root\\)\\s+Gid:\\s+\\(\\s+0\\/\\s+root\\s*"
+                                                }
+                                            ],
+                                            "type": "SHELL_RUN"
                                         }
                                     ]
                                 }
@@ -123,13 +353,6 @@
                                             "pattern": "^\\s*install\\s+freevxfs\\s+\/bin\/true\\s*$",
                                             "path": "/etc/modprobe.d/freevxfs.conf",
                                             "type": "FILE_PATTERN"
-                                        },
-                                        {
-                                            "id": "1.1.2",
-                                            "description": "Ensure \/tmp is configured",
-                                            "command": "findmnt,-n,\/tmp",
-                                            "expectationPattern": "^\\s*\/tmp\\s+tmpfs\\s+tmpfs\\s+rw,nosuid,nodev,noexec\\s*$",
-                                            "type": "SHELL_RUN"
                                         },
                                         {
                                             "id": "1.1.2",

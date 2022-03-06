@@ -726,7 +726,7 @@
                         </tr>
                         <th:block th:each="gr : ${cat.groups}">
 
-                           <tr>
+                           <tr th:if="${cat.id != gr.id and gr.name != null}">
                               <td id="checklist-w4583aad353b5b5" class="group sect" colspan="3">
                                  <a href="#detail-w4583aad353b5b5" th:text="${gr.id + ' ' + gr.name}">1.1.1</a>
                               </td>
