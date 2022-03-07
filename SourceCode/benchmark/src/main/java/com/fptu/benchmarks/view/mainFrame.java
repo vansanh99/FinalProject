@@ -13,6 +13,7 @@ import com.fptu.benchmarks.beans.Audit;
 import com.fptu.benchmarks.model.ProfileDetails;
 import com.fptu.benchmarks.business.ProfileHandler;
 import java.awt.CardLayout;
+import java.awt.event.ItemEvent;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -400,34 +401,38 @@ public class mainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_chkbPdfReportMouseClicked
 
     private void cbbBenchmarkItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbBenchmarkItemStateChanged
-        try {
-            String path = "profiles/" + cbbBenchmark.getSelectedItem().toString();
-            String jsonString = new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
-            Profile p = new ObjectMapper().readValue(jsonString,
-                    new TypeReference<Profile>() {
-            });
-            if (null != p) {
-                ProfileDetails.setName(cbbBenchmark.getSelectedItem().toString());
-                ProfileDetails.setProfile(p);
-                log.info("profile loaded!!!");
-                txtDescpCard1.setText(p.getDescription());
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            try {
+                String path = "profiles/" + cbbBenchmark.getSelectedItem().toString();
+                String jsonString = new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
+                Profile p = new ObjectMapper().readValue(jsonString,
+                        new TypeReference<Profile>() {
+                });
+                if (null != p) {
+                    ProfileDetails.setName(cbbBenchmark.getSelectedItem().toString());
+                    ProfileDetails.setProfile(p);
+                    log.info("profile loaded!!!");
+                    txtDescpCard1.setText(p.getDescription());
+                }
+                enableBtnNext(card1.getName());
+            } catch (JsonProcessingException e1) {
+                if (cbbBenchmark.getSelectedIndex() != 0) {
+                    log.error("loi json :: {}", e1);
+                    Fragment.errMsgUI(cardContent, e1.getMessage(), "Notification");
+                }
+            } catch (IOException ex) {
+                if (cbbBenchmark.getSelectedIndex() != 0) {
+                    log.error("loi doc file :: {}", ex);
+                    Fragment.errMsgUI(cardContent, "Profile not found", "Notification");
+                } else {
+                    txtDescpCard1.setText(StringUtils.EMPTY);
+                }
+            } finally {
+                if (cbbBenchmark.getSelectedIndex() == 0) {
+                    ProfileDetails.clearProfileDetails();
+                }
+                enableBtnNext(card1.getName());
             }
-            enableBtnNext(card1.getName());
-        } catch (JsonProcessingException e1) {
-            if (cbbBenchmark.getSelectedIndex() != 0) {
-                log.error("loi json :: {}", e1);
-            }
-        } catch (IOException ex) {
-            if (cbbBenchmark.getSelectedIndex() != 0) {
-                log.error("loi doc file :: {}", ex);
-            } else {
-                txtDescpCard1.setText(StringUtils.EMPTY);
-            }
-        } finally {
-            if (cbbBenchmark.getSelectedIndex() == 0) {
-                ProfileDetails.clearProfileDetails();
-            }
-            enableBtnNext(card1.getName());
         }
     }//GEN-LAST:event_cbbBenchmarkItemStateChanged
 
