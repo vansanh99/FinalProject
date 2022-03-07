@@ -10,15 +10,12 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.exec.CommandLine;
@@ -35,6 +32,7 @@ import org.apache.commons.io.output.ByteArrayOutputStream;
 public class CommonUtils {
 
     private static final File FILE_CONFIG = new File("cfg.properties");
+    private static Properties props = loadProp();
 
     /**
      * This method will return the result of matching regex.
@@ -48,43 +46,48 @@ public class CommonUtils {
     }
 
     public static String getConfigValue(String key) {
-        String val = "";
+        String val = props.getProperty(key);
+        return val;
+    }
+
+    public static Properties loadProp() {
+        Properties props = null;
         try {
-            Properties props;
-            try ( FileReader reader = new FileReader(FILE_CONFIG)) {
+            try (FileReader reader = new FileReader(FILE_CONFIG)) {
                 props = new Properties();
                 props.load(reader);
             }
-            val = props.getProperty(key);
         } catch (IOException ex) {
         }
-        return val;
+        return props;
     }
 
     public static String runPipeCommand(String command) {
         log.info("command befor {}", command);
         String[] cmds = command.split(";");
         String output = "";
-        //try {
-            InputStream input = null;
-            OutputStream outputS = null;
-            for (String cmd : cmds) {
-                List<Command> commandLst = new ArrayList<>();
-                String[] commandArr = cmd.split("\\|");
-                for (String c : commandArr) {
-                    //log.info("command inloop {}", c);
-                    String[] a = c.split(",");
-                    String[] args = new String[a.length - 1];
-                    if (a.length > 1) {
-                        for (int i = 0; i < a.length - 1; i++) {
-                            args[i] = a[i + 1];
-                        }
+        /*try {
+        InputStream input = null;
+        OutputStream outputS = null;*/
+        for (int i = 0; i < cmds.length; i++) {
+            log.info("command {}: {}", i, command);
+            String cmd = cmds[i];
+            List<Command> commandLst = new ArrayList<>();
+            String[] commandArr = cmd.split("\\|");
+            for (String c : commandArr) {
+                //log.info("command in pipe {}", c);
+                String[] a = c.split(",");
+                String[] args = new String[a.length - 1];
+                if (a.length > 1) {
+                    for (int j = 0; j < a.length - 1; j++) {
+                        args[j] = a[j + 1];
                     }
-                    Command com = Command.builder().cmd(a[0]).args(args).build();
-                    commandLst.add(com);
-                    output = runCommand(commandLst);
                 }
-                /*log.debug("command 1: {}", commandArr[0]);
+                Command com = Command.builder().cmd(a[0]).args(args).build();
+                commandLst.add(com);
+            }
+            output = runCommand(commandLst);
+            /*log.debug("command 1: {}", commandArr[0]);
                 Process p1 = Runtime.getRuntime().exec(commandArr[0].split(","));
                 final int exitValue = p1.waitFor();
                 if (exitValue == 0) {
@@ -110,8 +113,8 @@ public class CommonUtils {
                         outputS.close(); // signals grep to finish
                     }
                 }*/
-            }
-            /*InputStreamReader inputStreamReader = new InputStreamReader(input);
+        }
+        /*InputStreamReader inputStreamReader = new InputStreamReader(input);
             try ( BufferedReader rd = new BufferedReader(inputStreamReader)) {
                 output = rd.lines().collect(Collectors.joining(System.lineSeparator()));
                 log.info("command output: {}", output);
@@ -133,9 +136,9 @@ public class CommonUtils {
      * from a Linux shell
      *
      * @param commands
-     * @return 
+     * @return
      */
-    public static String runCommand(List<Command> commands){
+    public static String runCommand(List<Command> commands) {
         InputStream input = null;
         String finalOutput = "";
         for (Command command : commands) {
@@ -160,20 +163,20 @@ public class CommonUtils {
                 }
             }
             if (runCmd) {
-                    log.info("cmd: {}, args: {}", command.getCmd(), command.getArgs());
-                    ByteArrayOutputStream output = new ByteArrayOutputStream();
-                    ByteArrayOutputStream error = new ByteArrayOutputStream();
-                    CommandLine commandLine = new CommandLine(command.getCmd()).addArguments(command.getArgs());
-                    DefaultExecutor executor = new DefaultExecutor();
-                    ExecuteWatchdog watchdog = new ExecuteWatchdog(30000);
-                    executor.setWatchdog(watchdog);
-                    if (null == input) {
-                        log.info("inp null");
-                        executor.setStreamHandler(new PumpStreamHandler(output, error));
-                    } else {
-                        log.info("inp  not null");
-                        executor.setStreamHandler(new PumpStreamHandler(output, error, input));
-                    }
+                log.info("cmd: {}, args: {}", command.getCmd(), command.getArgs());
+                ByteArrayOutputStream output = new ByteArrayOutputStream();
+                ByteArrayOutputStream error = new ByteArrayOutputStream();
+                CommandLine commandLine = new CommandLine(command.getCmd()).addArguments(command.getArgs());
+                DefaultExecutor executor = new DefaultExecutor();
+                ExecuteWatchdog watchdog = new ExecuteWatchdog(30000);
+                executor.setWatchdog(watchdog);
+                if (null == input) {
+                    log.info("inp null");
+                    executor.setStreamHandler(new PumpStreamHandler(output, error));
+                } else {
+                    log.info("inp  not null");
+                    executor.setStreamHandler(new PumpStreamHandler(output, error, input));
+                }
                 try {
                     executor.execute(commandLine);
                     input = output.toInputStream();
@@ -182,7 +185,7 @@ public class CommonUtils {
                 } catch (IOException ex) {
                     log.error("could not run command: {}", ex);
                     finalOutput = error.toString(StandardCharsets.UTF_8);
-                    
+
                 }
             }
         }

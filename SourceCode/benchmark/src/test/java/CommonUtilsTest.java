@@ -42,4 +42,9 @@ public class CommonUtilsTest {
             Logger.getLogger(CommonUtilsTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    @Test
+    void commandTest() {
+        System.out.println(CommonUtils.runPipeCommand(
+                "grep,^banner\\-message\\-enable=true,/etc/gdm3/greeter.dconf-defaults"));
+    }
 }

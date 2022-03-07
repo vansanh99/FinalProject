@@ -313,6 +313,245 @@
                                                 }
                                             ],
                                             "type": "SHELL_RUN"
+                                        },
+                                        {
+                                            "id": "1.5.2",
+                                            "description": "Ensure bootloader password is set",
+                                            "command_list": [
+                                                {
+                                                    "command": "grep,^set superusers,/boot/grub/grub.cfg",
+                                                    "expectationPattern": "\\s*set\\s+superusers=\\s*"
+                                                },
+                                                {
+                                                    "command": "grep,^password,/boot/grub/grub.cfg",
+                                                    "expectationPattern": "\\s*password_pbkdf2\\s*"
+                                                }
+                                            ],
+                                            "operator": "AND",
+                                            "type": "SHELL_RUN"
+                                        },
+                                        {
+                                            "id": "1.5.3",
+                                            "description": "Ensure authentication required for single user mode",
+                                            "command_list": [
+                                                {
+                                                    "command": "grep,^root:[*\\!]:,/etc/shadow",
+                                                    "expectationPattern": "^$"
+                                                }
+                                            ],
+                                            "type": "SHELL_RUN"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "id": "1.6",
+                            "name": "Additional Process Hardening",
+                            "groups": [
+                                {
+                                    "id": "1.6",
+                                    "report": [
+                                        {
+                                            "id": "1.6.1",
+                                            "description": "Ensure XD/NX support is enabled",
+                                            "command_list": [
+                                                {
+                                                    "command": "journalctl|grep,protection: active",
+                                                    "expectationPattern": "\\s*kernel:\\s+NX\\s+\\(Execute Disable\\)\\s+protection:\\s+active\\s*"
+                                                }
+                                            ],
+                                            "type": "SHELL_RUN"
+                                        },
+                                        {
+                                            "id": "1.6.2",
+                                            "description": "Ensure address space layout randomization (ASLR) is enabled",
+                                            "command_list": [
+                                                {
+                                                    "command": "sysctl,kernel.randomize_va_space",
+                                                    "expectationPattern": "\\s*kernel.randomize_va_space = 2\\s*"
+                                                },
+                                                {
+                                                    "command": "grep,-iR,kernel\\.randomize_va_space,/etc/sysctl.conf,/etc/sysctl.d",
+                                                    "expectationPattern": "\\s*kernel.randomize_va_space = 2\\s*"
+                                                }
+                                            ],
+                                            "operator": "AND",
+                                            "type": "SHELL_RUN"
+                                        },
+                                        {
+                                            "id": "1.6.3",
+                                            "description": "Ensure prelink is disabled",
+                                            "command_list": [
+                                                {
+                                                    "command": "dpkg,-s,prelink",
+                                                    "expectationPattern": "\\s*package 'prelink' is not installed\\s*"
+                                                }
+                                            ],
+                                            "type": "SHELL_RUN"
+                                        },
+                                        {
+                                            "id": "1.6.4",
+                                            "description": "Ensure core dumps are restricted",
+                                            "command_list": [
+                                                {
+                                                    "command": "grep,-R,hard core,/etc/security/limits.conf,/etc/security/limits.d",
+                                                    "expectationPattern": "\\s*hard core 0\\s*"
+                                                },
+                                                {
+                                                    "command": "sysctl,fs.suid_dumpable",
+                                                    "expectationPattern": "\\s*fs.suid_dumpable\\*=\\s*0\\s*"
+                                                },
+                                                {
+                                                    "command": "grep,-R,fs\\.suid_dumpable,/etc/sysctl.conf,/etc/sysctl.d",
+                                                    "expectationPattern": "\\s*fs.suid_dumpable\\*=\\s*0\\s*"
+                                                }
+                                            ],
+                                            "operator": "AND",
+                                            "type": "SHELL_RUN"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "id": "1.7",
+                            "name": "Mandatory Access Control",
+                            "groups": [
+                                {
+                                    "id": "1.7.1",
+                                    "name": "Configure AppArmor",
+                                    "report": [
+                                        {
+                                            "id": "1.7.1.1",
+                                            "description": "Ensure AppArmor is installed",
+                                            "command_list": [
+                                                {
+                                                    "command": "dpkg,-s,apparmor",
+                                                    "expectationPattern": "\\s*Status: install ok installed\\s*"
+                                                }
+                                            ],
+                                            "type": "SHELL_RUN"
+                                        },
+                                        {
+                                            "id": "1.7.2",
+                                            "description": "Ensure address space layout randomization (ASLR) is enabled",
+                                            "command_list": [
+                                                {
+                                                    "command": "grep,^\\s*linux,/boot/grub/grub.cfg|grep,-v,apparmor=1|grep,-v,/boot/memtest86+.bin",
+                                                    "expectationPattern": "^$"
+                                                },
+                                                {
+                                                    "command": "grep,^\\s*linux,/boot/grub/grub.cfg|grep,-v,security=apparmor|grep,-v,/boot/memtest86+.bin",
+                                                    "expectationPattern": "^$"
+                                                }
+                                            ],
+                                            "operator": "AND",
+                                            "type": "SHELL_RUN"
+                                        },
+                                        {
+                                            "id": "1.7.3",
+                                            "description": "Ensure all AppArmor Profiles are in enforce or complain mode",
+                                            "type": "UNKNOWN"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "id": "1.8",
+                            "name": "Warning Banners",
+                            "groups": [
+                                {
+                                    "id": "1.8.1",
+                                    "name": "Command Line Warning Banners",
+                                    "report": [
+                                        {
+                                            "id": "1.8.1.1",
+                                            "description": "Ensure message of the day is configured properly",
+                                            "type": "UNKNOWN"
+                                        },
+                                        {
+                                            "id": "1.8.1.2",
+                                            "description": "Ensure local login warning banner is configured properly",
+                                            "type": "UNKNOWN"
+                                        },
+                                        {
+                                            "id": "1.8.1.3",
+                                            "description": "Ensure remote login warning banner is configured properly",
+                                            "type": "UNKNOWN"
+                                        },
+                                        {
+                                            "id": "1.8.1.4",
+                                            "description": "Ensure permissions on /etc/motd are configured",
+                                            "command_list": [
+                                                {
+                                                    "command": "ls,/etc/motd",
+                                                    "expectationPattern": "\\s*No such file or directory\\s*"
+                                                },
+                                                {
+                                                    "command": "stat,/etc/motd",
+                                                    "expectationPattern": "\\s*Access:\\s+\\(0644\/-rw-r--r--\\)\\s+Uid:\\s+\\(\\s+0\\/\\s+root\\)\\s+Gid:\\s+\\(\\s+0\\/\\s+root\\s*"
+                                                }
+                                            ],
+                                            "operator": "OR",
+                                            "type": "SHELL_RUN"
+                                        },
+                                        {
+                                            "id": "1.8.1.5",
+                                            "description": "Ensure permissions on /etc/issue are configured",
+                                            "command_list": [
+                                                {
+                                                    "command": "ls,/etc/issue",
+                                                    "expectationPattern": "\\s*No such file or directory\\s*"
+                                                },
+                                                {
+                                                    "command": "stat,/etc/issue",
+                                                    "expectationPattern": "\\s*Access:\\s+\\(0644\/-rw-r--r--\\)\\s+Uid:\\s+\\(\\s+0\\/\\s+root\\)\\s+Gid:\\s+\\(\\s+0\\/\\s+root\\s*"
+                                                }
+                                            ],
+                                            "operator": "OR",
+                                            "type": "SHELL_RUN"
+                                        },
+                                        {
+                                            "id": "1.8.1.6",
+                                            "description": "Ensure permissions on /etc/issue.net are configured",
+                                            "command_list": [
+                                                {
+                                                    "command": "ls,/etc/issue.net",
+                                                    "expectationPattern": "\\s*No such file or directory\\s*"
+                                                },
+                                                {
+                                                    "command": "stat,/etc/issue.net",
+                                                    "expectationPattern": "\\s*Access:\\s+\\(0644\/-rw-r--r--\\)\\s+Uid:\\s+\\(\\s+0\\/\\s+root\\)\\s+Gid:\\s+\\(\\s+0\\/\\s+root\\s*"
+                                                }
+                                            ],
+                                            "operator": "OR",
+                                            "type": "SHELL_RUN"
+                                        },
+                                        {
+                                            "id": "1.8.2",
+                                            "description": "Ensure GDM login banner is configured",
+                                            "command_list": [
+                                                {
+                                                    "command": "ls,/etc/gdm3/greeter.dconf-defaults",
+                                                    "expectationPattern": "\\s*/etc/gdm3/greeter.dconf-defaults\\s*"
+                                                },
+                                                {
+                                                    "command": "grep,^\\[org/gnome/login-screen\\],/etc/gdm3/greeter.dconf-defaults",
+                                                    "expectationPattern": "^\\s*\\[org\\/gnome\\/login-screen\\]\\s*(\\s+#.*)?$"
+                                                },
+                                                {
+                                                    "command": "grep,^banner\\-message\\-enable=true,/etc/gdm3/greeter.dconf-defaults",
+                                                    "expectationPattern": "^\\s*banner\\-message\\-enable\\s*=\\s*true\\s*(\\s+#.*)?$"
+                                                },
+                                                {
+                                                    "command": "grep,^banner\\-message\\-text=,/etc/gdm3/greeter.dconf-defaults",
+                                                    "expectationPattern": "^\\s*banner\\-message\\-text\\s*=\\s*'.+'\\s*(\\s+#.*)?$"
+                                                }
+                                            ],
+                                            "operator": "AND",
+                                            "type": "SHELL_RUN"
                                         }
                                     ]
                                 }

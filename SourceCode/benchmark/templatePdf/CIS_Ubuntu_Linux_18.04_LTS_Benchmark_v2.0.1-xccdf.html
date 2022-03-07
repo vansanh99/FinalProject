@@ -732,7 +732,7 @@
                               </td>
                            </tr>
                            <th:block th:each="rep : ${gr.reports}">
-                              <tr th:class="${rep.status == false} ? '' : 'failuresOnlyArea tableVisible'">
+                              <tr th:class="${rep.status == false or rep.type == 'UNKNOWN'} ? '' : 'failuresOnlyArea tableVisible'">
                                  <td>
                                     <span class="weight">1.0</span>
                                  </td>
@@ -743,8 +743,8 @@
                                     <span>
                                        <a href="#detail-w107aad365d174">
                                           <span
-                                             th:class="${rep.status == false} ? 'fail' : (${rep.status == true} ? 'pass' : 'unknown')"
-                                             th:text="${rep.status == false} ? 'Fail' : (${rep.status == true} ? 'Pass' : 'Unknown')"></span>
+                                             th:class="${rep.type == 'UNKNOWN'} ? 'unknown' : (${rep.status == false} ? 'fail' : 'true')"
+                                             th:text="${rep.type == 'UNKNOWN'} ? 'Unknown' : (${rep.status == false} ? 'Fail' : 'true')"></span>
                                        </a>
                                     </span>
                                  </td>
