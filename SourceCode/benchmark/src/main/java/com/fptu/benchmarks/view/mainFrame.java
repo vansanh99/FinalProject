@@ -5,13 +5,15 @@
 package com.fptu.benchmarks.view;
 
 import com.fptu.benchmarks.beans.Profile;
-import com.fptu.benchmarks.business.PdfUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fptu.benchmarks.beans.Audit;
-import com.fptu.benchmarks.model.ProfileDetails;
+import com.fptu.benchmarks.beans.Level;
+import com.fptu.benchmarks.business.LevelListCellRenderer;
+import com.fptu.benchmarks.business.PdfUtils;
 import com.fptu.benchmarks.business.ProfileHandler;
+import com.fptu.benchmarks.model.ProfileDetails;
 import java.awt.CardLayout;
 import java.awt.event.ItemEvent;
 import java.io.File;
@@ -19,11 +21,12 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.UIManager;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.assertj.core.util.Lists;
 import org.thymeleaf.context.Context;
 
 /**
@@ -137,15 +140,9 @@ public class mainFrame extends javax.swing.JFrame {
 
         jLabel4.setText("Profile(s):");
 
-        cbbLevel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "select..." }));
         cbbLevel.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbbLevelItemStateChanged(evt);
-            }
-        });
-        cbbLevel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbbLevelActionPerformed(evt);
             }
         });
 
@@ -329,33 +326,49 @@ public class mainFrame extends javax.swing.JFrame {
         if (btnNext1.isEnabled()) {
             log.info("btnNext1 clicked");
             CardLayout cardLayout = (CardLayout) cardContent.getLayout();
+            ProfileHandler ph = new ProfileHandler();
             if (cbbBenchmark.isShowing()) {
-                DefaultComboBoxModel dcbbm = new DefaultComboBoxModel();
-                cbbLevel.setModel(dcbbm);
-                cbbLevel.addItem("Please select...");
-                for (Audit a : ProfileDetails.getProfile().getAudits()) {
-                    cbbLevel.addItem(a.getLevel());
+                DefaultComboBoxModel<Level> dcbbm = new DefaultComboBoxModel<>();
+                Audit audit = ProfileDetails.getProfile().getAudit();
+                if (null != audit) {
+                    List<Level> levelList = audit.getLevelList();
+                    if (CollectionUtils.isNotEmpty(levelList)) {
+                        levelList.forEach(l -> {
+                            dcbbm.addElement(l);
+                        }
+                        );
+                    } else {
+                        dcbbm.addElement(Level.builder().name("No profile...").build());
+                    }
+                    cbbLevel.setModel(dcbbm);
+                    cbbLevel.setRenderer(new LevelListCellRenderer());
+                    cardLayout.show(cardContent, card2.getName());
+                    //enableBtnNext(card2.getName());
+                    btnBack.setEnabled(true);
+                    btnNext1.setEnabled(true);
+                    epProfile.setText(levelList.get(0).getDescription());
+                } else {
+                    log.error("there is no audit set in this benchmark");
+                    Fragment.errMsgUI(cardContent, "No audit selected", "Error");
                 }
-                cardLayout.show(cardContent, card2.getName());
-                enableBtnNext(card2.getName());
-                btnBack.setEnabled(true);
             } else if (cbbLevel.isShowing()) {
-                String level = cbbLevel.getSelectedItem().toString();
+                Level level = (Level) cbbLevel.getSelectedItem();
                 ProfileDetails.setProfileLevel(level);
-                ProfileDetails.getProfile().setAudits(Lists.newArrayList(ProfileDetails.getProfile().getAudits().stream()
+                Audit audit = ProfileDetails.getProfile().getAudit();
+                ph.LevelFilter(audit, level);
+                /*ProfileDetails.getProfile().setAudit(Lists.newArrayList(ProfileDetails.getProfile().getAudit().stream()
                         .filter(a -> a.getLevel().equalsIgnoreCase(level))//set lever
                         .findAny()
                         .orElse(null)
-                ));
+                ));*/
                 File file = new File("reports");
                 lblSaveReport.setText("Saving to " + file.getAbsolutePath());
                 cardLayout.show(cardContent, card3.getName());
                 enableBtnNext(card3.getName());
                 btnBack.setEnabled(true);
             } else if (lblSaveReport.isShowing()) {
-                ProfileHandler ph = new ProfileHandler();
                 ObjectMapper obm = new ObjectMapper();
-                ph.proccessProfile(ProfileDetails.getProfile().getAudits().get(0));
+                ph.proccessProfile(ProfileDetails.getProfile().getAudit());
                 String jsonText = "";
                 try {
                     jsonText = obm.writerWithDefaultPrettyPrinter().writeValueAsString(ProfileDetails.getProfile());
@@ -363,7 +376,8 @@ public class mainFrame extends javax.swing.JFrame {
                     log.error("error json {}", ex);
                 }
                 Context context = new Context();
-                context.setVariable("audit", ProfileDetails.getProfile().getAudits().get(0));
+                context.setVariable("audit", ProfileDetails.getProfile().getAudit());
+                context.setVariable("level", ProfileDetails.getProfileLevel());
                 context.setVariable("htmlReport", chkbHtmlReport.isSelected());
                 context.setVariable("pdfReport", chkbPdfReport.isSelected());
                 File f = PdfUtils.generatePdfFromHtml(context, ProfileDetails.getProfile().getTemplateReport(), "reports/test.pdf");
@@ -436,17 +450,11 @@ public class mainFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cbbBenchmarkItemStateChanged
 
-    private void cbbLevelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLevelActionPerformed
-        enableBtnNext(card2.getName());
-    }//GEN-LAST:event_cbbLevelActionPerformed
-
     private void cbbLevelItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbLevelItemStateChanged
-        if (cbbLevel.getSelectedIndex() == 0) {
-            epProfile.setText("");
-        } else {
-            epProfile.setText(ProfileDetails.getProfile().getAudits().get(0).getDescription());
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            Level lvl = (Level) cbbLevel.getSelectedItem();
+            epProfile.setText(lvl.getDescription());
         }
-        enableBtnNext(card2.getName());
     }//GEN-LAST:event_cbbLevelItemStateChanged
     private void enableBtnNext(String card) {
         if (card1.isShowing() && cbbBenchmark.getSelectedIndex() == 0 && StringUtils.equals(card, card1.getName())
@@ -497,7 +505,7 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel card3;
     private javax.swing.JPanel cardContent;
     private javax.swing.JComboBox<String> cbbBenchmark;
-    private javax.swing.JComboBox<String> cbbLevel;
+    private javax.swing.JComboBox<Level> cbbLevel;
     private javax.swing.JCheckBox chkbHtmlReport;
     private javax.swing.JCheckBox chkbPdfReport;
     private javax.swing.JEditorPane epProfile;

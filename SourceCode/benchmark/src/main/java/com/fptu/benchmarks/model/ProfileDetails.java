@@ -4,6 +4,7 @@
  */
 package com.fptu.benchmarks.model;
 
+import com.fptu.benchmarks.beans.Level;
 import com.fptu.benchmarks.beans.Profile;
 
 /**
@@ -12,7 +13,7 @@ import com.fptu.benchmarks.beans.Profile;
  */
 public class ProfileDetails {
     public static Profile profile;
-    public static String profileLevel;
+    public static Level profileLevel;
     public static String name;
 
     public static Profile getProfile() {
@@ -23,11 +24,11 @@ public class ProfileDetails {
         ProfileDetails.profile = profile;
     }
 
-    public static String getProfileLevel() {
+    public static Level getProfileLevel() {
         return profileLevel;
     }
 
-    public static void setProfileLevel(String profileLevel) {
+    public static void setProfileLevel(Level profileLevel) {
         ProfileDetails.profileLevel = profileLevel;
     }
 

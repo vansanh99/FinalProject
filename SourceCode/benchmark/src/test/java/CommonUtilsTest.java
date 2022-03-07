@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 
@@ -44,7 +45,8 @@ public class CommonUtilsTest {
     }
     @Test
     void commandTest() {
-        System.out.println(CommonUtils.runPipeCommand(
-                "grep,^banner\\-message\\-enable=true,/etc/gdm3/greeter.dconf-defaults"));
+        //System.out.println(CommonUtils.runPipeCommand(
+          //      "grep,^banner\\-message\\-enable=true,/etc/gdm3/greeter.dconf-defaults"));
+          System.out.println(StringUtils.contains("abcd", "abcde"));
     }
 }

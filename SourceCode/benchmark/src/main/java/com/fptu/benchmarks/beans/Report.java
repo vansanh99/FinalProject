@@ -4,6 +4,7 @@
  */
 package com.fptu.benchmarks.beans;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import lombok.Data;
@@ -30,7 +31,11 @@ public class Report {
     private List<Command> commandList;
     private String operator;
     @JsonProperty("required")
-    private boolean required; 
+    private boolean required;
+    @JsonProperty("level")
+    private String level;
     @JsonProperty("status")
     private boolean status;
+    @JsonIgnore
+    private String finalLevel;
 }

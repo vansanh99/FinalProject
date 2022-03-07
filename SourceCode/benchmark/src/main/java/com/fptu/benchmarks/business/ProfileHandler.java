@@ -5,6 +5,7 @@
 package com.fptu.benchmarks.business;
 
 import com.fptu.benchmarks.beans.Audit;
+import com.fptu.benchmarks.beans.Level;
 import com.fptu.benchmarks.constant.Constants;
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -90,5 +92,33 @@ public class ProfileHandler {
             });
         });
         return audit;
+    }
+
+    public void LevelFilter(Audit audit, Level selLevel) {
+        if (CollectionUtils.isNotEmpty(audit.getChapters())) {
+            audit.getChapters().forEach(lc -> {
+                if (CollectionUtils.isNotEmpty(lc.getCategories())) {
+                    lc.getCategories().forEach(cat -> {
+                        if (CollectionUtils.isNotEmpty(cat.getGroups())) {
+                            cat.getGroups().forEach(gr -> {
+                                if (CollectionUtils.isNotEmpty(gr.getReports())) {
+                                    gr.getReports().forEach(re -> {
+                                        if (StringUtils.containsIgnoreCase(re.getLevel(), selLevel.getId())) {
+                                            re.setFinalLevel(selLevel.getId());
+                                        }
+                                    });
+                                } else {
+                                    //errror herea
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    //return error herer...
+                }
+            });
+        } else {
+            //return errror herer
+        }
     }
 }

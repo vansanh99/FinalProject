@@ -5,7 +5,6 @@
 package com.fptu.benchmarks.beans;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.ArrayList;
 import lombok.Data;
 
 /**
@@ -23,5 +22,5 @@ public class Profile {
     @JsonProperty("description")
     private String description;
     @JsonProperty("audit")
-    private ArrayList<Audit> audits;
+    private Audit audit;
 }
