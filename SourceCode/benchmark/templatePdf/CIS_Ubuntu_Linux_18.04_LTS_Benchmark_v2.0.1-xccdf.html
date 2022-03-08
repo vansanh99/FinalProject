@@ -8,12 +8,15 @@
    <div th:replace="resources.html::css"></div>
    <div th:replace="resources.html::js"></div>
 </head>
+
 <body>
    <div id="reportContainer">
       <div th:replace="resources.html::coverPage"></div>
       <div id="detailsContainer">
          <div>
-            <script type="text/javascript">setState('w4583aa_xml', false);</script>
+            <script type="text/javascript">
+               setState('w4583aa_xml', false);
+            </script>
          </div>
          <div id="summary">
             <h2 class="sectionTitle">Summary</h2>
@@ -595,7 +598,9 @@
          </div>
          <div id="profiles" class="profiles">
             <h2 class="sectionTitle">Profiles</h2>
-            <p th:utext="'This benchmark contains 4 profiles. The <b>' + ${level.name} + '</b> profile was used for this assessment.'"></p>
+            <p
+               th:utext="'This benchmark contains 4 profiles. The <b>' + ${level.name} + '</b> profile was used for this assessment.'">
+            </p>
             <table class="profile" width="100%">
                <thead>
                   <tr>
@@ -622,7 +627,9 @@
                         <div class="xml" id="w4583aac13_xml">
                            <pre></pre>
                         </div>
-                        <script type="text/javascript">setState('w4583aac13_xml', false);</script>
+                        <script type="text/javascript">
+                           setState('w4583aac13_xml', false);
+                        </script>
                      </td>
                   </tr>
                   <tr valign="top" th:class="${level.id == '2SV' ? ' selected-row' : ''} ">
@@ -644,7 +651,9 @@
                         <div class="xml" id="w4583aac15_xml">
                            <pre></pre>
                         </div>
-                        <script type="text/javascript">setState('w4583aac15_xml', false);</script>
+                        <script type="text/javascript">
+                           setState('w4583aac15_xml', false);
+                        </script>
                      </td>
                   </tr>
                   <tr valign="top" th:class="${level.id == '1WS' ? ' selected-row' : ''} ">
@@ -665,7 +674,9 @@
                         <div class="xml" id="w4583aac17_xml">
                            <pre></pre>
                         </div>
-                        <script type="text/javascript">setState('w4583aac17_xml', false);</script>
+                        <script type="text/javascript">
+                           setState('w4583aac17_xml', false);
+                        </script>
                      </td>
                   </tr>
                   <tr valign="top" th:class="${level.id == '2WS' ? ' selected-row' : ''} ">
@@ -687,7 +698,9 @@
                         <div class="xml" id="w4583aac19_xml">
                            <pre></pre>
                         </div>
-                        <script type="text/javascript">setState('w4583aac19_xml', false);</script>
+                        <script type="text/javascript">
+                           setState('w4583aac19_xml', false);
+                        </script>
                      </td>
                   </tr>
                </tbody>
@@ -715,36 +728,37 @@
                   <th:block th:each="chapter : ${audit.chapters}">
                      <tr>
                         <td id="checklist-w4583aad353" class="group sect" colspan="3">
-                           <a href="#detail-w4583aad353" th:text="${chapter.id + ' ' + chapter.name}">1</a>
+                           <a th:href="'#detail-' + ${chapter.id}" th:text="${chapter.id + ' ' + chapter.name}">1</a>
                         </td>
                      </tr>
                      <th:block th:each="cat : ${chapter.categories}">
                         <tr>
                            <td id="checklist-w4583aad353b5" class="group sect" colspan="3">
-                              <a href="#detail-w4583aad353b5" th:text="${cat.id + ' ' + cat.name}">1.1</a>
+                              <a th:href="'#detail-' + ${cat.id}" th:text="${cat.id + ' ' + cat.name}">1.1</a>
                            </td>
                         </tr>
                         <th:block th:each="gr : ${cat.groups}">
 
                            <tr th:if="${cat.id != gr.id and gr.name != null}">
                               <td id="checklist-w4583aad353b5b5" class="group sect" colspan="3">
-                                 <a href="#detail-w4583aad353b5b5" th:text="${gr.id + ' ' + gr.name}">1.1.1</a>
+                                 <a th:href="'#detail-' + ${gr.id}" th:text="${gr.id + ' ' + gr.name}">1.1.1</a>
                               </td>
                            </tr>
                            <th:block th:each="rep : ${gr.reports}">
-                              <tr th:class="${rep.status == false or rep.type == 'UNKNOWN'} ? '' : 'failuresOnlyArea tableVisible'">
+                              <tr
+                                 th:class="${rep.status == true or rep.type == 'UNKNOWN'} ? '' : 'failuresOnlyArea tableVisible'">
                                  <td>
                                     <span class="weight">1.0</span>
                                  </td>
                                  <td>
-                                    <a href="#detail-w107aad365d174" th:text="${rep.id + ' ' + rep.description}"></a>
+                                    <a th:href="'#detail-' + ${rep.id}" th:text="${rep.id + ' ' + rep.description}"></a>
                                  </td>
                                  <td class="numeric">
                                     <span>
-                                       <a href="#detail-w107aad365d174">
+                                       <a th:href="'#status-' + ${rep.id}">
                                           <span
-                                             th:class="${rep.type == 'UNKNOWN'} ? 'unknown' : (${rep.status == false} ? 'fail' : 'true')"
-                                             th:text="${rep.type == 'UNKNOWN'} ? 'Unknown' : (${rep.status == false} ? 'Fail' : 'true')"></span>
+                                             th:class="${rep.type == 'UNKNOWN'} ? 'unknown' : (${rep.status == false} ? 'fail' : 'pass')"
+                                             th:text="${rep.type == 'UNKNOWN'} ? 'Unknown' : (${rep.status == false} ? 'Fail' : 'Pass')"></span>
                                        </a>
                                     </span>
                                  </td>
@@ -762,788 +776,18 @@
          <div id="assessmentDetailsArea">
             <h2 id="details" class="sectionTitle">Assessment Details</h2>
             <div id="front-matter" />
-            <div id="detail-w4583aad353" class="group">
-               <h2 class="ruleGroupTitle" title="xccdf_org.cisecurity.benchmarks_group_1_Initial_Setup">1 Initial Setup
-               </h2>
-               <div class="description">
-                  <p>Items in this section are advised for all systems, but may be difficult or require extensive
-                     preparation after the initial setup of the system.</p>
-               </div>
-            </div>
-            <div id="detail-w4583aad353b5" class="group">
-               <h2 class="ruleGroupTitle" title="xccdf_org.cisecurity.benchmarks_group_1.1_Filesystem_Configuration">1.1
-                  Filesystem Configuration</h2>
-               <div class="description">
-                  <p>Directories that are used for system-wide functions can be further protected by placing them on
-                     separate partitions. This provides protection for resource exhaustion and enables the use of
-                     mounting options that are applicable to the directory's intended use. Users' data can be stored on
-                     separate partitions and have stricter mount options. A user partition is a filesystem that has been
-                     established for use by the users and does not contain software for system operations.</p>
-                  <p>The recommendations in this section are easier to perform during initial system installation. If
-                     the system is already installed, it is recommended that a full backup be performed before
-                     repartitioning the system.</p>
-                  <p>
-                     <strong>Note:</strong>
-                     If you are repartitioning a system that has already been installed, make sure the data has been
-                     copied over to the new partition, unmount it and then remove the data from the directory that was
-                     in the old partition. Otherwise it will still consume space in the old partition that will be
-                     masked when the new filesystem is mounted. For example, if a system is in single-user mode with no
-                     filesystems mounted and the administrator adds a lot of data to the <span
-                        class="inline_block">/tmp</span>
-                     directory, this data will still consume space in <span class="inline_block">/</span>
-                     once the <span class="inline_block">/tmp</span>
-                     filesystem is mounted unless it is removed first.
-                  </p>
-               </div>
-            </div>
-            <div id="detail-w4583aad353b5b5" class="group">
-               <h2 class="ruleGroupTitle"
-                  title="xccdf_org.cisecurity.benchmarks_group_1.1.1_Disable_unused_filesystems">1.1.1 Disable unused
-                  filesystems</h2>
-               <div class="description">
-                  <p>A number of uncommon filesystem types are supported under Linux. Removing support for unneeded
-                     filesystem types reduces the local attack surface of the system. If a filesystem type is not needed
-                     it should be disabled. Native Linux file systems are designed to ensure that built-in security
-                     controls function as expected. Non-native filesystems can lead to unexpected consequences to both
-                     the security and functionality of the system and should be used with caution. Many filesystems are
-                     created for niche use cases and are not maintained and supported as the operating systems are
-                     updated and patched. Users of non-native filesystems should ensure that there is attention and
-                     ongoing support for them, especially in light of frequent operating system changes.</p>
-                  <p>Standard network connectivity and Internet access to cloud storage may make the use of non-standard
-                     filesystem formats to directly attach heterogeneous devices much less attractive.</p>
-                  <p>
-                     <strong>Note</strong>
-                     : This should not be considered a comprehensive list of filesystems. You may wish to consider
-                     additions to those listed here for your environment.
-                  </p>
-               </div>
-            </div>
-            <div id="detail-w4583aad353b7" class="group">
-               <h2 class="ruleGroupTitle" title="xccdf_org.cisecurity.benchmarks_group_1.2_Configure_Software_Updates">
-                  1.2 Configure Software Updates</h2>
-               <div class="description">
-                  <p>Ubuntu Linux use apt to install and update software packages. Patch management procedures may vary
-                     widely between enterprises. Large enterprises may choose to install a local updates server that can
-                     be used in place of their distributions servers, whereas a single deployment of a system may prefer
-                     to get updates directly. Updates can be performed automatically or manually, depending on the
-                     site's policy for patch management. Many large enterprises prefer to test patches on a
-                     non-production system before rolling out to production.</p>
-                  <p>For the purpose of this benchmark, the requirement is to ensure that a patch management system is
-                     configured and maintained. The specifics on patch update procedures are left to the organization.
-                  </p>
-               </div>
-            </div>
-            <div id="detail-w4583aad353b9" class="group">
-               <h2 class="ruleGroupTitle" title="xccdf_org.cisecurity.benchmarks_group_1.3_Configure_sudo">1.3 Configure
-                  sudo</h2>
-               <div class="description">
-                  <p>sudo allows a permitted user to execute a command as the superuser or another user, as specified by
-                     the security policy. The invoking user's real (not effective) user ID is used to determine the user
-                     name with which to query the security policy.</p>
-                  <p>sudo supports a plugin architecture for security policies and input/output logging. Third parties
-                     can develop and distribute their own policy and I/O logging plugins to work seamlessly with the
-                     sudo front end. The default security policy is sudoers, which is configured via the file
-                     /etc/sudoers.</p>
-               </div>
-            </div>
-            <div id="detail-w4583aad353c11" class="group">
-               <h2 class="ruleGroupTitle"
-                  title="xccdf_org.cisecurity.benchmarks_group_1.4_Filesystem_Integrity_Checking">1.4 Filesystem
-                  Integrity Checking</h2>
-               <div class="description">
-                  <p>AIDE is a file integrity checking tool, similar in nature to Tripwire. While it cannot prevent
-                     intrusions, it can detect unauthorized changes to configuration files by alerting when the files
-                     are changed. When setting up AIDE, decide internally what the site policy will be concerning
-                     integrity checking. Review the AIDE quick start guide and AIDE documentation before proceeding.</p>
-               </div>
-            </div>
-            <div id="detail-w4583aad353c13" class="group">
-               <h2 class="ruleGroupTitle" title="xccdf_org.cisecurity.benchmarks_group_1.5_Secure_Boot_Settings">1.5
-                  Secure Boot Settings</h2>
-               <div class="description">
-                  <p>The recommendations in this section focus on securing the bootloader and settings involved in the
-                     boot process directly.</p>
-               </div>
-            </div>
-            <div id="detail-w4583aad353c15" class="group">
-               <h2 class="ruleGroupTitle"
-                  title="xccdf_org.cisecurity.benchmarks_group_1.6_Additional_Process_Hardening">1.6 Additional Process
-                  Hardening</h2>
-            </div>
-            <div id="detail-w4583aad353c17" class="group">
-               <h2 class="ruleGroupTitle" title="xccdf_org.cisecurity.benchmarks_group_1.7_Mandatory_Access_Control">1.7
-                  Mandatory Access Control</h2>
-               <div class="description">
-                  <p>Mandatory Access Control (MAC) provides an additional layer of access restrictions to processes on
-                     top of the base Discretionary Access Controls. By restricting how processes can access files and
-                     resources on a system the potential impact from vulnerabilities in the processes can be reduced.
-                  </p>
-                  <p>
-                     <strong>Impact:</strong>
-                     Mandatory Access Control limits the capabilities of applications and daemons on a system, while
-                     this can prevent unauthorized access the configuration of MAC can be complex and difficult to
-                     implement correctly preventing legitimate access from occurring.
-                  </p>
-                  <p>
-                     <strong>Note:</strong>
-                     Apparmor is the default MAC provided with Ubuntu systems.
-                  </p>
-                  <p>
-                     <strong>Note:</strong>
-                     Additional Mandatory Access Control systems to include SELinux exist. If a different Mandatory
-                     Access Control systems is used, please follow it's vendors guidance for proper implementation in
-                     place of the guidance provided in this section
-                  </p>
-               </div>
-            </div>
-            <div id="detail-w4583aad353c17b5" class="group">
-               <h2 class="ruleGroupTitle" title="xccdf_org.cisecurity.benchmarks_group_1.7.1_Configure_AppArmor">1.7.1
-                  Configure AppArmor</h2>
-               <div class="description">
-                  <p>AppArmor provides a Mandatory Access Control (MAC) system that greatly augments the default
-                     Discretionary Access Control (DAC) model. Under AppArmor MAC rules are applied by file paths
-                     instead of by security contexts as in other MAC systems. As such it does not require support in the
-                     filesystem and can be applied to network mounted filesystems for example. AppArmor security
-                     policies define what system resources applications can access and what privileges they can do so
-                     with. This automatically limits the damage that the software can do to files accessible by the
-                     calling user. The user does not need to take any action to gain this benefit. For an action to
-                     occur, both the traditional DAC permissions must be satisfied as well as the AppArmor MAC rules.
-                     The action will not be allowed if either one of these models does not permit the action. In this
-                     way, AppArmor rules can only make a system's permissions more restrictive and secure.</p>
-                  <p>
-                     <strong>References:</strong>
-                  </p>
-                  <ol>
-                     <li>
-                        AppArmor Documentation: <a
-                           href="http://wiki.apparmor.net/index.php/Documentation">http://wiki.apparmor.net/index.php/Documentation</a>
-                     </li>
-                     <li>
-                        Ubuntu AppArmor Documentation: <a
-                           href="https://help.ubuntu.com/community/AppArmor">https://help.ubuntu.com/community/AppArmor</a>
-                     </li>
-                     <li>
-                        SUSE AppArmor Documentation: <a
-                           href="https://www.suse.com/documentation/apparmor/">https://www.suse.com/documentation/apparmor/</a>
-                     </li>
-                  </ol>
-               </div>
-            </div>
-            <div id="detail-w4583aad353c19" class="group">
-               <h2 class="ruleGroupTitle" title="xccdf_org.cisecurity.benchmarks_group_1.8_Warning_Banners">1.8 Warning
-                  Banners</h2>
-               <div class="description">
-                  <p>Presenting a warning message prior to the normal user login may assist in the prosecution of
-                     trespassers on the computer system. Changing some of these login banners also has the side effect
-                     of hiding OS version information and other detailed system information from attackers attempting to
-                     target specific exploits at a system.</p>
-                  <p>
-                     Guidelines published by the US Department of Defense require that warning messages include at least
-                     the name of the organization that owns the system, the fact that the system is subject to
-                     monitoring and that such monitoring is in compliance with local statutes, and that use of the
-                     system implies consent to such monitoring. It is important that the organization's legal counsel
-                     review the content of all messages before any system modifications are made, as these warning
-                     messages are inherently site-specific. More information (including citations of relevant case law)
-                     can be found at <a
-                        href="http://www.justice.gov/criminal/cybercrime/">http://www.justice.gov/criminal/cybercrime/
-                     </a>
-                  </p>
-                  <p>
-                     <strong>Note:</strong>
-                     The text provided in the remediation actions for these items is intended as an example only. Please
-                     edit to include the specific text for your organization as approved by your legal department.
-                  </p>
-               </div>
-            </div>
-            <div id="detail-w4583aad353c19b5" class="group">
-               <h2 class="ruleGroupTitle"
-                  title="xccdf_org.cisecurity.benchmarks_group_1.8.1_Command_Line_Warning_Banners">1.8.1 Command Line
-                  Warning Banners</h2>
-               <div class="description">
-                  <p>
-                     The <span class="inline_block">/etc/motd</span>
-                     , <span class="inline_block">/etc/issue</span>
-                     , and <span class="inline_block">/etc/issue.net</span>
-                     files govern warning banners for standard command line logins for both local and remote users. </p>
-               </div>
-            </div>
-            <div id="detail-w4583aad355" class="group">
-               <h2 class="ruleGroupTitle" title="xccdf_org.cisecurity.benchmarks_group_2_Services">2 Services</h2>
-               <div class="description">
-                  <p>While applying system updates and patches helps correct known vulnerabilities, one of the best ways
-                     to protect the system against as yet unreported vulnerabilities is to disable all services that are
-                     not required for normal system operation. This prevents the exploitation of vulnerabilities
-                     discovered at a later date. If a service is not enabled, it cannot be exploited. The actions in
-                     this section of the document provide guidance on some services which can be safely disabled and
-                     under which circumstances, greatly reducing the number of possible threats to the resulting system.
-                     Additionally some services which should remain enabled but with secure configuration are covered as
-                     well as insecure service clients.</p>
-               </div>
-            </div>
-            <div id="detail-w4583aad355b5" class="group">
-               <h2 class="ruleGroupTitle" title="xccdf_org.cisecurity.benchmarks_group_2.1_inetd_Services">2.1 inetd
-                  Services</h2>
-               <div class="description">
-                  <p>inetd is a super-server daemon that provides internet services and passes connections to configured
-                     services. While not commonly used inetd and any unneeded inetd based services should be disabled if
-                     possible.</p>
-               </div>
-            </div>
-            <div id="detail-w4583aad355b7" class="group">
-               <h2 class="ruleGroupTitle" title="xccdf_org.cisecurity.benchmarks_group_2.2_Special_Purpose_Services">2.2
-                  Special Purpose Services</h2>
-               <div class="description">
-                  <p>This section describes services that are installed on systems that specifically need to run these
-                     services. If any of these services are not required, it is recommended that they be disabled or
-                     deleted from the system to reduce the potential attack surface.</p>
-               </div>
-            </div>
-            <div id="detail-w4583aad355b7b5" class="group">
-               <h2 class="ruleGroupTitle" title="xccdf_org.cisecurity.benchmarks_group_2.2.1_Time_Synchronization">2.2.1
-                  Time Synchronization</h2>
-               <div class="description">
-                  <p>It is recommended that physical systems and virtual guests lacking direct access to the physical
-                     host's clock be configured to synchronize their time using a service such as systemd-timesyncd,
-                     chrony, or ntp.</p>
-                  <p>If access to a physical host's clock is available and configured according to site policy, this
-                     section can be skipped.</p>
-               </div>
-            </div>
-            <div id="detail-w4583aad355b9" class="group">
-               <h2 class="ruleGroupTitle" title="xccdf_org.cisecurity.benchmarks_group_2.3_Service_Clients">2.3 Service
-                  Clients</h2>
-               <div class="description">
-                  <p>A number of insecure services exist. While disabling the servers prevents a local attack against
-                     these services, it is advised to remove their clients unless they are required.</p>
-                  <p>
-                     <strong>Note</strong>
-                     : This should not be considered a comprehensive list of insecure service clients. You may wish to
-                     consider additions to those listed here for your environment.
-                  </p>
-               </div>
-            </div>
-            <div id="detail-w4583aad357" class="group">
-               <h2 class="ruleGroupTitle" title="xccdf_org.cisecurity.benchmarks_group_3_Network_Configuration">3
-                  Network Configuration</h2>
-               <div class="description">
-                  <p>This section provides guidance on for securing the network configuration of the system through
-                     kernel parameters, access list control, and firewall settings.</p>
-               </div>
-            </div>
-            <div id="detail-w4583aad357b5" class="group">
-               <h2 class="ruleGroupTitle"
-                  title="xccdf_org.cisecurity.benchmarks_group_3.1_Network_Parameters_Host_Only">3.1 Network Parameters
-                  (Host Only)</h2>
-               <div class="description">
-                  <p>The following network parameters are intended for use if the system is to act as a host only. A
-                     system is considered host only if the system has a single interface, or has multiple interfaces but
-                     will not be configured as a router.</p>
-               </div>
-            </div>
-            <div id="detail-w4583aad357b7" class="group">
-               <h2 class="ruleGroupTitle"
-                  title="xccdf_org.cisecurity.benchmarks_group_3.2_Network_Parameters_Host_and_Router">3.2 Network
-                  Parameters (Host and Router)</h2>
-               <div class="description">
-                  <p>The following network parameters are intended for use on both host only and router systems. A
-                     system acts as a router if it has at least two interfaces and is configured to perform routing
-                     functions.</p>
-               </div>
-            </div>
-            <div id="detail-w4583aad357b9" class="group">
-               <h2 class="ruleGroupTitle" title="xccdf_org.cisecurity.benchmarks_group_3.3_TCP_Wrappers">3.3 TCP
-                  Wrappers</h2>
-            </div>
-            <div id="detail-w4583aad357c11" class="group">
-               <h2 class="ruleGroupTitle" title="xccdf_org.cisecurity.benchmarks_group_3.4_Uncommon_Network_Protocols">
-                  3.4 Uncommon Network Protocols</h2>
-               <div class="description">
-                  <p>The Linux kernel modules support several network protocols that are not commonly used. If these
-                     protocols are not needed, it is recommended that they be disabled in the kernel.</p>
-                  <p>
-                     <strong>Note:</strong>
-                     This should not be considered a comprehensive list of uncommon network protocols, you may wish to
-                     consider additions to those listed here for your environment.
-                  </p>
-               </div>
-            </div>
-            <div id="detail-w4583aad357c13" class="group">
-               <h2 class="ruleGroupTitle" title="xccdf_org.cisecurity.benchmarks_group_3.5_Firewall_Configuration">3.5
-                  Firewall Configuration</h2>
-               <div class="description">
-                  <p>A Host based firewall Provides defense against external and internal threats by refusing
-                     unauthorized connections, to stop intrusion and provide a strong method of access control policy.
-                  </p>
-                  <p>this section is intended only to ensure the resulting firewall rules are in place, not how they are
-                     configured</p>
-               </div>
-            </div>
-            <div id="detail-w4583aad357c13b5" class="group">
-               <h2 class="ruleGroupTitle"
-                  title="xccdf_org.cisecurity.benchmarks_group_3.5.1_Ensure_Firewall_software_is_installed">3.5.1 Ensure
-                  Firewall software is installed</h2>
-               <div class="description">
-                  <p>In order to configure Firewall protection for you system, a Firewall software package needs to be
-                     installed</p>
-               </div>
-            </div>
-            <div id="detail-w4583aad357c13b7" class="group">
-               <h2 class="ruleGroupTitle"
-                  title="xccdf_org.cisecurity.benchmarks_group_3.5.2_Configure_UncomplicatedFirewall">3.5.2 Configure
-                  UncomplicatedFirewall</h2>
-               <div class="description">
-                  <p>UncomplicatedFirewall (ufw) is a frontend for iptables. ufw provides a framework for managing
-                     netfilter, as well as a command-line interface for manipulating the firewall.</p>
-               </div>
-            </div>
-            <div id="detail-w4583aad357c13b9" class="group">
-               <h2 class="ruleGroupTitle" title="xccdf_org.cisecurity.benchmarks_group_3.5.3_Configure_nftables">3.5.3
-                  Configure nftables</h2>
-               <div class="description">
-                  <p>nftables is a subsystem of the Linux kernel providing filtering and classification of network
-                     packets/datagrams/frames and is the successor to iptables. The biggest change with the successor
-                     nftables is its simplicity. With iptables, we have to configure every single rule and use the
-                     syntax which can be compared with normal commands. With nftables, the simpler syntax, much like BPF
-                     (Berkely Packet Filter) means shorter lines and less repetition. Support for nftables should also
-                     be compiled into the kernel, together with the related nftables modules. Please ensure that your
-                     kernel supports nf_tables before choosing this option.</p>
-                  <p>Note: This section broadly assumes starting with an empty nftables firewall ruleset (established by
-                     flushing the rules with nft flush ruleset). Remediation steps included onlyaffect the live system,
-                     you will also need to configure your default firewall configuration to apply on boot. Configuration
-                     of a live systems firewall directly over a remote connection will often result in being locked out.
-                     It is advised to have a known good firewall configuration set to run on boot and to configure an
-                     entire firewall structure in a script that is then run and tested before saving to boot.</p>
-                  <p>The following will implement the firewall rules of this section and open ICMP, IGMP, and port
-                     22(ssh) from anywhere. Opening the ports for ICMP, IGMP, and port 22(ssh) needs to be updated in
-                     accordence with local site policy. Allow port 22(ssh) needs to be updated to only allow systems
-                     requiring ssh connectivity to connect, as per site policy.</p>
-                  <p>
-                     Save the script bellow as <span class="inline_block">/etc/nftables/nftables.rules</span>
-                  </p>
-                  <code class="code_block">
-#!/sbin/nft -f            <br/>
-                        <br/>
-# This nftables.rules config should be saved as /etc/nftables/nftables.rules            <br/>
-                        <br/>
-# flush nftables rulesset            <br/>
-flush ruleset            <br/>
-                        <br/>
-# Load nftables ruleset            <br/>
-                        <br/>
-# nftables config with inet table named filter            <br/>
-                        <br/>
-table inet filter {            <br/>
-        # Base chain for input hook named input (Filters inbound network packets)            <br/>
-        chain input {            <br/>
-                type filter hook input priority 0; policy drop;            <br/>
-                        <br/>
-                # Ensure loopback traffic is configured            <br/>
-                iif "lo" accept            <br/>
-                ip saddr 127.0.0.0/8 counter packets 0 bytes 0 drop            <br/>
-                ip6 saddr ::1 counter packets 0 bytes 0 drop            <br/>
-                        <br/>
-                # Ensure established connections are configured            <br/>
-                ip protocol tcp ct state established accept            <br/>
-                ip protocol udp ct state established accept            <br/>
-                ip protocol icmp ct state established accept            <br/>
-                        <br/>
-                # Accept port 22(SSH) traffic from anywhere            <br/>
-                tcp dport ssh accept            <br/>
-                        <br/>
-                # Accept ICMP and IGMP from anywhere            <br/>
-                icmpv6 type { destination-unreachable, packet-too-big, time-exceeded, parameter-problem, mld-listener-query, mld-listener-report, mld-listener-done, nd-            <br/>
-router-solicit, nd-router-advert, nd-neighbor-solicit, nd-neighbor-advert, ind-neighbor-solicit, ind-neighbor-advert, mld2-listener-report } accept            <br/>
-                icmp type { destination-unreachable, router-advertisement, router-solicitation, time-exceeded, parameter-problem } accept            <br/>
-                ip protocol igmp accept            <br/>
-        }            <br/>
-                        <br/>
-        # Base chain for hook forward named forward (Filters forwarded network packets)            <br/>
-        chain forward {            <br/>
-                type filter hook forward priority 0; policy drop;            <br/>
-        }            <br/>
-                        <br/>
-        # Base chain for hook output named output (Filters outbount network packets)            <br/>
-        chain output {            <br/>
-                type filter hook output priority 0; policy drop;            <br/>
-                # Ensure outbound and established connections are configured            <br/>
-                ip protocol tcp ct state established,related,new accept            <br/>
-                ip protocol udp ct state established,related,new accept            <br/>
-                ip protocol icmp ct state established,related,new accept            <br/>
-        }            <br/>
-}
-          </code>
-                  <p>Run the following command to load the file into nftables</p>
-                  <code class="code_block"># nft -f /etc/nftables/nftables.rules
-</code>
-                  <p>All changes in the nftables subsections are temporary.</p>
-                  <p>To make these changes permanent:</p>
-                  <p>Run the following command to create the nftables.rules file</p>
-                  <code class="code_block">nft list ruleset &gt; /etc/nftables/nftables.rules
-</code>
-                  <p>
-                     Add the following line to <span class="inline_block">/etc/sysconfig/nftables.conf</span>
-                  </p>
-                  <code class="code_block">include "/etc/nftables/nftables.rules"
-</code>
-               </div>
-            </div>
-            <div id="detail-w4583aad357c13c11" class="group">
-               <h2 class="ruleGroupTitle" title="xccdf_org.cisecurity.benchmarks_group_3.5.4_Configure_iptables">3.5.4
-                  Configure iptables</h2>
-               <div class="description">
-                  <p>IPtables is an application that allows a system administrator to configure the IPv4 and IPv6
-                     tables, chains and rules provided by the Linux kernel firewall. While several methods of
-                     configuration exist this section is intended only to ensure the resulting IPtables rules are in
-                     place, not how they are configured. If IPv6 is in use in your environment, similar settings should
-                     be applied to the IP6tables as well.</p>
-               </div>
-            </div>
-            <div id="detail-w4583aad357c13c11b5" class="group">
-               <h2 class="ruleGroupTitle" title="xccdf_org.cisecurity.benchmarks_group_3.5.4.1_Configure_IPv4_iptables">
-                  3.5.4.1 Configure IPv4 iptables</h2>
-               <div class="description">
-                  <p>Iptables is used to set up, maintain, and inspect the tables of IP packet filter rules in the Linux
-                     kernel. Several different tables may be defined. Each table contains a number of built-in chains
-                     and may also contain user-defined chains.</p>
-                  <p>Each chain is a list of rules which can match a set of packets. Each rule specifies what to do with
-                     a packet that matches. This is called a 'target', which may be a jump to a user-defined chain in
-                     the same table.</p>
-                  <p>Note: This section broadly assumes starting with an empty IPtables firewall ruleset (established by
-                     flushing the rules with iptables -F). Remediation steps included only affect the live system, you
-                     will also need to configure your default firewall configuration to apply on boot. Configuration of
-                     a live systems firewall directly over a remote connection will often result in being locked out. It
-                     is advised to have a known good firewall configuration set to run on boot and to configure an
-                     entire firewall structure in a script that is then run and tested before saving to boot. The
-                     following script will implement the firewall rules of this section and open port 22(ssh) from
-                     anywhere:</p>
-                  <code class="code_block">
-#!/bin/bash              <br/>
-                        <br/>
-# Flush IPtables rules              <br/>
-iptables -F              <br/>
-                        <br/>
-# Ensure default deny firewall policy              <br/>
-iptables -P INPUT DROP              <br/>
-iptables -P OUTPUT DROP              <br/>
-iptables -P FORWARD DROP              <br/>
-                        <br/>
-# Ensure loopback traffic is configured              <br/>
-iptables -A INPUT -i lo -j ACCEPT              <br/>
-iptables -A OUTPUT -o lo -j ACCEPT              <br/>
-iptables -A INPUT -s 127.0.0.0/8 -j DROP              <br/>
-                        <br/>
-# Ensure outbound and established connections are configured              <br/>
-iptables -A OUTPUT -p tcp -m state --state NEW,ESTABLISHED -j ACCEPT              <br/>
-iptables -A OUTPUT -p udp -m state --state NEW,ESTABLISHED -j ACCEPT              <br/>
-iptables -A OUTPUT -p icmp -m state --state NEW,ESTABLISHED -j ACCEPT              <br/>
-iptables -A INPUT -p tcp -m state --state ESTABLISHED -j ACCEPT              <br/>
-iptables -A INPUT -p udp -m state --state ESTABLISHED -j ACCEPT              <br/>
-iptables -A INPUT -p icmp -m state --state ESTABLISHED -j ACCEPT              <br/>
-                        <br/>
-# Open inbound ssh(tcp port 22) connections              <br/>
-iptables -A INPUT -p tcp --dport 22 -m state --state NEW -j ACCEPT
-            </code>
-               </div>
-            </div>
-            <div id="detail-w4583aad357c13c11b7" class="group">
-               <h2 class="ruleGroupTitle"
-                  title="xccdf_org.cisecurity.benchmarks_group_3.5.4.2_Configure_IPv6__ip6tables">3.5.4.2 Configure IPv6
-                  ip6tables</h2>
-               <div class="description">
-                  <p>Ip6tables is used to set up, maintain, and inspect the tables of IPv6 packet filter rules in the
-                     Linux kernel. Several different tables may be defined. Each table contains a number of built-in
-                     chains and may also contain user-defined chains.
-                     Each chain is a list of rules which can match a set of packets. Each rule specifies what to do with
-                     a packet that matches. This is called a `target', which may be a jump to a user-defined chain in
-                     the same table.</p>
-                  <p>If IPv6 in enabled on the system, the ip6tables should be configured.</p>
-                  <p>Note: This section broadly assumes starting with an empty ip6tables firewall ruleset (established
-                     by flushing the rules with ip6tables -F). Remediation steps included only affect the live system,
-                     you will also need to configure your default firewall configuration to apply on boot. Configuration
-                     of a live systems firewall directly over a remote connection will often result in being locked out.
-                     It is advised to have a known good firewall configuration set to run on boot and to configure an
-                     entire firewall structure in a script that is then run and tested before saving to boot. The
-                     following script will implement the firewall rules of this section and open port 22(ssh) from
-                     anywhere:</p>
-                  <code class="code_block">
-#!/bin/bash              <br/>
-                        <br/>
-# Flush ip6tables rules              <br/>
-ip6tables -F              <br/>
-                        <br/>
-# Ensure default deny firewall policy              <br/>
-ip6tables -P INPUT DROP              <br/>
-ip6tables -P OUTPUT DROP              <br/>
-ip6tables -P FORWARD DROP              <br/>
-                        <br/>
-# Ensure loopback traffic is configured              <br/>
-ip6tables -A INPUT -i lo -j ACCEPT              <br/>
-ip6tables -A OUTPUT -o lo -j ACCEPT              <br/>
-ip6tables -A INPUT -s ::1 -j DROP              <br/>
-                        <br/>
-# Ensure outbound and established connections are configured              <br/>
-ip6tables -A OUTPUT -p tcp -m state --state NEW,ESTABLISHED -j ACCEPT              <br/>
-ip6tables -A OUTPUT -p udp -m state --state NEW,ESTABLISHED -j ACCEPT              <br/>
-ip6tables -A OUTPUT -p icmp -m state --state NEW,ESTABLISHED -j ACCEPT              <br/>
-ip6tables -A INPUT -p tcp -m state --state ESTABLISHED -j ACCEPT              <br/>
-ip6tables -A INPUT -p udp -m state --state ESTABLISHED -j ACCEPT              <br/>
-ip6tables -A INPUT -p icmp -m state --state ESTABLISHED -j ACCEPT              <br/>
-                        <br/>
-# Open inbound ssh(tcp port 22) connections              <br/>
-ip6tables -A INPUT -p tcp --dport 22 -m state --state NEW -j ACCEPT
-            </code>
-               </div>
-            </div>
-            <div id="detail-w4583aad359" class="group">
-               <h2 class="ruleGroupTitle" title="xccdf_org.cisecurity.benchmarks_group_4_Logging_and_Auditing">4 Logging
-                  and Auditing</h2>
-               <div class="description">
-                  <p>The items in this section describe how to configure logging, log monitoring, and auditing, using
-                     tools included in most distributions.</p>
-                  <p>
-                     It is recommended that <span class="inline_block">rsyslog</span>
-                     be used for logging (with <span class="inline_block">logwatch</span>
-                     providing summarization) and <span class="inline_block">auditd</span>
-                     be used for auditing (with <span class="inline_block">aureport</span>
-                     providing summarization) to automatically monitor logs for intrusion attempts and other suspicious
-                     system behavior. </p>
-                  <p>In addition to the local log files created by the steps in this section, it is also recommended
-                     that sites collect copies of their system logs on a secure, centralized log server via an encrypted
-                     connection. Not only does centralized logging help sites correlate events that may be occurring on
-                     multiple systems, but having a second copy of the system log information may be critical after a
-                     system compromise where the attacker has modified the local log files on the affected system(s). If
-                     a log correlation system is deployed, configure it to process the logs described in this section.
-                  </p>
-                  <p>Because it is often necessary to correlate log information from many different systems
-                     (particularly after a security incident) it is recommended that the time be synchronized among
-                     systems and devices connected to the local network.</p>
-                  <p>It is important that all logs described in this section be monitored on a regular basis and
-                     correlated to determine trends. A seemingly innocuous entry in one log could be more significant
-                     when compared to an entry in another log.</p>
-                  <p>
-                     <strong>Note on log file permissions:</strong>
-
-                     There really isn't a "one size fits all" solution to the permissions on log files. Many sites
-                     utilize group permissions so that administrators who are in a defined security group, such as
-                     "wheel" do not have to elevate privileges to root in order to read log files. Also, if a third
-                     party log aggregation tool is used, it may need to have group permissions to read the log files,
-                     which is preferable to having it run setuid to root. Therefore, there are two remediation and audit
-                     steps for log file permissions. One is for systems that do not have a secured group method
-                     implemented that only permits root to read the log files ( <span class="inline_block">root:root
-                        600</span>
-                     ). The other is for sites that do have such a setup and are designated as <span
-                        class="inline_block">root:securegrp 640</span>
-                     where <span class="inline_block">securegrp</span>
-                     is the defined security group (in some cases <span class="inline_block">wheel</span>
-                     ).
-                  </p>
-               </div>
-            </div>
-            <div id="detail-w4583aad359b5" class="group">
-               <h2 class="ruleGroupTitle"
-                  title="xccdf_org.cisecurity.benchmarks_group_4.1_Configure_System_Accounting_auditd">4.1 Configure
-                  System Accounting (auditd)</h2>
-               <div class="description">
-                  <p>
-                     System auditing, through <span class="inline_block">auditd</span>
-                     , allows system administrators to monitor their systems such that they can detect unauthorized
-                     access or modification of data. By default, auditd will audit SELinux AVC denials, system logins,
-                     account modifications, and authentication events. Events will be logged to <span
-                        class="inline_block">/var/log/audit/audit.log</span>
-                     . The recording of these events will use a modest amount of disk space on a system. If
-                     significantly more events are captured, additional on system or off system storage may need to be
-                     allocated. </p>
-                  <p>
-                     The recommendations in this section implement an audit policy that produces large quantities of
-                     logged data. In some environments it can be challenging to store or process these logs and as such
-                     they are marked as Level 2 for both Servers and Workstations. <strong>Note:</strong>
-                     For 64 bit systems that have arch as a rule parameter, you will need two rules: one for 64 bit and
-                     one for 32 bit systems. For 32 bit systems, only one rule is needed. </p>
-                  <p>
-                     <strong>Note:</strong>
-                     Several recommendations in this section filter based off of <span
-                        class="inline_block">auid&gt;=1000</span>
-                     for unprivileged non-system users. Some distributions split at <span class="inline_block">UID
-                        500</span>
-                     instead, consult your documentation and/or the <span class="inline_block">UID_MIN</span>
-                     setting in <span class="inline_block">/etc/login.defs</span>
-                     to determine which is appropriate for you.
-                  </p>
-                  <p>
-                     <strong>Note:</strong>
-                     Once all audit rules have been added to a file or files in the <span
-                        class="inline_block">/etc/audit/rules.d/</span>
-                     directory, the auditd service must be re-started, or the system rebooted, for the new rules to be
-                     included.
-                  </p>
-               </div>
-            </div>
-            <div id="detail-w4583aad359b5b5" class="group">
-               <h2 class="ruleGroupTitle"
-                  title="xccdf_org.cisecurity.benchmarks_group_4.1.1_Ensure_auditing_is_enabled">4.1.1 Ensure auditing
-                  is enabled</h2>
-               <div class="description">
-                  <p>The capturing of system events provides system administrators with information to allow them to
-                     determine if unauthorized access to their system is occurring.</p>
-               </div>
-            </div>
-            <div id="detail-w4583aad359b5b7" class="group">
-               <h2 class="ruleGroupTitle" title="xccdf_org.cisecurity.benchmarks_group_4.1.2_Configure_Data_Retention">
-                  4.1.2 Configure Data Retention</h2>
-               <div class="description">
-                  <p>When auditing, it is important to carefully configure the storage requirements for audit logs. By
-                     default, auditd will max out the log files at 5MB and retain only 4 copies of them. Older versions
-                     will be deleted. It is possible on a system that the 20 MBs of audit logs may fill up the system
-                     causing loss of audit data. While the recommendations here provide guidance, check your site policy
-                     for audit storage requirements.</p>
-               </div>
-            </div>
-            <div id="detail-w4583aad359b7" class="group">
-               <h2 class="ruleGroupTitle" title="xccdf_org.cisecurity.benchmarks_group_4.2_Configure_Logging">4.2
-                  Configure Logging</h2>
-               <div class="description">
-                  <p>Logging services should be configured to prevent information leaks and to aggregate logs on a
-                     remote server so that they can be reviewed in the event of a system compromise and ease log
-                     analysis.</p>
-               </div>
-            </div>
-            <div id="detail-w4583aad359b7b5" class="group">
-               <h2 class="ruleGroupTitle" title="xccdf_org.cisecurity.benchmarks_group_4.2.1_Configure_rsyslog">4.2.1
-                  Configure rsyslog</h2>
-               <div class="description">
-                  <p>
-                     The <span class="inline_block">rsyslog</span>
-                     software is recommended as a replacement for the <span class="inline_block">syslogd</span>
-                     daemon and provides improvements over <span class="inline_block">syslogd</span>
-                     , such as connection-oriented (i.e. TCP) transmission of logs, the option to log to database
-                     formats, and the encryption of log data en route to a central logging server.
-                     <strong>Note:</strong>
-                     This section only applies if <span class="inline_block">rsyslog</span>
-                     is installed on the system.
-                  </p>
-               </div>
-            </div>
-            <div id="detail-w4583aad359b7b7" class="group">
-               <h2 class="ruleGroupTitle" title="xccdf_org.cisecurity.benchmarks_group_4.2.2_Configure_journald">4.2.2
-                  Configure journald</h2>
-               <div class="description">
-                  <p>systemd-journald is a system service that collects and stores logging data. It creates and
-                     maintains structured, indexed journals based on logging information that is received from a variety
-                     of sources: Kernel log messages, via kmsg</p>
-                  <p>Any changes made to the systemd-journald configuration will require a re-start of systemd-journald
-                  </p>
-               </div>
-            </div>
-            <div id="detail-w4583aad361" class="group">
-               <h2 class="ruleGroupTitle"
-                  title="xccdf_org.cisecurity.benchmarks_group_5_Access_Authentication_and_Authorization">5 Access,
-                  Authentication and Authorization</h2>
-            </div>
-            <div id="detail-w4583aad361b5" class="group">
-               <h2 class="ruleGroupTitle" title="xccdf_org.cisecurity.benchmarks_group_5.1_Configure_cron">5.1 Configure
-                  cron</h2>
-            </div>
-            <div id="detail-w4583aad361b7" class="group">
-               <h2 class="ruleGroupTitle" title="xccdf_org.cisecurity.benchmarks_group_5.2_SSH_Server_Configuration">5.2
-                  SSH Server Configuration</h2>
-               <div class="description">
-                  <p>
-                     SSH is a secure, encrypted replacement for common login services such as <span
-                        class="inline_block">telnet</span>
-                     , <span class="inline_block">ftp</span>
-                     , <span class="inline_block">rlogin</span>
-                     , <span class="inline_block">rsh</span>
-                     , and <span class="inline_block">rcp</span>
-                     . It is strongly recommended that sites abandon older clear-text login protocols and use SSH to
-                     prevent session hijacking and sniffing of sensitive data off the network. </p>
-                  <p>
-                     <strong>Note:</strong>
-                     The recommendations in this section only apply if the SSH daemon is installed on the system, if
-                     remote access is <strong>not</strong>
-                     required the SSH daemon can be removed and this section skipped.
-                  </p>
-                  <p>Command to remove the SSH daemon:</p>
-                  <code class="code_block"># apt purge openssh-server
-</code>
-                  <p>
-                     <strong>Note:</strong>
-                     Once all configuration changes have been made to <span
-                        class="inline_block">/etc/ssh/sshd_config</span>
-                     , the sshd configuration must be reloaded:
-                  </p>
-                  <p>Command to re-load the SSH daemon configuration:</p>
-                  <code class="code_block"># systemctl reload sshd
-</code>
-               </div>
-            </div>
-            <div id="detail-w4583aad361b9" class="group">
-               <h2 class="ruleGroupTitle" title="xccdf_org.cisecurity.benchmarks_group_5.3_Configure_PAM">5.3 Configure
-                  PAM</h2>
-               <div class="description">
-                  <p>
-                     PAM (Pluggable Authentication Modules) is a service that implements modular authentication modules
-                     on UNIX systems. PAM is implemented as a set of shared objects that are loaded and executed when a
-                     program needs to authenticate a user. Files for PAM are typically located in the <span
-                        class="inline_block">/etc/pam.d</span>
-                     directory. PAM must be carefully configured to secure system authentication. While this section
-                     covers some of PAM, please consult other PAM resources to fully understand the configuration
-                     capabilities. </p>
-               </div>
-            </div>
-            <div id="detail-w4583aad361c11" class="group">
-               <h2 class="ruleGroupTitle"
-                  title="xccdf_org.cisecurity.benchmarks_group_5.4_User_Accounts_and_Environment">5.4 User Accounts and
-                  Environment</h2>
-               <div class="description">
-                  <p>This section provides guidance on setting up secure defaults for system and user accounts and their
-                     environment.</p>
-               </div>
-            </div>
-            <div id="detail-w4583aad361c11b5" class="group">
-               <h2 class="ruleGroupTitle"
-                  title="xccdf_org.cisecurity.benchmarks_group_5.4.1_Set_Shadow_Password_Suite_Parameters">5.4.1 Set
-                  Shadow Password Suite Parameters</h2>
-               <div class="description">
-                  <p>
-                     While a majority of the password control parameters have been moved to PAM, some parameters are
-                     still available through the shadow password suite. Any changes made to <span
-                        class="inline_block">/etc/login.defs</span>
-                     will only be applied if the <span class="inline_block">usermod</span>
-                     command is used. If user IDs are added a different way, use the <span
-                        class="inline_block">chage</span>
-                     command to effect changes to individual user IDs. </p>
-               </div>
-            </div>
-            <div id="detail-w4583aad363" class="group">
-               <h2 class="ruleGroupTitle" title="xccdf_org.cisecurity.benchmarks_group_6_System_Maintenance">6 System
-                  Maintenance</h2>
-               <div class="description">
-                  <p>Recommendations in this section are intended as maintenance and are intended to be checked on a
-                     frequent basis to ensure system stability. Many recommendations do not have quick remediations and
-                     require investigation into the cause and best fix available and may indicate an attempted breach of
-                     system security.</p>
-               </div>
-            </div>
-            <div id="detail-w4583aad363b5" class="group">
-               <h2 class="ruleGroupTitle" title="xccdf_org.cisecurity.benchmarks_group_6.1_System_File_Permissions">6.1
-                  System File Permissions</h2>
-               <div class="description">
-                  <p>This section provides guidance on securing aspects of system files and directories.</p>
-               </div>
-            </div>
-            <div id="detail-w4583aad363b7" class="group">
-               <h2 class="ruleGroupTitle" title="xccdf_org.cisecurity.benchmarks_group_6.2_User_and_Group_Settings">6.2
-                  User and Group Settings</h2>
-               <div class="description">
-                  <p>This section provides guidance on securing aspects of the users and groups.</p>
-                  <p>
-                     <strong>Note:</strong>
-                     The recommendations in this section check local users and groups. Any users or groups from other
-                     sources such as LDAP will not be audited. In a domain environment similar checks should be
-                     performed against domain users and groups.
-                  </p>
-               </div>
-            </div>
+            <th:block th:each="chapter : ${audit.chapters}">
+               <div th:id="'detail-' + ${chapter.id}" class="group" th:insert="detailsFragment.html::__${#strings.replace(chapter.id,'.','a')}__"></div>
+               <th:block th:each="cat : ${chapter.categories}">
+                  <div th:id="'detail-' + ${cat.id}" class="group" th:insert="detailsFragment.html::__${#strings.replace(cat.id,'.','a')}__"></div>
+                  <th:block th:each="gr : ${cat.groups}">
+                     <div th:if="${cat.id != gr.id and gr.name != null}" th:id="'detail-' + ${gr.id}" class="group" th:insert="detailsFragment.html::__${#strings.replace(gr.id,'.','a')}__"></div>
+                     <th:block th:each="rep : ${gr.reports}">
+                        <div th:id="'detail-' + ${rep.id}" class="Rule " th:classappend="${rep.status == true or rep.type == 'UNKNOWN'} ? 'failuresOnlyArea visible' : ''"th:insert="detailsFragment.html::__${#strings.replace(rep.id,'.','a')}__(rep=${rep})"></div>
+                     </th:block>
+                  </th:block>
+               </th:block>
+            </th:block>
          </div>
          <div id="rear-matter">
             <div class="backtop">
