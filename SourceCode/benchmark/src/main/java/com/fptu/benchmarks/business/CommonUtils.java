@@ -4,6 +4,7 @@
  */
 package com.fptu.benchmarks.business;
 
+import com.fptu.benchmarks.constant.Constants;
 import com.fptu.benchmarks.model.Command;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -64,19 +65,19 @@ public class CommonUtils {
 
     public static String runPipeCommand(String command) {
         log.info("command befor {}", command);
-        String[] cmds = command.split(";");
+        String[] cmds = command.split(Constants.COMMAND_SEP);
         String output = "";
         /*try {
         InputStream input = null;
         OutputStream outputS = null;*/
+        List<Command> commandLst = new ArrayList<>();
         for (int i = 0; i < cmds.length; i++) {
             log.info("command {}: {}", i, command);
             String cmd = cmds[i];
-            List<Command> commandLst = new ArrayList<>();
-            String[] commandArr = cmd.split("\\|");
+            String[] commandArr = cmd.split(Constants.PIPE);
             for (String c : commandArr) {
                 //log.info("command in pipe {}", c);
-                String[] a = c.split(",");
+                String[] a = c.split(Constants.COMMA_SEP);
                 String[] args = new String[a.length - 1];
                 if (a.length > 1) {
                     for (int j = 0; j < a.length - 1; j++) {
@@ -86,8 +87,9 @@ public class CommonUtils {
                 Command com = Command.builder().cmd(a[0]).args(args).build();
                 commandLst.add(com);
             }
-            output = runCommand(commandLst);
-            /*log.debug("command 1: {}", commandArr[0]);
+        }
+        output = runCommand(commandLst);
+        /*log.debug("command 1: {}", commandArr[0]);
                 Process p1 = Runtime.getRuntime().exec(commandArr[0].split(","));
                 final int exitValue = p1.waitFor();
                 if (exitValue == 0) {
@@ -112,9 +114,9 @@ public class CommonUtils {
                         input = p2.getInputStream();
                         outputS.close(); // signals grep to finish
                     }
-                }*/
+                }
         }
-        /*InputStreamReader inputStreamReader = new InputStreamReader(input);
+        InputStreamReader inputStreamReader = new InputStreamReader(input);
             try ( BufferedReader rd = new BufferedReader(inputStreamReader)) {
                 output = rd.lines().collect(Collectors.joining(System.lineSeparator()));
                 log.info("command output: {}", output);

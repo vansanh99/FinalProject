@@ -97,7 +97,7 @@
                                         "description": "Ensure separate partition exists for \/tmp",
                                         "command_list": [
                                             {
-                                                "command": "mount,|grep,\/tmp",
+                                                "command": "mount[,][|]grep[,]\/tmp",
                                                 "expectationPattern": "\\s*tmpfs on \/tmp type tmpfs\\s*"
                                             }
                                         ],
@@ -109,7 +109,7 @@
                                         "description": "Ensure nodev option set on \/tmp partition",
                                         "command_list": [
                                             {
-                                                "command": "mount,|grep,\/tmp",
+                                                "command": "mount[,][|]grep[,]\/tmp",
                                                 "expectationPattern": "\\s*tmpfs on \/tmp type tmpfs \\(.*nodev.*\\)\\s*"
                                             }
                                         ],
@@ -121,7 +121,7 @@
                                         "description": "Ensure nosuid option set on \/tmp partition",
                                         "command_list": [
                                             {
-                                                "command": "mount,|grep,\/tmp",
+                                                "command": "mount[,][|]grep[,]\/tmp",
                                                 "expectationPattern": "\\s*tmpfs on \/tmp type tmpfs \\(.*nosuid.*\\)\\s*"
                                             }
                                         ],
@@ -133,7 +133,7 @@
                                         "description": "Ensure noexec option set on \/tmp partition",
                                         "command_list": [
                                             {
-                                                "command": "mount,|grep,\/tmp",
+                                                "command": "mount[,][|]grep[,]\/tmp",
                                                 "expectationPattern": "\\s*tmpfs on \/tmp type tmpfs \\(.*noexec.*\\)\\s*"
                                             }
                                         ],
@@ -145,7 +145,7 @@
                                         "description": "Ensure nodev option set on /var/tmp partition",
                                         "command_list": [
                                             {
-                                                "command": "mount,|grep,\/var\/tmp,|grep,-v,nodev",
+                                                "command": "mount[,][|]grep[,]\/var\/tmp[,][|]grep[,]-v[,]nodev",
                                                 "expectationPattern": "^$"
                                             }
                                         ],
@@ -157,7 +157,7 @@
                                         "description": "Ensure nosuid option set on /var/tmp partition",
                                         "command_list": [
                                             {
-                                                "command": "mount,|grep,\/var\/tmp,|grep,-v,nosuid",
+                                                "command": "mount[,][|]grep[,]\/var\/tmp[,][|]grep[,]-v[,]nosuid",
                                                 "expectationPattern": "^$"
                                             }
                                         ],
@@ -169,7 +169,7 @@
                                         "description": "Ensure noexec option set on /var/tmp partition",
                                         "command_list": [
                                             {
-                                                "command": "mount,|grep,\/var\/tmp,|grep,-v,noexec",
+                                                "command": "mount[,][|]grep[,]\/var\/tmp[,][|]grep[,]-v[,]noexec",
                                                 "expectationPattern": "^$"
                                             }
                                         ],
@@ -181,7 +181,7 @@
                                         "description": "Ensure nodev option set on /home partition",
                                         "command_list": [
                                             {
-                                                "command": "mount,|grep,\/home,|grep,-v,nodev",
+                                                "command": "mount[,][|]grep[,]\/home[,][|]grep[,]-v[,]nodev",
                                                 "expectationPattern": "^$"
                                             }
                                         ],
@@ -193,7 +193,7 @@
                                         "description": "Ensure nodev option set on /dev/shm partition",
                                         "command_list": [
                                             {
-                                                "command": "mount,|grep,\/dev/shm,|grep,-v,nodev",
+                                                "command": "mount[,][|]grep[,]\/dev/shm[,][|]grep[,]-v[,]nodev",
                                                 "expectationPattern": "^$"
                                             }
                                         ],
@@ -205,7 +205,7 @@
                                         "description": "Ensure nosuid option set on /dev/shm partition",
                                         "command_list": [
                                             {
-                                                "command": "mount,|grep,\/dev/shm,|grep,-v,nosuid",
+                                                "command": "mount[,][|]grep[,]\/dev/shm[,][|]grep[,]-v[,]nosuid",
                                                 "expectationPattern": "^$"
                                             }
                                         ],
@@ -217,7 +217,7 @@
                                         "description": "Ensure noexec option set on /dev/shm partition",
                                         "command_list": [
                                             {
-                                                "command": "mount,|grep,\/dev/shm,|grep,-v,noexec",
+                                                "command": "mount[,][|]grep[,]\/dev/shm[,][|]grep[,]-v[,]noexec",
                                                 "expectationPattern": "^$"
                                             }
                                         ],
@@ -229,13 +229,13 @@
                                         "description": "Disable Automounting",
                                         "command_list": [
                                             {
-                                                "id":"1",
-                                                "command": "systemctl,is-enabled,autofs",
+                                                "id": "1",
+                                                "command": "systemctl[,]is-enabled[,]autofs",
                                                 "expectationPattern": "^disabled$"
                                             },
                                             {
-                                                "id":"2",
-                                                "command": "dpkg,-s,autofs",
+                                                "id": "2",
+                                                "command": "dpkg[,]-s[,]autofs",
                                                 "expectationPattern": "\\s*package 'autofs' is not installed\\s*"
                                             }
                                         ],
@@ -272,13 +272,13 @@
                                         "description": "Ensure sudo is installed",
                                         "command_list": [
                                             {
-                                                "id":"1",
-                                                "command": "dpkg,-s,sudo",
+                                                "id": "1",
+                                                "command": "dpkg[,]-s[,]sudo",
                                                 "expectationPattern": "\\s*Status: install ok installed\\s*"
                                             },
                                             {
-                                                "id":"2",
-                                                "command": "dpkg,-s,sudo-ldap",
+                                                "id": "2",
+                                                "command": "dpkg[,]-s[,]sudo-ldap",
                                                 "expectationPattern": "\\s*Status: install ok installed\\s*"
                                             }
                                         ],
@@ -291,13 +291,13 @@
                                         "description": "Ensure sudo commands use pty",
                                         "command_list": [
                                             {
-                                                "id":"1",
-                                                "command": "grep,-Ei,^\\s*Defaults use_pty\\s*$,/etc/sudoers",
+                                                "id": "1",
+                                                "command": "grep[,]-Ei[,]^\\s*Defaults use_pty\\s*$[,]/etc/sudoers",
                                                 "expectationPattern": "\\s*Defaults use_pty\\s*"
                                             },
                                             {
-                                                "id":"2",
-                                                "command": "grep,-Ei,^\\s*Defaults use_pty\\s*$,/etc/sudoers.d/README",
+                                                "id": "2",
+                                                "command": "grep[,]-Ei[,]^\\s*Defaults use_pty\\s*$[,]/etc/sudoers.d/README",
                                                 "expectationPattern": "\\s*Defaults use_pty\\s*"
                                             }
                                         ],
@@ -310,7 +310,7 @@
                                         "description": "Ensure sudo log file exists",
                                         "command_list": [
                                             {
-                                                "command": "grep,-Ei,^\\s*Defaults\\s+logfile=\\S+,/etc/sudoers,/etc/sudoers.d/README",
+                                                "command": "grep[,]-Ei[,]^\\s*Defaults\\s+logfile=\\S+[,]/etc/sudoers[,]/etc/sudoers.d/README",
                                                 "expectationPattern": "\\s*Defaults logfile=\\s*"
                                             }
                                         ],
@@ -333,7 +333,7 @@
                                         "description": "Ensure sudo is installed",
                                         "command_list": [
                                             {
-                                                "command": "dpkg,-s,aide",
+                                                "command": "dpkg[,]-s[,]aide",
                                                 "expectationPattern": "\\s*Status: install ok installed\\s*"
                                             }
                                         ],
@@ -356,7 +356,7 @@
                                         "description": "Ensure permissions on bootloader config are configured",
                                         "command_list": [
                                             {
-                                                "command": "stat,/boot/grub/grub.cfg",
+                                                "command": "stat[,]/boot/grub/grub.cfg",
                                                 "expectationPattern": "\\s*Access:\\s+\\(0400\/-r--------\\)\\s+Uid:\\s+\\(\\s+0\\/\\s+root\\)\\s+Gid:\\s+\\(\\s+0\\/\\s+root\\s*"
                                             }
                                         ],
@@ -368,13 +368,13 @@
                                         "description": "Ensure bootloader password is set",
                                         "command_list": [
                                             {
-                                                "id":"1",
-                                                "command": "grep,^set superusers,/boot/grub/grub.cfg",
+                                                "id": "1",
+                                                "command": "grep[,]^set superusers[,]/boot/grub/grub.cfg",
                                                 "expectationPattern": "\\s*set\\s+superusers=\\s*"
                                             },
                                             {
-                                                "id":"2",
-                                                "command": "grep,^password,/boot/grub/grub.cfg",
+                                                "id": "2",
+                                                "command": "grep[,]^password[,]/boot/grub/grub.cfg",
                                                 "expectationPattern": "\\s*password_pbkdf2\\s*"
                                             }
                                         ],
@@ -387,7 +387,7 @@
                                         "description": "Ensure authentication required for single user mode",
                                         "command_list": [
                                             {
-                                                "command": "grep,^root:[*\\!]:,/etc/shadow",
+                                                "command": "grep[,]^root:[*\\!]:[,]/etc/shadow",
                                                 "expectationPattern": "^$"
                                             }
                                         ],
@@ -410,7 +410,7 @@
                                         "description": "Ensure XD/NX support is enabled",
                                         "command_list": [
                                             {
-                                                "command": "journalctl|grep,protection: active",
+                                                "command": "journalctl[|]grep[,]protection: active",
                                                 "expectationPattern": "\\s*kernel:\\s+NX\\s+\\(Execute Disable\\)\\s+protection:\\s+active\\s*"
                                             }
                                         ],
@@ -422,13 +422,13 @@
                                         "description": "Ensure address space layout randomization (ASLR) is enabled",
                                         "command_list": [
                                             {
-                                                "id":"1",
-                                                "command": "sysctl,kernel.randomize_va_space",
+                                                "id": "1",
+                                                "command": "sysctl[,]kernel.randomize_va_space",
                                                 "expectationPattern": "\\s*kernel.randomize_va_space = 2\\s*"
                                             },
                                             {
-                                                "id":"2",
-                                                "command": "grep,-iR,kernel\\.randomize_va_space,/etc/sysctl.conf,/etc/sysctl.d",
+                                                "id": "2",
+                                                "command": "grep[,]-iR[,]kernel\\.randomize_va_space[,]/etc/sysctl.conf[,]/etc/sysctl.d",
                                                 "expectationPattern": "\\s*kernel.randomize_va_space = 2\\s*"
                                             }
                                         ],
@@ -441,7 +441,7 @@
                                         "description": "Ensure prelink is disabled",
                                         "command_list": [
                                             {
-                                                "command": "dpkg,-s,prelink",
+                                                "command": "dpkg[,]-s[,]prelink",
                                                 "expectationPattern": "\\s*package 'prelink' is not installed\\s*"
                                             }
                                         ],
@@ -453,18 +453,18 @@
                                         "description": "Ensure core dumps are restricted",
                                         "command_list": [
                                             {
-                                                "id":"1",
-                                                "command": "grep,-R,hard core,/etc/security/limits.conf,/etc/security/limits.d",
+                                                "id": "1",
+                                                "command": "grep[,]-R[,]hard core[,]/etc/security/limits.conf[,]/etc/security/limits.d",
                                                 "expectationPattern": "\\s*hard core 0\\s*"
                                             },
                                             {
-                                                "id":"2",
-                                                "command": "sysctl,fs.suid_dumpable",
+                                                "id": "2",
+                                                "command": "sysctl[,]fs.suid_dumpable",
                                                 "expectationPattern": "\\s*fs.suid_dumpable\\*=\\s*0\\s*"
                                             },
                                             {
-                                                "id":"3",
-                                                "command": "grep,-R,fs\\.suid_dumpable,/etc/sysctl.conf,/etc/sysctl.d",
+                                                "id": "3",
+                                                "command": "grep[,]-R[,]fs\\.suid_dumpable[,]/etc/sysctl.conf[,]/etc/sysctl.d",
                                                 "expectationPattern": "\\s*fs.suid_dumpable\\*=\\s*0\\s*"
                                             }
                                         ],
@@ -489,7 +489,7 @@
                                         "description": "Ensure AppArmor is installed",
                                         "command_list": [
                                             {
-                                                "command": "dpkg,-s,apparmor",
+                                                "command": "dpkg[,]-s[,]apparmor",
                                                 "expectationPattern": "\\s*Status: install ok installed\\s*"
                                             }
                                         ],
@@ -501,13 +501,13 @@
                                         "description": "Ensure address space layout randomization (ASLR) is enabled",
                                         "command_list": [
                                             {
-                                                "id":"1",
-                                                "command": "grep,^\\s*linux,/boot/grub/grub.cfg|grep,-v,apparmor=1|grep,-v,/boot/memtest86+.bin",
+                                                "id": "1",
+                                                "command": "grep[,]^\\s*linux[,]/boot/grub/grub.cfg[|]grep[,]-v[,]apparmor=1[|]grep[,]-v[,]/boot/memtest86+.bin",
                                                 "expectationPattern": "^$"
                                             },
                                             {
-                                                "id":"2",
-                                                "command": "grep,^\\s*linux,/boot/grub/grub.cfg|grep,-v,security=apparmor|grep,-v,/boot/memtest86+.bin",
+                                                "id": "2",
+                                                "command": "grep[,]^\\s*linux[,]/boot/grub/grub.cfg[|]grep[,]-v[,]security=apparmor[|]grep[,]-v[,]/boot/memtest86+.bin",
                                                 "expectationPattern": "^$"
                                             }
                                         ],
@@ -556,13 +556,13 @@
                                         "description": "Ensure permissions on /etc/motd are configured",
                                         "command_list": [
                                             {
-                                                "id":"1",
-                                                "command": "ls,/etc/motd",
+                                                "id": "1",
+                                                "command": "ls[,]/etc/motd",
                                                 "expectationPattern": "\\s*No such file or directory\\s*"
                                             },
                                             {
-                                                "id":"2",
-                                                "command": "stat,/etc/motd",
+                                                "id": "2",
+                                                "command": "stat[,]/etc/motd",
                                                 "expectationPattern": "\\s*Access:\\s+\\(0644\/-rw-r--r--\\)\\s+Uid:\\s+\\(\\s+0\\/\\s+root\\)\\s+Gid:\\s+\\(\\s+0\\/\\s+root\\s*"
                                             }
                                         ],
@@ -575,13 +575,13 @@
                                         "description": "Ensure permissions on /etc/issue are configured",
                                         "command_list": [
                                             {
-                                                "id":"1",
-                                                "command": "ls,/etc/issue",
+                                                "id": "1",
+                                                "command": "ls[,]/etc/issue",
                                                 "expectationPattern": "\\s*No such file or directory\\s*"
                                             },
                                             {
-                                                "id":"2",
-                                                "command": "stat,/etc/issue",
+                                                "id": "2",
+                                                "command": "stat[,]/etc/issue",
                                                 "expectationPattern": "\\s*Access:\\s+\\(0644\/-rw-r--r--\\)\\s+Uid:\\s+\\(\\s+0\\/\\s+root\\)\\s+Gid:\\s+\\(\\s+0\\/\\s+root\\s*"
                                             }
                                         ],
@@ -594,13 +594,13 @@
                                         "description": "Ensure permissions on /etc/issue.net are configured",
                                         "command_list": [
                                             {
-                                                "id":"1",
-                                                "command": "ls,/etc/issue.net",
+                                                "id": "1",
+                                                "command": "ls[,]/etc/issue.net",
                                                 "expectationPattern": "\\s*No such file or directory\\s*"
                                             },
                                             {
-                                                "id":"2",
-                                                "command": "stat,/etc/issue.net",
+                                                "id": "2",
+                                                "command": "stat[,]/etc/issue.net",
                                                 "expectationPattern": "\\s*Access:\\s+\\(0644\/-rw-r--r--\\)\\s+Uid:\\s+\\(\\s+0\\/\\s+root\\)\\s+Gid:\\s+\\(\\s+0\\/\\s+root\\s*"
                                             }
                                         ],
@@ -613,23 +613,23 @@
                                         "description": "Ensure GDM login banner is configured",
                                         "command_list": [
                                             {
-                                                "id":"1",
-                                                "command": "ls,/etc/gdm3/greeter.dconf-defaults",
+                                                "id": "1",
+                                                "command": "ls[,]/etc/gdm3/greeter.dconf-defaults",
                                                 "expectationPattern": "\\s*/etc/gdm3/greeter.dconf-defaults\\s*"
                                             },
                                             {
-                                                "id":"2",
-                                                "command": "grep,^\\[org/gnome/login-screen\\],/etc/gdm3/greeter.dconf-defaults",
+                                                "id": "2",
+                                                "command": "grep[,]^\\[org/gnome/login-screen\\],/etc/gdm3/greeter.dconf-defaults",
                                                 "expectationPattern": "^\\s*\\[org\\/gnome\\/login-screen\\]\\s*(\\s+#.*)?$"
                                             },
                                             {
-                                                "id":"3",
-                                                "command": "grep,^banner\\-message\\-enable=true,/etc/gdm3/greeter.dconf-defaults",
+                                                "id": "3",
+                                                "command": "grep[,]^banner\\-message\\-enable=true[,]/etc/gdm3/greeter.dconf-defaults",
                                                 "expectationPattern": "^\\s*banner\\-message\\-enable\\s*=\\s*true\\s*(\\s+#.*)?$"
                                             },
                                             {
-                                                "id":"4",
-                                                "command": "grep,^banner\\-message\\-text=,/etc/gdm3/greeter.dconf-defaults",
+                                                "id": "4",
+                                                "command": "grep[,]^banner\\-message\\-text=[,]/etc/gdm3/greeter.dconf-defaults",
                                                 "expectationPattern": "^\\s*banner\\-message\\-text\\s*=\\s*'.+'\\s*(\\s+#.*)?$"
                                             }
                                         ],
@@ -642,7 +642,461 @@
                         ]
                     }
                 ]
+            },
+            {
+                "id": "5",
+                "name": "Access[,] Authentication and Authorization",
+                "categories": [
+                    {
+                        "id": "5.1",
+                        "name": "Configure cron",
+                        "groups": [
+                            {
+                                "id": "5.1",
+                                "report": [
+                                    {
+                                        "id": "5.1.1",
+                                        "description": "Ensure cron daemon is enabled",
+                                        "command_list": [
+                                            {
+                                                "command": "systemctl[,]is-enabled[,]cron",
+                                                "expectationPattern": "^enabled$"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.1.2",
+                                        "description": "Ensure permissions on /etc/crontab are configured",
+                                        "command_list": [
+                                            {
+                                                "command": "stat[,]/etc/crontab",
+                                                "expectationPattern": "\\s*Access:\\s+\\(0600\/-rw-------\\)\\s+Uid:\\s+\\(\\s+0\\/\\s+root\\)\\s+Gid:\\s+\\(\\s+0\\/\\s+root\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.1.3",
+                                        "description": "Ensure permissions on /etc/cron.hourly are configured",
+                                        "command_list": [
+                                            {
+                                                "command": "stat[,]/etc/cron.hourly",
+                                                "expectationPattern": "\\s*Access:\\s+\\(0700\/drwx------\\)\\s+Uid:\\s+\\(\\s+0\\/\\s+root\\)\\s+Gid:\\s+\\(\\s+0\\/\\s+root\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.1.4",
+                                        "description": "Ensure permissions on /etc/cron.daily are configured",
+                                        "command_list": [
+                                            {
+                                                "command": "stat[,]/etc/cron.daily",
+                                                "expectationPattern": "\\s*Access:\\s+\\(0700\/drwx------\\)\\s+Uid:\\s+\\(\\s+0\\/\\s+root\\)\\s+Gid:\\s+\\(\\s+0\\/\\s+root\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.1.5",
+                                        "description": "Ensure permissions on /etc/cron.weekly are configured",
+                                        "command_list": [
+                                            {
+                                                "command": "stat[,]/etc/cron.weekly",
+                                                "expectationPattern": "\\s*Access:\\s+\\(0700\/drwx------\\)\\s+Uid:\\s+\\(\\s+0\\/\\s+root\\)\\s+Gid:\\s+\\(\\s+0\\/\\s+root\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.1.6",
+                                        "description": "Ensure permissions on /etc/cron.monthly are configured",
+                                        "command_list": [
+                                            {
+                                                "command": "stat[,]/etc/cron.monthly",
+                                                "expectationPattern": "\\s*Access:\\s+\\(0700\/drwx------\\)\\s+Uid:\\s+\\(\\s+0\\/\\s+root\\)\\s+Gid:\\s+\\(\\s+0\\/\\s+root\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.1.7",
+                                        "description": "Ensure permissions on /etc/cron.d are configured",
+                                        "command_list": [
+                                            {
+                                                "command": "stat[,]/etc/cron.d",
+                                                "expectationPattern": "\\s*Access:\\s+\\(0700\/drwx------\\)\\s+Uid:\\s+\\(\\s+0\\/\\s+root\\)\\s+Gid:\\s+\\(\\s+0\\/\\s+root\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.1.8",
+                                        "description": "Ensure at/cron is restricted to authorized users",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "stat[,]/etc/cron.deny",
+                                                "expectationPattern": "\\s*cannot stat '/etc/cron.deny': No such file or directory\\s*"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "stat[,]/etc/at.deny",
+                                                "expectationPattern": "\\s*cannot stat '/etc/at.deny': No such file or directory\\s*"
+                                            },
+                                            {
+                                                "id": "3",
+                                                "command": "stat[,]/etc/at.deny",
+                                                "expectationPattern": "\\s*Access:\\s+\\(0640\/-rw-r-----\\)\\s+Uid:\\s+\\(\\s+0\\/\\s+root\\)\\s+Gid:\\s+\\(\\s+0\\/\\s+root\\s*"
+                                            },
+                                            {
+                                                "id": "4",
+                                                "command": "stat[,]/etc/at.deny",
+                                                "expectationPattern": "\\s*Access:\\s+\\(0640\/-rw-r-----\\)\\s+Uid:\\s+\\(\\s+0\\/\\s+root\\)\\s+Gid:\\s+\\(\\s+0\\/\\s+root\\s*"
+                                            }
+                                        ],
+                                        "operator": "1&&2&&3&&4",
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "5.2",
+                        "name": "SSH Server Configuration",
+                        "groups": [
+                            {
+                                "id": "5.2",
+                                "report": [
+                                    {
+                                        "id": "5.2.1",
+                                        "description": "Ensure permissions on /etc/ssh/sshd_config are configured",
+                                        "command_list": [
+                                            {
+                                                "command": "stat[,]/etc/ssh/sshd_config",
+                                                "expectationPattern": "\\s*Access:\\s+\\(0600\/-rw-------\\)\\s+Uid:\\s+\\(\\s+0\\/\\s+root\\)\\s+Gid:\\s+\\(\\s+0\\/\\s+root\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.2.2",
+                                        "description": "Ensure permissions on SSH private host key files are configured",
+                                        "command_list": [
+                                            {
+                                                "command": "find[,]/etc/ssh[,]-xdev[,]-type[,]f[,]-name[,]ssh_host_*_key[,]-exec[,]stat[,]{},;[|]grep[,]'Access:.*Uid'[|]grep[,]0600.*0/\\s*root.*0/\\s*root[,]-v",
+                                                "expectationPattern": "^$"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.2.3",
+                                        "description": "Ensure permissions on SSH public host key files are configured",
+                                        "command_list": [
+                                            {
+                                                "command": "find[,]/etc/ssh[,]-xdev[,]-type[,]f[,]-name[,]ssh_host_*_key.pub[,]-exec[,]stat[,]{},;[|]grep[,]'Access:.*Uid'[|]grep[,]0644.*0/\\s*root.*0/\\s*root[,]-v",
+                                                "expectationPattern": "^$"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.2.4",
+                                        "description": "Ensure SSH Protocol is not set to 1",
+                                        "command_list": [
+                                            {
+                                                "command": "sshd[,]-T[|]grep[,]-Ei[,]'^\\s*protocol\\s+\\(1|1\\s*,\\s*2|2\\s*,\\s*1\\)\\s*'",
+                                                "expectationPattern": "^$"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.2.5",
+                                        "description": "Ensure SSH LogLevel is appropriate",
+                                        "command_list": [
+                                            {
+                                                "command": "sshd[,]-T[|]grep[,]loglevel",
+                                                "expectationPattern": "\\s*(LogLevel VERBOSE)|(loglevel INFO)\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.2.6",
+                                        "description": "Ensure SSH X11 forwarding is disabled",
+                                        "command_list": [
+                                            {
+                                                "command": "sshd[,]-T[|]grep[,]x11forwarding",
+                                                "expectationPattern": "\\s*X11Forwarding no\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,2SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.2.7",
+                                        "description": "Ensure SSH MaxAuthTries is set to 4 or less",
+                                        "command_list": [
+                                            {
+                                                "command": "sshd[,]-T[|]grep[,]maxauthtries",
+                                                "expectationPattern": "\\s*MaxAuthTries [1-4]\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.2.8",
+                                        "description": "Ensure SSH IgnoreRhosts is enabled",
+                                        "command_list": [
+                                            {
+                                                "command": "sshd[,]-T[|]grep[,]ignorerhosts",
+                                                "expectationPattern": "\\s*IgnoreRhosts yes\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.2.9",
+                                        "description": "Ensure SSH HostbasedAuthentication is disabled",
+                                        "command_list": [
+                                            {
+                                                "command": "sshd[,]-T[|]grep[,]hostbasedauthentication",
+                                                "expectationPattern": "\\s*HostbasedAuthentication no\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.2.10",
+                                        "description": "Ensure SSH root login is disabled",
+                                        "command_list": [
+                                            {
+                                                "command": "sshd[,]-T[|]grep[,]permitrootlogin",
+                                                "expectationPattern": "\\s*PermitRootLogin no\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.2.11",
+                                        "description": "Ensure SSH PermitEmptyPasswords is disabled",
+                                        "command_list": [
+                                            {
+                                                "command": "sshd[,]-T[|]grep[,]permitemptypasswords",
+                                                "expectationPattern": "\\s*PermitEmptyPasswords no\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.2.12",
+                                        "description": "Ensure SSH PermitUserEnvironment is disabled",
+                                        "command_list": [
+                                            {
+                                                "command": "sshd[,]-T[|]grep[,]permituserenvironment",
+                                                "expectationPattern": "\\s*PermitUserEnvironment no\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.2.13",
+                                        "description": "Ensure only strong Ciphers are used",
+                                        "command_list": [
+                                            {
+                                                "command": "sshd[,]-T[|]grep[,]cipher[|]grep[,]3des-cbc\\|aes128-cbc\\|aes192-cbc\\|aes256-cbc\\|arcfour\\|arcfour128\\|arcfour256\\|blowfish-cbc\\|cast128-cbc\\|rijndael-cbc@lysator.liu.se",
+                                                "expectationPattern": "^$"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.2.14",
+                                        "description": "Ensure only strong MAC algorithms are used",
+                                        "command_list": [
+                                            {
+                                                "command": "sshd[,]-T[|]grep[,]-i[,]MACs[|]grep[,]hmac-md5\\|hmac-md5-96\\|hmac-ripemd160\\|hmac-sha1\\|hmac-sha1-96\\|umac-64@openssh.com\\|umac-128@openssh.com\\|hmac-md5-etm@openssh.com\\|hmac-md5-96-etm@openssh.com\\|hmac-ripemd160-etm@openssh.com\\|hmac-sha1-etm@openssh.com\\|hmac-sha1-96-etm@openssh.com\\|umac-64-etm@openssh.com\\|umac-128-etm@openssh.com",
+                                                "expectationPattern": "^$"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.2.15",
+                                        "description": "Ensure only strong Key Exchange algorithms are used",
+                                        "command_list": [
+                                            {
+                                                "command": "sshd[,]-T[|]grep[,]kexalgorithms[|]grep[,]diffie-hellman-group1-sha1\\|diffie-hellman-group14-sha1\\|diffie-hellman-group-exchange-sha1",
+                                                "expectationPattern": "^$"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.2.16",
+                                        "description": "Ensure only strong Key Exchange algorithms are used",
+                                        "command_list": [
+                                            {
+                                                "id":"1",
+                                                "command": "sshd[,]-T[|]grep[,]clientaliveinterval",
+                                                "expectationPattern": "^ClientAliveInterval (0*([0-9]|[1-8][0-9]|9[0-9]|300))$"
+                                            },
+                                            {
+                                                "id":"2",
+                                                "command": "sshd[,]-T[|]grep[,]clientalivecountmax",
+                                                "expectationPattern": "\\s*ClientAliveCountMax [0-3]\\s*"
+                                            }
+                                        ],
+                                        "operator": "1&&2",
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.2.17",
+                                        "description": "Ensure SSH LoginGraceTime is set to one minute or less",
+                                        "command_list": [
+                                            {
+                                                "command": "sshd[,]-T[|]grep[,]logingracetime",
+                                                "expectationPattern": "^LoginGraceTime (0*([1-9]|[1-5]|60))$"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.2.18",
+                                        "description": "Ensure SSH access is limited",
+                                        "command_list": [
+                                            {
+                                                "command": "sshd[,]-T[|]grep[,]logingracetime",
+                                                "expectationPattern": "^LoginGraceTime (0*([1-9]|[1-5]|60))$"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.2.18",
+                                        "description": "Ensure SSH access is limited",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "sshd[,]-T[|]grep[,]allowusers",
+                                                "expectationPattern": "\\s*AllowUsers\\s*"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "sshd[,]-T[|]grep[,]allowgroups",
+                                                "expectationPattern": "\\s*AllowGroups\\s*"
+                                            },
+                                            {
+                                                "id": "3",
+                                                "command": "sshd[,]-T[|]grep[,]denyusers",
+                                                "expectationPattern": "\\s*DenyUsers\\s*"
+                                            },
+                                            {
+                                                "id": "4",
+                                                "command": "sshd[,]-T[|]grep[,]denygroups",
+                                                "expectationPattern": "\\s*DenyGroups\\s*"
+                                            }
+                                        ],
+                                        "operator": "1||2||3||4",
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.2.19",
+                                        "description": "Ensure SSH warning banner is configured",
+                                        "command_list": [
+                                            {
+                                                "command": "sshd[,]-T[|]grep[,]banner",
+                                                "expectationPattern": "\\s*Banner /etc/issue.net\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.2.20",
+                                        "description": "Ensure SSH PAM is enabled",
+                                        "command_list": [
+                                            {
+                                                "command": "sshd[,]-T[|]grep[,]-i[,]usepam",
+                                                "expectationPattern": "\\s*usepam yes\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.2.21",
+                                        "description": "Ensure SSH PAM is enabled",
+                                        "command_list": [
+                                            {
+                                                "command": "sshd[,]-T[|]grep[,]-i[,]allowtcpforwarding",
+                                                "expectationPattern": "\\s*AllowTcpForwarding no\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.2.22",
+                                        "description": "Ensure SSH PAM is enabled",
+                                        "command_list": [
+                                            {
+                                                "command": "sshd[,]-T[|]grep[,]-i[,]maxstartups",
+                                                "expectationPattern": "\\s*MaxStartups 10:30:60\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.2.23",
+                                        "description": "Ensure SSH MaxSessions is set to 4 or less",
+                                        "command_list": [
+                                            {
+                                                "command": "sshd[,]-T[|]grep[,]-i[,]maxsessions",
+                                                "expectationPattern": "\\s*maxsessions 4\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
             }
         ]
     }
 }
+            

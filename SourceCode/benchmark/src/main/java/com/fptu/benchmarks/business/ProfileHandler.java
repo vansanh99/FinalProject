@@ -28,7 +28,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 @Log4j2
 public class ProfileHandler {
-    
+
     public Audit proccessProfile(Audit audit) {
         audit.getChapters().forEach(chap -> {
             chap.getCategories().forEach(cat -> {
@@ -85,27 +85,27 @@ public class ProfileHandler {
                                         String languageVersion = "ECMAScript 262 Edition 11";
                                         ScriptEngineManager manager = new ScriptEngineManager();
                                         List<ScriptEngineFactory> factories = manager.getEngineFactories();
-                                        
+
                                         ScriptEngine engine = null;
                                         for (ScriptEngineFactory factory : factories) {
                                             String language = factory.getLanguageName();
                                             String version = factory.getLanguageVersion();
-                                            
+
                                             if (language.equals(languageName)
                                                     && version.equals(languageVersion)) {
                                                 engine = factory.getScriptEngine();
                                                 break;
                                             }
                                         }
-                                        
+
                                         if (engine != null) {
                                             try {
-                                                report.setStatus((boolean) engine.eval(report.getOperator()));
+                                                report.setStatus(((Boolean) engine.eval(report.getOperator())));
                                             } catch (ScriptException e) {
                                                 log.error("Scripte err {}", e);
                                             }
                                         }
-                                        log.info("operator after: {}", report.getOperator());
+                                        log.info("operator after: {}, status {}", report.getOperator(), report.isStatus());
                                     } else {
                                         log.error("operator can not be empty");
                                     }
@@ -119,7 +119,7 @@ public class ProfileHandler {
         });
         return audit;
     }
-    
+
     public void LevelFilter(Audit audit, Level selLevel) {
         if (CollectionUtils.isNotEmpty(audit.getChapters())) {
             audit.getChapters().forEach(lc -> {

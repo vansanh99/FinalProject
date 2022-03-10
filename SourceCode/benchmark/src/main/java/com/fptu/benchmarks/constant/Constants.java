@@ -14,5 +14,8 @@ public class Constants {
     public static final String FILE_EXISTENCE = "FILE_EXISTENCE";
     public static final String FILE_PATTERN = "FILE_PATTERN";
     public static final String SHELL_RUN = "SHELL_RUN";
+    public static final String PIPE = "\\[\\|\\]";
+    public static final String COMMAND_SEP = "\\[;\\]";
+    public static final String COMMA_SEP = "\\[,\\]";
     
 }
