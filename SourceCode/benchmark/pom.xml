@@ -15,6 +15,18 @@
     </properties>
     <dependencies>
         <dependency>
+            <!--https://search.maven.org/remotecontent?filepath=org/graalvm/js/js/21.3.0/js-21.3.0.jar-->
+            <groupId>org.graalvm.js</groupId>
+            <artifactId>js</artifactId>
+            <version>22.0.0.2</version>
+        </dependency>
+        <dependency>
+            <!--https://search.maven.org/remotecontent?filepath=org/graalvm/js/js-scriptengine/21.3.0/js-scriptengine-21.3.0.jar-->
+            <groupId>org.graalvm.js</groupId>
+            <artifactId>js-scriptengine</artifactId>
+            <version>22.0.0.2</version>
+        </dependency>
+        <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
             <version>${jackson.version}</version>

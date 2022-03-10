@@ -14,6 +14,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineFactory;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -24,7 +28,7 @@ import org.apache.commons.lang3.StringUtils;
  */
 @Log4j2
 public class ProfileHandler {
-
+    
     public Audit proccessProfile(Audit audit) {
         audit.getChapters().forEach(chap -> {
             chap.getCategories().forEach(cat -> {
@@ -55,37 +59,59 @@ public class ProfileHandler {
                                 log.debug("status: {}", report.isStatus());
                             }
                             case Constants.SHELL_RUN -> {//run shell
-                                List<Boolean> statuss = new ArrayList<>();
+                                log.info("operator bef: {}", report.getOperator());
                                 report.getCommandList().stream().forEach(cmd -> {
                                     log.debug("command: {}, type: {}, expect: {}", cmd.getCommand(), report.getType(), cmd.getExpectationPattern());
                                     String result = CommonUtils.runPipeCommand(cmd.getCommand());
                                     if (result != null) {
                                         if (CommonUtils.ismatchPattern(result, cmd.getExpectationPattern())) {
-                                            statuss.add(Constants.TRUE);
+                                            if (report.getCommandList().size() > 1) {
+                                                report.setOperator(StringUtils.replace(report.getOperator(), cmd.getId(), "true"));
+                                            } else {
+                                                report.setStatus(Constants.TRUE);
+                                            }
                                         } else {
-                                            statuss.add(Constants.FALSE);
+                                            if (report.getCommandList().size() > 1) {
+                                                report.setOperator(StringUtils.replace(report.getOperator(), cmd.getId(), "false"));
+                                            } else {
+                                                report.setStatus(Constants.FALSE);
+                                            }
                                         }
                                     }
                                 });
-                                log.debug("status: {}", statuss.toString());
-                                for (Boolean s : statuss) {
-                                    report.setStatus(s);
-                                    if (StringUtils.equals(report.getOperator(), "OR")) {
-                                        if (s) {
-                                            report.setStatus(s);
-                                            break;
+                                if (report.getCommandList().size() > 1) {
+                                    if (StringUtils.isNoneEmpty(report.getOperator())) {
+                                        String languageName = "ECMAScript";
+                                        String languageVersion = "ECMAScript 262 Edition 11";
+                                        ScriptEngineManager manager = new ScriptEngineManager();
+                                        List<ScriptEngineFactory> factories = manager.getEngineFactories();
+                                        
+                                        ScriptEngine engine = null;
+                                        for (ScriptEngineFactory factory : factories) {
+                                            String language = factory.getLanguageName();
+                                            String version = factory.getLanguageVersion();
+                                            
+                                            if (language.equals(languageName)
+                                                    && version.equals(languageVersion)) {
+                                                engine = factory.getScriptEngine();
+                                                break;
+                                            }
                                         }
-                                    }
-                                    if (StringUtils.equals(report.getOperator(), "AND")) {
-                                        if (!s) {
-                                            report.setStatus(s);
-                                            break;
+                                        
+                                        if (engine != null) {
+                                            try {
+                                                report.setStatus((boolean) engine.eval(report.getOperator()));
+                                            } catch (ScriptException e) {
+                                                log.error("Scripte err {}", e);
+                                            }
                                         }
+                                        log.info("operator after: {}", report.getOperator());
+                                    } else {
+                                        log.error("operator can not be empty");
                                     }
                                 }
                             }
                         }
-
                     }
                     );
                 });
@@ -93,7 +119,7 @@ public class ProfileHandler {
         });
         return audit;
     }
-
+    
     public void LevelFilter(Audit audit, Level selLevel) {
         if (CollectionUtils.isNotEmpty(audit.getChapters())) {
             audit.getChapters().forEach(lc -> {

@@ -229,15 +229,17 @@
                                         "description": "Disable Automounting",
                                         "command_list": [
                                             {
+                                                "id":"1",
                                                 "command": "systemctl,is-enabled,autofs",
                                                 "expectationPattern": "^disabled$"
                                             },
                                             {
+                                                "id":"2",
                                                 "command": "dpkg,-s,autofs",
                                                 "expectationPattern": "\\s*package 'autofs' is not installed\\s*"
                                             }
                                         ],
-                                        "operator": "OR",
+                                        "operator": "1||2",
                                         "level": "1WS",
                                         "type": "SHELL_RUN"
                                     },
@@ -270,15 +272,17 @@
                                         "description": "Ensure sudo is installed",
                                         "command_list": [
                                             {
+                                                "id":"1",
                                                 "command": "dpkg,-s,sudo",
                                                 "expectationPattern": "\\s*Status: install ok installed\\s*"
                                             },
                                             {
+                                                "id":"2",
                                                 "command": "dpkg,-s,sudo-ldap",
                                                 "expectationPattern": "\\s*Status: install ok installed\\s*"
                                             }
                                         ],
-                                        "operator": "OR",
+                                        "operator": "1||2",
                                         "level": "1WS",
                                         "type": "SHELL_RUN"
                                     },
@@ -287,15 +291,17 @@
                                         "description": "Ensure sudo commands use pty",
                                         "command_list": [
                                             {
+                                                "id":"1",
                                                 "command": "grep,-Ei,^\\s*Defaults use_pty\\s*$,/etc/sudoers",
                                                 "expectationPattern": "\\s*Defaults use_pty\\s*"
                                             },
                                             {
+                                                "id":"2",
                                                 "command": "grep,-Ei,^\\s*Defaults use_pty\\s*$,/etc/sudoers.d/README",
                                                 "expectationPattern": "\\s*Defaults use_pty\\s*"
                                             }
                                         ],
-                                        "operator": "OR",
+                                        "operator": "1||2",
                                         "level": "1WS",
                                         "type": "SHELL_RUN"
                                     },
@@ -362,15 +368,17 @@
                                         "description": "Ensure bootloader password is set",
                                         "command_list": [
                                             {
+                                                "id":"1",
                                                 "command": "grep,^set superusers,/boot/grub/grub.cfg",
                                                 "expectationPattern": "\\s*set\\s+superusers=\\s*"
                                             },
                                             {
+                                                "id":"2",
                                                 "command": "grep,^password,/boot/grub/grub.cfg",
                                                 "expectationPattern": "\\s*password_pbkdf2\\s*"
                                             }
                                         ],
-                                        "operator": "AND",
+                                        "operator": "1&&2",
                                         "level": "1WS",
                                         "type": "SHELL_RUN"
                                     },
@@ -414,15 +422,17 @@
                                         "description": "Ensure address space layout randomization (ASLR) is enabled",
                                         "command_list": [
                                             {
+                                                "id":"1",
                                                 "command": "sysctl,kernel.randomize_va_space",
                                                 "expectationPattern": "\\s*kernel.randomize_va_space = 2\\s*"
                                             },
                                             {
+                                                "id":"2",
                                                 "command": "grep,-iR,kernel\\.randomize_va_space,/etc/sysctl.conf,/etc/sysctl.d",
                                                 "expectationPattern": "\\s*kernel.randomize_va_space = 2\\s*"
                                             }
                                         ],
-                                        "operator": "AND",
+                                        "operator": "1&&2",
                                         "level": "1WS",
                                         "type": "SHELL_RUN"
                                     },
@@ -443,19 +453,22 @@
                                         "description": "Ensure core dumps are restricted",
                                         "command_list": [
                                             {
+                                                "id":"1",
                                                 "command": "grep,-R,hard core,/etc/security/limits.conf,/etc/security/limits.d",
                                                 "expectationPattern": "\\s*hard core 0\\s*"
                                             },
                                             {
+                                                "id":"2",
                                                 "command": "sysctl,fs.suid_dumpable",
                                                 "expectationPattern": "\\s*fs.suid_dumpable\\*=\\s*0\\s*"
                                             },
                                             {
+                                                "id":"3",
                                                 "command": "grep,-R,fs\\.suid_dumpable,/etc/sysctl.conf,/etc/sysctl.d",
                                                 "expectationPattern": "\\s*fs.suid_dumpable\\*=\\s*0\\s*"
                                             }
                                         ],
-                                        "operator": "AND",
+                                        "operator": "1&&2&&3",
                                         "level": "1WS",
                                         "type": "SHELL_RUN"
                                     }
@@ -488,15 +501,17 @@
                                         "description": "Ensure address space layout randomization (ASLR) is enabled",
                                         "command_list": [
                                             {
+                                                "id":"1",
                                                 "command": "grep,^\\s*linux,/boot/grub/grub.cfg|grep,-v,apparmor=1|grep,-v,/boot/memtest86+.bin",
                                                 "expectationPattern": "^$"
                                             },
                                             {
+                                                "id":"2",
                                                 "command": "grep,^\\s*linux,/boot/grub/grub.cfg|grep,-v,security=apparmor|grep,-v,/boot/memtest86+.bin",
                                                 "expectationPattern": "^$"
                                             }
                                         ],
-                                        "operator": "AND",
+                                        "operator": "1&&2",
                                         "level": "1WS",
                                         "type": "SHELL_RUN"
                                     },
@@ -541,15 +556,17 @@
                                         "description": "Ensure permissions on /etc/motd are configured",
                                         "command_list": [
                                             {
+                                                "id":"1",
                                                 "command": "ls,/etc/motd",
                                                 "expectationPattern": "\\s*No such file or directory\\s*"
                                             },
                                             {
+                                                "id":"2",
                                                 "command": "stat,/etc/motd",
                                                 "expectationPattern": "\\s*Access:\\s+\\(0644\/-rw-r--r--\\)\\s+Uid:\\s+\\(\\s+0\\/\\s+root\\)\\s+Gid:\\s+\\(\\s+0\\/\\s+root\\s*"
                                             }
                                         ],
-                                        "operator": "OR",
+                                        "operator": "1||2",
                                         "level": "1WS",
                                         "type": "SHELL_RUN"
                                     },
@@ -558,15 +575,17 @@
                                         "description": "Ensure permissions on /etc/issue are configured",
                                         "command_list": [
                                             {
+                                                "id":"1",
                                                 "command": "ls,/etc/issue",
                                                 "expectationPattern": "\\s*No such file or directory\\s*"
                                             },
                                             {
+                                                "id":"2",
                                                 "command": "stat,/etc/issue",
                                                 "expectationPattern": "\\s*Access:\\s+\\(0644\/-rw-r--r--\\)\\s+Uid:\\s+\\(\\s+0\\/\\s+root\\)\\s+Gid:\\s+\\(\\s+0\\/\\s+root\\s*"
                                             }
                                         ],
-                                        "operator": "OR",
+                                        "operator": "1||2",
                                         "level": "1WS",
                                         "type": "SHELL_RUN"
                                     },
@@ -575,15 +594,17 @@
                                         "description": "Ensure permissions on /etc/issue.net are configured",
                                         "command_list": [
                                             {
+                                                "id":"1",
                                                 "command": "ls,/etc/issue.net",
                                                 "expectationPattern": "\\s*No such file or directory\\s*"
                                             },
                                             {
+                                                "id":"2",
                                                 "command": "stat,/etc/issue.net",
                                                 "expectationPattern": "\\s*Access:\\s+\\(0644\/-rw-r--r--\\)\\s+Uid:\\s+\\(\\s+0\\/\\s+root\\)\\s+Gid:\\s+\\(\\s+0\\/\\s+root\\s*"
                                             }
                                         ],
-                                        "operator": "OR",
+                                        "operator": "1||2",
                                         "level": "1WS",
                                         "type": "SHELL_RUN"
                                     },
@@ -592,23 +613,27 @@
                                         "description": "Ensure GDM login banner is configured",
                                         "command_list": [
                                             {
+                                                "id":"1",
                                                 "command": "ls,/etc/gdm3/greeter.dconf-defaults",
                                                 "expectationPattern": "\\s*/etc/gdm3/greeter.dconf-defaults\\s*"
                                             },
                                             {
+                                                "id":"2",
                                                 "command": "grep,^\\[org/gnome/login-screen\\],/etc/gdm3/greeter.dconf-defaults",
                                                 "expectationPattern": "^\\s*\\[org\\/gnome\\/login-screen\\]\\s*(\\s+#.*)?$"
                                             },
                                             {
+                                                "id":"3",
                                                 "command": "grep,^banner\\-message\\-enable=true,/etc/gdm3/greeter.dconf-defaults",
                                                 "expectationPattern": "^\\s*banner\\-message\\-enable\\s*=\\s*true\\s*(\\s+#.*)?$"
                                             },
                                             {
+                                                "id":"4",
                                                 "command": "grep,^banner\\-message\\-text=,/etc/gdm3/greeter.dconf-defaults",
                                                 "expectationPattern": "^\\s*banner\\-message\\-text\\s*=\\s*'.+'\\s*(\\s+#.*)?$"
                                             }
                                         ],
-                                        "operator": "AND",
+                                        "operator": "1&&2&&3&&4",
                                         "level": "1WS",
                                         "type": "SHELL_RUN"
                                     }
