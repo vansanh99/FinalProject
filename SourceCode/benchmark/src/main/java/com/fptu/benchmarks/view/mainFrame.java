@@ -432,7 +432,7 @@ public class mainFrame extends javax.swing.JFrame {
             } catch (JsonProcessingException e1) {
                 if (cbbBenchmark.getSelectedIndex() != 0) {
                     log.error("loi json :: {}", e1);
-                    Fragment.errMsgUI(cardContent, e1.getMessage(), "Notification");
+                    Fragment.errMsgUI(cardContent, "Error in parsing profile", "Notification");
                 }
             } catch (IOException ex) {
                 if (cbbBenchmark.getSelectedIndex() != 0) {

@@ -13,7 +13,8 @@ import lombok.Data;
  */
 @Data
 public class Command {
-    
+    @JsonProperty("id")
+    private String id;
     @JsonProperty("command")
     private String command;
     @JsonProperty("expectationPattern")

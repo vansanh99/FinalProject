@@ -2,7 +2,7 @@
     "name": "Linux",
     "version": "",
     "description": "This document provides prescriptive guidance for establishing a secure configuration posture for <b>Ubuntu Linux 18.04 <br></br>LTS<b> systems running on x86 and x64 platforms.",
-    "templateReport": "CIS_Ubuntu_Linux_18.04_LTS_Benchmark_v2.0.1-xccdf",
+    "templateReport": "CIS_Ubuntu_Linux_18.04_LTS_Benchmark_v2.0.1",
     "audit": {
         "level_list": [
             {
