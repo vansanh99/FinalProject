@@ -53,7 +53,7 @@
                                         "permission": "",
                                         "pattern": "^\\s*install\\s+freevxfs\\s+\/bin\/true\\s*$",
                                         "path": "/etc/modprobe.d/freevxfs.conf",
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "FILE_PATTERN"
                                     },
                                     {
@@ -62,7 +62,7 @@
                                         "permission": "",
                                         "pattern": "^\\s*install\\s+jffs2\\s+\/bin\/true\\s*$",
                                         "path": "/etc/modprobe.d/jffs2.conf",
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "FILE_PATTERN"
                                     },
                                     {
@@ -71,7 +71,7 @@
                                         "permission": "",
                                         "pattern": "^\\s*install\\s+hfs\\s+\/bin\/true\\s*$",
                                         "path": "/etc/modprobe.d/hfs.conf",
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "FILE_PATTERN"
                                     },
                                     {
@@ -80,16 +80,25 @@
                                         "permission": "",
                                         "pattern": "^\\s*install\\s+hfsplus\\s+\/bin\/true\\s*$",
                                         "path": "/etc/modprobe.d/hfsplus.conf",
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "FILE_PATTERN"
                                     },
                                     {
                                         "id": "1.1.1.6",
+                                        "description": "Ensure mounting of squashfs filesystems is disabled",
+                                        "permission": "",
+                                        "pattern": "^\\s*install\\s+squashfs\\s+\/bin\/true\\s*$",
+                                        "path": "/etc/modprobe.d/squashfs.conf",
+                                        "level": "1WS,1SV",
+                                        "type": "FILE_PATTERN"
+                                    },
+                                    {
+                                        "id": "1.1.1.7",
                                         "description": "Ensure mounting of udf filesystems is disabled",
                                         "permission": "",
                                         "pattern": "^\\s*install\\s+udf\\s+\/bin\/true\\s*$",
                                         "path": "/etc/modprobe.d/udf.conf",
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "FILE_PATTERN"
                                     },
                                     {
@@ -101,7 +110,7 @@
                                                 "expectationPattern": "\\s*tmpfs on \/tmp type tmpfs\\s*"
                                             }
                                         ],
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "SHELL_RUN"
                                     },
                                     {
@@ -113,7 +122,7 @@
                                                 "expectationPattern": "\\s*tmpfs on \/tmp type tmpfs \\(.*nodev.*\\)\\s*"
                                             }
                                         ],
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "SHELL_RUN"
                                     },
                                     {
@@ -125,7 +134,7 @@
                                                 "expectationPattern": "\\s*tmpfs on \/tmp type tmpfs \\(.*nosuid.*\\)\\s*"
                                             }
                                         ],
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "SHELL_RUN"
                                     },
                                     {
@@ -137,7 +146,31 @@
                                                 "expectationPattern": "\\s*tmpfs on \/tmp type tmpfs \\(.*noexec.*\\)\\s*"
                                             }
                                         ],
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "1.1.6",
+                                        "description": "Ensure separate partition exists for /var",
+                                        "command_list": [
+                                            {
+                                                "command": "mount[|]grep[,]-E[,]\\s/var\\s",
+                                                "expectationPattern": "^\\/dev\\/xvdg1 on \\/var type ext4 \\(rw,relatime,data=ordered\\)"
+                                            }
+                                        ],
+                                        "level": "2WS,2SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "1.1.7",
+                                        "description": "Ensure separate partition exists for /var/tmp",
+                                        "command_list": [
+                                            {
+                                                "command": "mount[|]grep[,]/var/tmp",
+                                                "expectationPattern": ".+\\s+on \\/var\\/tmp type ext4 \\(rw,nosuid,nodev,noexec,relatime\\)"
+                                            }
+                                        ],
+                                        "level": "2WS,2SV",
                                         "type": "SHELL_RUN"
                                     },
                                     {
@@ -149,7 +182,7 @@
                                                 "expectationPattern": "^$"
                                             }
                                         ],
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "SHELL_RUN"
                                     },
                                     {
@@ -161,7 +194,7 @@
                                                 "expectationPattern": "^$"
                                             }
                                         ],
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "SHELL_RUN"
                                     },
                                     {
@@ -173,7 +206,43 @@
                                                 "expectationPattern": "^$"
                                             }
                                         ],
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "1.1.11",
+                                        "description": "Ensure separate partition exists for /var/log",
+                                        "command_list": [
+                                            {
+                                                "command": "mount[|]grep[,]/var/log",
+                                                "expectationPattern": "\\/dev\\/xvdh1 on \\/var\\/log type ext4 \\(rw,relatime,data=ordered\\)"
+                                            }
+                                        ],
+                                        "level": "2WS,2SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "1.1.12",
+                                        "description": "Ensure separate partition exists for /var/log/audit",
+                                        "command_list": [
+                                            {
+                                                "command": "mount[|]grep[,]/var/log/audit",
+                                                "expectationPattern": "\\/dev\\/xvdh1 on \\/var\\/log\\/audit type ext4 \\(rw,relatime,data=ordered\\)"
+                                            }
+                                        ],
+                                        "level": "2WS,2SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "1.1.13",
+                                        "description": " Ensure separate partition exists for /home",
+                                        "command_list": [
+                                            {
+                                                "command": "mount[|]grep[,]/home",
+                                                "expectationPattern": "\\/dev\\/xvdh1 on \\/home type ext4 \\(rw,nodev,relatime,data=ordered\\)"
+                                            }
+                                        ],
+                                        "level": "2WS,2SV",
                                         "type": "SHELL_RUN"
                                     },
                                     {
@@ -185,7 +254,7 @@
                                                 "expectationPattern": "^$"
                                             }
                                         ],
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "SHELL_RUN"
                                     },
                                     {
@@ -197,7 +266,7 @@
                                                 "expectationPattern": "^$"
                                             }
                                         ],
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "SHELL_RUN"
                                     },
                                     {
@@ -209,7 +278,7 @@
                                                 "expectationPattern": "^$"
                                             }
                                         ],
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "SHELL_RUN"
                                     },
                                     {
@@ -221,7 +290,7 @@
                                                 "expectationPattern": "^$"
                                             }
                                         ],
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "SHELL_RUN"
                                     },
                                     {
@@ -240,15 +309,21 @@
                                             }
                                         ],
                                         "operator": "1||2",
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "1.1.22",
+                                        "description": "Disable Automounting",
+                                        "level": "1WS,1SV",
+                                        "type": "UNKNOWN"
                                     },
                                     {
                                         "id": "1.1.23",
                                         "description": "Disable USB Storage",
                                         "pattern": "^\\s*install\\s+usb-storage\\s+\/bin\/true\\s*$",
                                         "path": "/etc/modprobe.d/usb_storage.conf",
-                                        "level": "1WS",
+                                        "level": "2WS,1SV",
                                         "type": "FILE_PATTERN"
                                     }
                                 ]
@@ -283,7 +358,7 @@
                                             }
                                         ],
                                         "operator": "1||2",
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "SHELL_RUN"
                                     },
                                     {
@@ -302,7 +377,7 @@
                                             }
                                         ],
                                         "operator": "1||2",
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "SHELL_RUN"
                                     },
                                     {
@@ -314,7 +389,7 @@
                                                 "expectationPattern": "\\s*Defaults logfile=\\s*"
                                             }
                                         ],
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "SHELL_RUN"
                                     }
                                 ]
@@ -337,7 +412,7 @@
                                                 "expectationPattern": "\\s*Status: install ok installed\\s*"
                                             }
                                         ],
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "SHELL_RUN"
                                     }
                                 ]
@@ -360,7 +435,7 @@
                                                 "expectationPattern": "\\s*Access:\\s+\\(0400\/-r--------\\)\\s+Uid:\\s+\\(\\s+0\\/\\s+root\\)\\s+Gid:\\s+\\(\\s+0\\/\\s+root\\s*"
                                             }
                                         ],
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "SHELL_RUN"
                                     },
                                     {
@@ -379,7 +454,7 @@
                                             }
                                         ],
                                         "operator": "1&&2",
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "SHELL_RUN"
                                     },
                                     {
@@ -391,7 +466,7 @@
                                                 "expectationPattern": "^$"
                                             }
                                         ],
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "SHELL_RUN"
                                     }
                                 ]
@@ -414,7 +489,7 @@
                                                 "expectationPattern": "\\s*kernel:\\s+NX\\s+\\(Execute Disable\\)\\s+protection:\\s+active\\s*"
                                             }
                                         ],
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "SHELL_RUN"
                                     },
                                     {
@@ -433,7 +508,7 @@
                                             }
                                         ],
                                         "operator": "1&&2",
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "SHELL_RUN"
                                     },
                                     {
@@ -445,7 +520,7 @@
                                                 "expectationPattern": "\\s*package 'prelink' is not installed\\s*"
                                             }
                                         ],
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "SHELL_RUN"
                                     },
                                     {
@@ -469,7 +544,7 @@
                                             }
                                         ],
                                         "operator": "1&&2&&3",
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "SHELL_RUN"
                                     }
                                 ]
@@ -493,7 +568,7 @@
                                                 "expectationPattern": "\\s*Status: install ok installed\\s*"
                                             }
                                         ],
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "SHELL_RUN"
                                     },
                                     {
@@ -518,7 +593,7 @@
                                     {
                                         "id": "1.7.1.3",
                                         "description": "Ensure all AppArmor Profiles are in enforce or complain mode",
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "UNKNOWN"
                                     }
                                 ]
@@ -536,19 +611,19 @@
                                     {
                                         "id": "1.8.1.1",
                                         "description": "Ensure message of the day is configured properly",
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "UNKNOWN"
                                     },
                                     {
                                         "id": "1.8.1.2",
                                         "description": "Ensure local login warning banner is configured properly",
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "UNKNOWN"
                                     },
                                     {
                                         "id": "1.8.1.3",
                                         "description": "Ensure remote login warning banner is configured properly",
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "UNKNOWN"
                                     },
                                     {
@@ -567,7 +642,7 @@
                                             }
                                         ],
                                         "operator": "1||2",
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "SHELL_RUN"
                                     },
                                     {
@@ -586,7 +661,7 @@
                                             }
                                         ],
                                         "operator": "1||2",
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "SHELL_RUN"
                                     },
                                     {
@@ -605,7 +680,7 @@
                                             }
                                         ],
                                         "operator": "1||2",
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
                                         "type": "SHELL_RUN"
                                     },
                                     {
@@ -634,7 +709,506 @@
                                             }
                                         ],
                                         "operator": "1&&2&&3&&4",
-                                        "level": "1WS",
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "4",
+                "name": "Logging and Auditing",
+                "categories": [
+                    {
+                        "id": "4.1",
+                        "name": "Configure System Accounting (auditd)",
+                        "groups": [
+                            {
+                                "id": "4.1.1",
+                                "name": "Ensure auditing is enabled",
+                                "report": [
+                                    {
+                                        "id": "4.1.1.1",
+                                        "description": "Ensure auditd is installed",
+                                        "command_list": [
+                                            {
+                                                "command": "dpkg[,]-s[,]auditd",
+                                                "expectationPattern": "\\s*Status: install ok installed\\s*"
+                                            }
+                                        ],
+                                        "level": "2WS,2SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "4.1.1.2",
+                                        "description": "Ensure auditd service is enabled",
+                                        "command_list": [
+                                            {
+                                                "command": "systemctl[,]is-enabled[,]auditd",
+                                                "expectationPattern": "^enabled$"
+                                            }
+                                        ],
+                                        "level": "2WS,2SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "4.1.1.3",
+                                        "description": "Ensure auditing for processes that start prior to auditd is enabled",
+                                        "command_list": [
+                                            {
+                                                "command": "grep[,]-E[,]^\\s*linux[,]/boot/grub/grub.cfg[|]grep[,]-v[,]audit=1[|]grep[,]-v[,]/boot/memtest86+.bin",
+                                                "expectationPattern": "^$"
+                                            }
+                                        ],
+                                        "level": "2WS,2SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "4.1.1.4",
+                                        "description": "Ensure audit_backlog_limit is sufficient",
+                                        "command_list": [
+                                            {
+                                                "command": "grep[,]-E[,]^\\s*linux[,]/boot/grub/grub.cfg[|]grep[,]-v[,]audit_backlog_limit=",
+                                                "expectationPattern": "^$"
+                                            }
+                                        ],
+                                        "level": "2WS,2SV",
+                                        "type": "SHELL_RUN"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "4.1.2",
+                                "name": "Configure Data Retention",
+                                "report": [
+                                    {
+                                        "id": "4.1.2.1",
+                                        "description": "Ensure audit log storage size is configured",
+                                        "command_list": [
+                                            {
+                                                "command": "grep[,]max_log_file[,]/etc/audit/auditd.conf",
+                                                "expectationPattern": "^\\s*max_log_file\\s*=\\s*\\S+\\s*(\\s+#.*)?$"
+                                            }
+                                        ],
+                                        "level": "2WS,2SV",
+                                        "type": "UNKNOWN"
+                                    },
+                                    {
+                                        "id": "4.1.2.2",
+                                        "description": "Ensure audit logs are not automatically deleted",
+                                        "command_list": [
+                                            {
+                                                "command": "grep[,]max_log_file_action[,]/etc/audit/auditd.conf",
+                                                "expectationPattern": "^\\s*max_log_file_action\\s*=\\s*keep_logs\\s*(\\s+#.*)?$"
+                                            }
+                                        ],
+                                        "level": "2WS,2SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "4.1.2.3",
+                                        "description": "Ensure system is disabled when audit logs are full",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "grep[,]space_left_action[,]/etc/audit/auditd.conf",
+                                                "expectationPattern": "^\\s*space_left_action\\s*=\\s*email\\s*(\\s+#.*)?$"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "grep[,]action_mail_acct[,]/etc/audit/auditd.conf",
+                                                "expectationPattern": "^\\s*action_mail_acct\\s*=\\s*root\\s*(\\s+#.*)?$"
+                                            },
+                                            {
+                                                "id": "3",
+                                                "command": "grep[,]admin_space_left_action[,]/etc/audit/auditd.conf",
+                                                "expectationPattern": "^\\s*admin_space_left_action\\s*=\\s*halt\\s*(\\s+#.*)?$"
+                                            }
+                                        ],
+                                        "operator": "1&&2&&3",
+                                        "level": "2WS,2SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "4.1.3",
+                                        "description": "Ensure system is disabled when audit logs are full",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "cat[,]/etc/audit/audit.rules",
+                                                "expectationPattern": "^^-a\\s+always,exit\\s+-F\\s+arch=b32\\s+-S\\s+clock_settime\\s+-k\\s+time-change *$"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "cat[,]/etc/audit/audit.rules",
+                                                "expectationPattern": "^^-a\\s+always,exit\\s+-F\\s+arch=b32\\s+-S\\s+adjtimex\\s+-S\\s+settimeofday\\s+-S\\s+stime\\s+-k\\s+time-change *$"
+                                            },
+                                            {
+                                                "id": "3",
+                                                "command": "cat[,]/etc/audit/audit.rules",
+                                                "expectationPattern": "^^-a\\s+always,exit\\s+-F\\s+arch=b64\\s+-S\\s+adjtimex\\s+-S\\s+settimeofday\\s+-k\\s+time-change *$"
+                                            },
+                                            {
+                                                "id": "4",
+                                                "command": "cat[,]/etc/audit/audit.rules",
+                                                "expectationPattern": "^^-w\\s+/etc/localtime\\s+-p\\s+wa\\s+-k\\s+time-change *$"
+                                            },
+                                            {
+                                                "id": "5",
+                                                "command": "cat[,]/etc/audit/audit.rules",
+                                                "expectationPattern": "^^-a\\s+always,exit\\s+-F\\s+arch=b64\\s+-S\\s+clock_settime\\s+-k\\s+time-change *$"
+                                            }
+                                        ],
+                                        "operator": "1||2||3||4||5",
+                                        "level": "2WS,2SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "4.1.4",
+                                        "description": "Ensure events that modify user/group information are collected",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "cat[,]/etc/audit/audit.rules",
+                                                "expectationPattern": "^-w\\s+/etc/security/opasswd\\s+-p\\s+wa\\s+-k\\s+identity *$"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "cat[,]/etc/audit/audit.rules",
+                                                "expectationPattern": "^-w\\s+/etc/shadow\\s+-p\\s+wa\\s+-k\\s+identity *$"
+                                            },
+                                            {
+                                                "id": "3",
+                                                "command": "cat[,]/etc/audit/audit.rules",
+                                                "expectationPattern": "^-w\\s+/etc/gshadow\\s+-p\\s+wa\\s+-k\\s+identity *$"
+                                            },
+                                            {
+                                                "id": "4",
+                                                "command": "cat[,]/etc/audit/audit.rules",
+                                                "expectationPattern": "^-w\\s+/etc/passwd\\s+-p\\s+wa\\s+-k\\s+identity *$"
+                                            },
+                                            {
+                                                "id": "5",
+                                                "command": "cat[,]/etc/audit/audit.rules",
+                                                "expectationPattern": "^-w\\s+/etc/group\\s+-p\\s+wa\\s+-k\\s+identity *$"
+                                            }
+                                        ],
+                                        "operator": "1||2||3||4||5",
+                                        "level": "2WS,2SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "4.1.5",
+                                        "description": "Ensure events that modify the system's network environment are collected",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "cat[,]/etc/audit/audit.rules",
+                                                "expectationPattern": "^-w\\s+/etc/network\\s+-p\\s+wa\\s+-k\\s+system-locale *$"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "cat[,]/etc/audit/audit.rules",
+                                                "expectationPattern": "^^\\s*-w\\s+\\/etc\\/hosts\\s+-p\\s+wa\\s+-k\\s+system-locale\\s* *$"
+                                            },
+                                            {
+                                                "id": "3",
+                                                "command": "cat[,]/etc/audit/audit.rules",
+                                                "expectationPattern": "^-w\\s+/etc/issue.net\\s+-p\\s+wa\\s+-k\\s+system-locale *$"
+                                            },
+                                            {
+                                                "id": "4",
+                                                "command": "cat[,]/etc/audit/audit.rules",
+                                                "expectationPattern": "^-w\\s+/etc/issue\\s+-p\\s+wa\\s+-k\\s+system-locale *$"
+                                            },
+                                            {
+                                                "id": "5",
+                                                "command": "cat[,]/etc/audit/audit.rules",
+                                                "expectationPattern": "^-a\\s+always,exit\\s+-F\\s+arch=b32\\s+-S\\s+sethostname\\s+-S\\s+setdomainname\\s+-k\\s+system-locale *$"
+                                            },
+                                            {
+                                                "id": "6",
+                                                "command": "cat[,]/etc/audit/audit.rules",
+                                                "expectationPattern": "^-a\\s+always,exit\\s+-F\\s+arch=b64\\s+-S\\s+sethostname\\s+-S\\s+setdomainname\\s+-k\\s+system-locale *$"
+                                            }
+                                        ],
+                                        "operator": "1||2||3||4||5||6",
+                                        "level": "2WS,2SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "4.1.6",
+                                        "description": "Ensure events that modify the system's Mandatory Access Controls are collected",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "cat[,]/etc/audit/audit.rules",
+                                                "expectationPattern": "^-w\\s+/etc/apparmor(\\/)*\\s+-p\\s+wa\\s+-k\\s+MAC-policy *$"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "cat[,]/etc/audit/audit.rules",
+                                                "expectationPattern": "^-w\\s+/etc/apparmor.d(\\/)*\\s+-p\\s+wa\\s+-k\\s+MAC-policy *$"
+                                            }
+                                        ],
+                                        "operator": "1||2",
+                                        "level": "2WS,2SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "4.1.7",
+                                        "description": "Ensure login and logout events are collected",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "cat[,]/etc/audit/audit.rules",
+                                                "expectationPattern": "^-w\\s+/var/log/tallylog\\s+-p\\s+wa\\s+-k\\s+logins *$"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "cat[,]/etc/audit/audit.rules",
+                                                "expectationPattern": "^-w\\s+/var/log/faillog\\s+-p\\s+wa\\s+-k\\s+logins *$"
+                                            },
+                                            {
+                                                "id": "3",
+                                                "command": "cat[,]/etc/audit/audit.rules",
+                                                "expectationPattern": "^-w\\s+/var/log/lastlog\\s+-p\\s+wa\\s+-k\\s+logins *$"
+                                            }
+                                        ],
+                                        "operator": "1||2||3",
+                                        "level": "2WS,2SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "4.1.8",
+                                        "description": "Ensure session initiation information is collected",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "cat[,]/etc/audit/audit.rules",
+                                                "expectationPattern": "^-w\\s+/var/log/btmp\\s+-p\\s+wa\\s+-k\\s+logins *$"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "cat[,]/etc/audit/audit.rules",
+                                                "expectationPattern": "^-w\\s+/var/log/wtmp\\s+-p\\s+wa\\s+-k\\s+logins *$"
+                                            },
+                                            {
+                                                "id": "3",
+                                                "command": "cat[,]/etc/audit/audit.rules",
+                                                "expectationPattern": "^-w\\s+/var/run/utmp\\s+-p\\s+wa\\s+-k\\s+session *$"
+                                            }
+                                        ],
+                                        "operator": "1||2||3",
+                                        "level": "2WS,2SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "4.1.9",
+                                        "description": "Ensure discretionary access control permission modification events are collected",
+                                        "level": "2WS,2SV",
+                                        "type": "UNKNOWN"
+                                    },
+                                    {
+                                        "id": "4.1.10",
+                                        "description": "Ensure unsuccessful unauthorized file access attempts are collected",
+                                        "level": "2WS,2SV",
+                                        "type": "UNKNOWN"
+                                    },
+                                    {
+                                        "id": "4.1.11",
+                                        "description": "Ensure use of privileged commands is collected",
+                                        "level": "2WS,2SV",
+                                        "type": "UNKNOWN"
+                                    },
+                                    {
+                                        "id": "4.1.12",
+                                        "description": "Ensure successful file system mounts are collected",
+                                        "level": "2WS,2SV",
+                                        "type": "UNKNOWN"
+                                    },
+                                    {
+                                        "id": "4.1.13",
+                                        "description": "Ensure file deletion events by users are collected",
+                                        "level": "2WS,2SV",
+                                        "type": "UNKNOWN"
+                                    },
+                                    {
+                                        "id": "4.1.14",
+                                        "description": "Ensure changes to system administration scope (sudoers) is collected",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "cat[,]/etc/audit/audit.rules",
+                                                "expectationPattern": "^-w\\s+/etc/sudoers\\s+-p\\s+wa\\s+-k\\s+scope *$"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "cat[,]/etc/audit/audit.rules",
+                                                "expectationPattern": "^-w\\s+/etc/sudoers.d(/)*\\s+-p\\s+wa\\s+-k\\s+scope *$"
+                                            }
+                                        ],
+                                        "operator": "1||2",
+                                        "level": "2WS,2SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "4.1.15",
+                                        "description": "Ensure system administrator actions (sudolog) are collectedEnsure file deletion events by users are collected",
+                                        "level": "2WS,2SV",
+                                        "type": "UNKNOWN"
+                                    },
+                                    {
+                                        "id": "4.1.16",
+                                        "description": "Ensure kernel module loading and unloading is collected",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "cat[,]/etc/audit/audit.rules",
+                                                "expectationPattern": "^-w\\s+/sbin/modprobe\\s+-p\\s+x\\s+-k\\s+modules *$"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "cat[,]/etc/audit/audit.rules",
+                                                "expectationPattern": "^-w\\s+/sbin/insmod\\s+-p\\s+x\\s+-k\\s+modules *$"
+                                            },
+                                            {
+                                                "id": "3",
+                                                "command": "cat[,]/etc/audit/audit.rules",
+                                                "expectationPattern": "^-w\\s+/sbin/rmmod\\s+-p\\s+x\\s+-k\\s+modules *$"
+                                            }
+                                        ],
+                                        "operator": "1||2||3",
+                                        "level": "2WS,2SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "4.1.17",
+                                        "description": "Ensure the audit configuration is immutable",
+                                        "command_list": [
+                                            {
+                                                "command": "cat[,]/etc/audit/audit.rules",
+                                                "expectationPattern": "^-e\\s+2 *$"
+                                            }
+                                        ],
+                                        "level": "2WS,2SV",
+                                        "type": "SHELL_RUN"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "4.2",
+                        "name": "Configure Logging",
+                        "groups": [
+                            {
+                                "id": "4.2.1",
+                                "name": "Configure rsyslog",
+                                "report": [
+                                    {
+                                        "id": "4.2.1.1",
+                                        "description": "Ensure rsyslog is installed",
+                                        "command_list": [
+                                            {
+                                                "command": "dpkg[,]-s[,]rsyslog",
+                                                "expectationPattern": "\\s*Status: install ok installed\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "4.2.1.2",
+                                        "description": "Ensure rsyslog Service is enabled",
+                                        "command_list": [
+                                            {
+                                                "command": "systemctl[,]is-enabled[,]rsyslog",
+                                                "expectationPattern": "\\s*enabled\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "4.2.1.4",
+                                        "description": "Ensure rsyslog default file permissions configured",
+                                        "command_list": [
+                                            {
+                                                "command": "grep[,]-E[,]-R[,]^\\$FileCreateMode[,]/etc/rsyslog.conf[,]/etc/rsyslog.d",
+                                                "expectationPattern": "^\\s*\\$FileCreateMode\\s+0[6420][40]0\\s*(\\s+#.*)?$"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "4.2.1.5",
+                                        "description": "Ensure rsyslog is configured to send logs to a remote log host",
+                                        "command_list": [
+                                            {
+                                                "command": "grep[,]-E][,]-R[,]^[^#](\\s*\\S++\\s*)\\s*action\\([,]/etc/rsyslog.conf[,]/etc/rsyslog.d[|]grep[.]target=[.]",
+                                                "expectationPattern": "^\\s*target=\\s*.+(\\s+#.*)?$"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "4.2.2",
+                                "name": "Configure journald",
+                                "report": [
+                                    {
+                                        "id": "4.2.2.1",
+                                        "description": "Ensure journald is configured to send logs to rsyslog",
+                                        "command_list": [
+                                            {
+                                                "command": "grep[,]-E[,]-i[,]^\\s*ForwardToSyslog[,]/etc/systemd/journald.conf",
+                                                "expectationPattern": "\\s*ForwardToSyslog=yes\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "4.2.2.2",
+                                        "description": "Ensure journald is configured to compress large log files",
+                                        "command_list": [
+                                            {
+                                                "command": "grep[,]-E[,]-i[,]^\\s*Compress[,]/etc/systemd/journald.conf",
+                                                "expectationPattern": "\\s*Compress=yes\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "4.2.2.3",
+                                        "description": "Ensure journald is configured to write logfiles to persistent disk",
+                                        "command_list": [
+                                            {
+                                                "command": "grep[,]-E[,]-i[,]^\\s*Storage[,]/etc/systemd/journald.conf",
+                                                "expectationPattern": "\\s*Storage=persistent\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "4.2.3",
+                                        "description": "Ensure permissions on all logfiles are configured",
+                                        "command_list": [
+                                            {
+                                                "command": "find[,]/var/log[,]-type[,]f[,]-ls[|]grep[,]-Ev[,]\\-\\-\\-\\-\\-\\s++",
+                                                "expectationPattern": "^$"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
                                         "type": "SHELL_RUN"
                                     }
                                 ]
@@ -645,7 +1219,7 @@
             },
             {
                 "id": "5",
-                "name": "Access[,] Authentication and Authorization",
+                "name": "Access, Authentication and Authorization",
                 "categories": [
                     {
                         "id": "5.1",
@@ -963,12 +1537,12 @@
                                         "description": "Ensure only strong Key Exchange algorithms are used",
                                         "command_list": [
                                             {
-                                                "id":"1",
+                                                "id": "1",
                                                 "command": "sshd[,]-T[|]grep[,]clientaliveinterval",
                                                 "expectationPattern": "^ClientAliveInterval (0*([0-9]|[1-8][0-9]|9[0-9]|300))$"
                                             },
                                             {
-                                                "id":"2",
+                                                "id": "2",
                                                 "command": "sshd[,]-T[|]grep[,]clientalivecountmax",
                                                 "expectationPattern": "\\s*ClientAliveCountMax [0-3]\\s*"
                                             }
@@ -1169,10 +1743,166 @@
                                 ]
                             }
                         ]
+                    },
+                    {
+                        "id": "5.4",
+                        "name": "User Accounts and Environment",
+                        "groups": [
+                            {
+                                "id": "5.4.1",
+                                "name": "Set Shadow Password Suite Parameters",
+                                "report": [
+                                    {
+                                        "id": "5.4.1.1",
+                                        "description": "Ensure password expiration is 365 days or less",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "grep[,]^PASS_MAX_DAYS[,]/etc/login.defs",
+                                                "expectationPattern": "^PASS_MAX_DAYS\\s+0*(?:36[0-5]|3[0-5]\\d|[12]\\d{2}|[1-9]\\d?)\\s*(\\s+#.*)*$"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "grep[,]-E[,]^[^:]++:[^!*][,]/etc/shadow[|]cut[,]-d:[,]-f1,5",
+                                                "expectationPattern": "^.*:0*(?:36[0-5]|3[0-5]\\d|[12]\\d{2}|[1-9]\\d?)\\s*(\\s+#.*)*$"
+                                            }
+                                        ],
+                                        "operator": "1&&2",
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.4.1.2",
+                                        "description": "Ensure minimum days between password changes is configured",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "grep[,]^PASS_MIN_DAYS[,]/etc/login.defs",
+                                                "expectationPattern": "^PASS_MIN_DAYS\\s+0*[1-9][0-9]*\\s*(\\s+#.*)*$"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "grep[,]-E[,]^[^:]++:[^!*][,]/etc/shadow[|]cut[,]-d:[,]-f1,4",
+                                                "expectationPattern": "^.*:0*[1-9][0-9]*\\s*(\\s+#.*)*$"
+                                            }
+                                        ],
+                                        "operator": "1&&2",
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.4.1.3",
+                                        "description": "Ensure password expiration warning days is 7 or more",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "grep[,]^PASS_WARN_AGE[,]/etc/login.defs",
+                                                "expectationPattern": "^PASS_WARN_AGE\\s+0*([7-9]|[1-9]{2,})\\s*(\\s+#.*)*$"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "grep[,]-E[,]^[^:]++:[^!*][,]/etc/shadow[|]cut[,]-d:[,]-f1,6",
+                                                "expectationPattern": "^.*:0*([7-9]|[1-9]{2,})\\s*(\\s+#.*)*$"
+                                            }
+                                        ],
+                                        "operator": "1&&2",
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.4.1.4",
+                                        "description": "Ensure inactive password lock is 30 days or less",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "useradd[,]-D[|]grep[,]INACTIVE",
+                                                "expectationPattern": "^INACTIVE\\s+=\\s+0*([0-9]|[1-2][0-9]|30)\\s*(\\s+#.*)*$"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "grep[,]-E[,]^[^:]++:[^!*][,]/etc/shadow[|]cut[,]-d:[,]-f1,7",
+                                                "expectationPattern": "^.*:0*([0-9]|[1-2][0-9]|30)\\s*(\\s+#.*)*$"
+                                            }
+                                        ],
+                                        "operator": "1&&2",
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.4.1.5",
+                                        "description": "Ensure inactive password lock is 30 days or less",
+                                        "level": "1WS,1SV",
+                                        "type": "UNKNOWN"
+                                    },
+                                    {
+                                        "id": "5.4.2",
+                                        "description": "Ensure system accounts are secured",
+                                        "level": "1WS,1SV",
+                                        "type": "UNKNOWN"
+                                    },
+                                    {
+                                        "id": "5.4.3",
+                                        "description": "Ensure default group for the root account is GID 0",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "grep[,]-E[,]^root:[,]/etc/passwd[|]cut[,]-f4[,]-d:",
+                                                "expectationPattern": "^\\s*0\\s*(\\s+#.*)*$"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.4.4",
+                                        "description": "Ensure default user umask is 027 or more restrictive",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "grep[,]umask[,]/etc/bash.bashrc",
+                                                "expectationPattern": "^\\s*umask\\s+[01234567][2367]7\\s*(\\s+#.*)?$"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "grep[,]-R[,]umask[,]/etc/profile[,]/etc/profile.d",
+                                                "expectationPattern": "^\\s*umask\\s+[01234567][2367]7\\s*(\\s+#.*)?$"
+                                            }
+                                        ],
+                                        "operator": "1&&2",
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.4.5",
+                                        "description": "Ensure default user shell timeout is 900 seconds or less",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "grep[,]-E[,]-i[,]^\\s*\\(\\S++\\s++\\)*TMOUT=\\(900|[1-8][0-9][0-9]|[1-9][0-9]|[1-9]\\)\\s*\\(\\S++\\s*\\)*\\(\\s++#.*\\)?$[,]/etc/bash.bashrc",
+                                                "expectationPattern": "^\\s*(\\S+\\s+)*TMOUT=(900|[1-8][0-9][0-9]|[1-9][0-9]|[1-9])\\b\\s*(\\S+\\s*)*(\\s+#.*)?$"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "grep[,]-E[,]-i[,]^\\s*\\(\\S++\\s++\\)*TMOUT=\\(900|[1-8][0-9][0-9]|[1-9][0-9]|[1-9]\\)\\s*\\(\\S++\\s*\\)*\\(\\s++#.*\\)?$[,]/etc/profile[,]/etc/profile.d",
+                                                "expectationPattern": "^\\s*umask\\s+[01234567][2367]7\\s*(\\s+#.*)?$"
+                                            }
+                                        ],
+                                        "operator": "1||2",
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "5.6",
+                                        "description": "Ensure access to the su command is restricted",
+                                        "level": "1WS,1SV",
+                                        "type": "UNKNOWN"
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 ]
             }
         ]
     }
 }
-            
