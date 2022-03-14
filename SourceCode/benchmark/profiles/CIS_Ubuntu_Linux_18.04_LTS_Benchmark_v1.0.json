@@ -656,7 +656,8 @@
                 "description": "Ensure xinetd is not installed",
                 "command_list": [
                   {
-                    "command": "dpkg,-s,xinetd"
+                    "command": "dpkg[,]-s[,]xinetd",
+                    "expectationPattern" : "\\s*package 'xinetd' is not installed\\s*"
                   }
                 ],
                 "level": "1WS, 1SV",
@@ -667,7 +668,8 @@
                 "description": "Ensure openbsd-inetd is not installed",
                 "command_list": [
                   {
-                    "command": "dpkg,-s,openbsd-inetd"
+                    "command": "dpkg[,]-s[,]openbsd-inetd",
+                    "expectationPattern": "\\s*package 'openbsd-inetd' is not installed\\s*"
                   }
                 ],
                 "level": "1WS,1SV",
@@ -688,13 +690,16 @@
                     "description": "Ensure time synchronization is in use",
                     "command_list": [
                       {
-                        "command": "systemctl,is-enabled,systemd-timesyncd"
+                        "command": "systemctl[,]is-enabled[,]systemd-timesyncd",
+                        "expectationPattern": "enable"
                       },
                       {
-                        "command": "dpkg,-s,chrony"
+                        "command": "dpkg[,]-s[,]chrony",
+                        "expectedPattern" : "\\s*package 'chrony' is not installed\\s*"
                       },
                       {
-                        "command": "dpkg,-s,ntp"
+                        "command": "dpkg[,]-s[,]ntp",
+                        "expectationPattern": "\\s*package 'ntp' is not installed\\s*"
                       }
                     ],
                     "operator": "AND",
@@ -730,7 +735,8 @@
                     "description": "Ensure X Window System is not installed",
                     "command_list": [
                       {
-                        "command": "dpkg,-l,xserver-xorg*"
+                        "command": "dpkg[,]-l[,]xserver-xorg*",
+                        "expectationPattern": ""
                       }
                     ],
                     "level": "1SV",
@@ -971,6 +977,637 @@
                 ],
                 "level": "1WS,1SV",
                 "type": "SHELL_RUN"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "3",
+        "name": "Network Configuration",
+        "categories": [
+          {
+            "id": "3.1",
+            "name": "Network Parameters(Host Only)",
+            "report": [
+              {
+                "id": "3.1.1",
+                "description": "Ensure packet redirect sending is disabled",
+                "command_list": [
+                  {
+                    "command": "sysctl,net.ipv4.conf.all.send_redirects"
+                  },
+                  {
+                    "command": "sysctl,net.ipv4.conf.default.send_redirects"
+                  },
+                  {
+                    "command": ""
+                  },
+                  {
+                    "command": ""
+                  }
+                ],
+                "operator": "AND",
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "3.1.2",
+                "description": "Ensure IP forwarding is disabled",
+                "command_list": [
+                  {
+                    "command": "sysctl,net.ipv4.ip_forward"
+                  },
+                  {
+                    "command": ""
+                  },
+                  {
+                    "command": ""
+                  },
+                  {
+                    "command": ""
+                  }
+                ],
+                "operator": "AND",
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              }
+            ]
+          },
+          {
+            "id": "3.2",
+            "name": "Network Parameters (Host and Router)",
+            "report": [
+              {
+                "id": "3.2.1",
+                "description": "Ensure source routed packets are not accepted",
+                "command_list": [
+                  {
+                    "command": "sysctl,net.ipv4.conf.all.accept_source_route"
+                  },
+                  {
+                    "command": "sysctl,net.ipv4.conf.default.accept_source_route"
+                  },
+                  {
+                    "command": ""
+                  },
+                  {
+                    "command": ""
+                  },
+                  {
+                    "command": "sysctl,net.ipv6.conf.all.accept_source_route"
+                  },
+                  {
+                    "command": "sysctl,net.ipv6.conf.default.accept_source_route"
+                  },
+                  {
+                    "command": ""
+                  },
+                  {
+                    "command": ""
+                  }
+                ],
+                "operator": "AND",
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "3.2.2",
+                "description": "Ensure ICMP redirects are not accepted",
+                "command_list": [
+                  {
+                    "command": "sysctl,net.ipv4.conf.all.accept_redirects"
+                  },
+                  {
+                    "command": "sysctl,net.ipv4.conf.default.accept_redirects"
+                  },
+                  {
+                    "command": ""
+                  },
+                  {
+                    "command": ""
+                  },
+                  {
+                    "command": "sysctl,net.ipv6.conf.all.accept_redirects"
+                  },
+                  {
+                    "command": "sysctl,net.ipv6.conf.default.accept_redirects"
+                  },
+                  {
+                    "command": ""
+                  },
+                  {
+                    "command": ""
+                  }
+                ],
+                "operator": "AND",
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "3.2.3",
+                "description": "Ensure secure ICMP redirects are not accepted",
+                "command_list": [
+                  {
+                    "command": "sysctl,net.ipv4.conf.all.secure_redirects"
+                  },
+                  {
+                    "command": "sysctl,net.ipv4.conf.default.secure_redirects"
+                  },
+                  {
+                    "command": ""
+                  },
+                  {
+                    "command": ""
+                  }
+                ],
+                "operator": "AND",
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "3.2.4",
+                "description": "Ensure suspicious packets are logged",
+                "command_list": [
+                  {
+                    "command": "sysctl,net.ipv4.conf.all.log_martians"
+                  },
+                  {
+                    "command": "sysctl,net.ipv4.conf.default.log_martians"
+                  },
+                  {
+                    "command": ""
+                  },
+                  {
+                    "command": ""
+                  }
+                ],
+                "operator": "AND",
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "3.2.5",
+                "description": "Ensure broadcast ICMP requests are ignored",
+                "command_list": [
+                  {
+                    "command": "sysctl,net.ipv4.icmp_echo_ignore_broadcasts"
+                  },
+                  {
+                    "command": ""
+                  }
+                ],
+                "operator": "AND",
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "3.2.6",
+                "description": "Ensure bogus ICMP responses are ignored",
+                "command_list": [
+                  {
+                    "command": "sysctl,net.ipv4.icmp_ignore_bogus_error_responses"
+                  },
+                  {
+                    "command": ""
+                  }
+                ],
+                "operator": "AND",
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "3.2.7",
+                "description": "Ensure Reverse Path Filtering is enabled",
+                "command_list": [
+                  {
+                    "command": "sysctl,net.ipv4.conf.all.rp_filter"
+                  },
+                  {
+                    "command": "sysctl,net.ipv4.conf.default.rp_filter"
+                  },
+                  {
+                    "command": ""
+                  },
+                  {
+                    "command": ""
+                  }
+                ],
+                "operator": "AND",
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "3.2.8",
+                "description": "Ensure TCP SYN Cookies is enabled",
+                "command_list": [
+                  {
+                    "command": "sysctl,net.ipv4.tcp_syncookies"
+                  },
+                  {
+                    "command": ""
+                  }
+                ],
+                "operator": "AND",
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "3.2.9",
+                "description": "Ensure IPv6 router advertisements are not accepted",
+                "command_list": [
+                  {
+                    "command": "sysctl,net.ipv6.conf.all.accept_ra"
+                  },
+                  {
+                    "command": "sysctl,net.ipv6.conf.default.accept_ra"
+                  },
+                  {
+                    "command": ""
+                  },
+                  {
+                    "command": ""
+                  }
+                ],
+                "operator": "AND",
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              }
+            ]
+          },
+          {
+            "id": "3.3",
+            "name": "TCP Wrappers",
+            "report": [
+              {
+                "id": "3.3.4",
+                "description": "Ensure permissions on /etc/hosts.allow are configured",
+                "command_list": [
+                  {
+                    "command": ""
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "3.3.5",
+                "description": "Ensure permissions on /etc/hosts.deny are configured",
+                "command_list": [
+                  {
+                    "command": ""
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              }
+            ]
+          },
+          {
+            "id": "3.4",
+            "name": "Uncommon Network Protocols",
+            "report": [
+              {
+                "id": "3.4.1",
+                "description": "",
+                "command_list": [
+                  {
+                    "command": "modprobe,-n,-v,dccp"
+                  },
+                  {
+                    "command": "lsmod,|grep,dccp"
+                  }
+                ],
+                "operator": "AND",
+                "level": "2WS,2SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "3.4.2",
+                "description": "Ensure SCTP is disabled",
+                "command_list": [
+                  {
+                    "command": "modprobe,-n,-v,sctp"
+                  },
+                  {
+                    "command": "lsmod,|grep,sctp"
+                  }
+                ],
+                "operator": "AND",
+                "level": "2WS,2SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "3.4.3",
+                "description": "Ensure RDS is disabled",
+                "command_list": [
+                  {
+                    "command": "modprobe,-n,-v,rds"
+                  },
+                  {
+                    "command": "lsmod,|grep,rds"
+                  }
+                ],
+                "operator": "AND",
+                "level": "2WS,2SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "3.4.4",
+                "description": "Ensure TIPC is disabled",
+                "command_list": [
+                  {
+                    "command": "modprobe,-n,-v,tipc"
+                  },
+                  {
+                    "command": "lsmod,|grep,tipc"
+                  }
+                ],
+                "operator": "AND",
+                "level": "2WS,2SV",
+                "type": "SHELL_RUN"
+              }
+            ]
+          },
+          {
+            "id": "3.5",
+            "name": "Firewall Configuration",
+            "group": [
+              {
+                "id": "3.5.1",
+                "name": "Ensure Firewall software is installed",
+                "report": [
+                  {
+                    "id": "3.5.1.1",
+                    "description": "Ensure a Firewall package is installed",
+                    "command_list": [
+                      {
+                        "command": "dpkg,-s,ufw |grep,-i,status"
+                      },
+                      {
+                        "command": "dpkg,-s,nftables,|grep,-i,status"
+                      },
+                      {
+                        "command": "dpkg,-s,iptables,|grep,-i,status"
+                      }
+                    ],
+                    "operator": "AND",
+                    "level": "1WS,1SV",
+                    "type": "SHELL_RUN"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "3.5.2",
+            "name": "Configure UncomplicatedFirewall",
+            "report": [
+              {
+                "id": "3.5.2.1",
+                "description": "Ensure ufw service is enabled",
+                "command_list": [
+                  {
+                    "command": "systemctl,is-enabled,ufw"
+                  },
+                  {
+                    "command": "ufw,status,|grep,Status"
+                  }
+                ],
+                "operator": "AND",
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "3.5.2.2",
+                "description": "Ensure default deny firewall policy",
+                "command_list": [
+                  {
+                    "command": "ufw,status,verbose"
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "3.5.2.3",
+                "description": "Ensure loopback traffic is configured",
+                "command_list": [
+                  {
+                    "command": "ufw,status,verbose"
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              }
+            ]
+          },
+          {
+            "id": "3.5.3",
+            "name": "Configure nftables",
+            "report": [
+              {
+                "id": "3.5.3.2",
+                "description": "Ensure a table exists",
+                "command_list": [
+                  {
+                    "command": "nft,list,tables"
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "3.5.3.3",
+                "description": "Ensure base chains exist",
+                "command_list": [
+                  {
+                    "command": ""
+                  },
+                  {
+                    "command": ""
+                  },
+                  {
+                    "command": ""
+                  }
+                ],
+                "operator": "AND",
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "3.5.3.4",
+                "description": "Ensure loopback traffic is configured",
+                "command_list": [
+                  {
+                    "command": ""
+                  },
+                  {
+                    "command": ""
+                  },
+                  {
+                    "command": ""
+                  }
+                ],
+                "operator": "AND",
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "3.5.3.6",
+                "description": "Ensure default deny firewall policy",
+                "command_list": [
+                  {
+                    "command": ""
+                  },
+                  {
+                    "command": ""
+                  },
+                  {
+                    "command": ""
+                  }
+                ],
+                "operator": "AND",
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "3.5.3.7",
+                "description": "Ensure nftables service is enabled",
+                "command_list": [
+                  {
+                    "command": "systemctl,is-enabled,nftables"
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "3.5.3.8",
+                "description": "Ensure nftables rules are permanent",
+                "command_list": [
+                  {
+                    "command": ""
+                  },
+                  {
+                    "command": ""
+                  },
+                  {
+                    "command": ""
+                  }
+                ],
+                "operator": "AND",
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              }
+            ]
+          },
+          {
+            "id": "3.5.4",
+            "name": "Configure iptables",
+            "group": [
+              {
+                "id": "3.5.4.1",
+                "name": "Configure IPv4 iptables",
+                "report": [
+                  {
+                    "id": "3.5.4.1.1",
+                    "description": "Ensure default deny firewall policy",
+                    "command_list": [
+                      {
+                        "command": "iptables,-L"
+                      }
+                    ],
+                    "level": "1WS,1SV",
+                    "type": "SHELL_RUN"
+                  },
+                  {
+                    "id": "3.5.4.1.2",
+                    "description": "Ensure loopback traffic is configured",
+                    "command_list": [
+                      {
+                        "command": "iptables,-L,INPUT,-v,-n"
+                      },
+                      {
+                        "command": "iptables,-L,OUTPUT,-v,-n"
+                      }
+                    ],
+                    "operator": "AND",
+                    "level": "1WS,1SV",
+                    "type": "SHELL_RUN"
+                  },
+                  {
+                    "id": "3.5.4.1.4",
+                    "description": "Ensure firewall rules exist for all open ports",
+                    "command_list": [
+                      {
+                        "command": "ss,-4tuln"
+                      },
+                      {
+                        "command": "iptables,-L,INPUT,-v,-n"
+                      }
+                    ],
+                    "operator": "AND",
+                    "level": "1WS,1SV",
+                    "type": "SHELL_RUN"
+                  }
+                ]
+              },
+              {
+                "id": "3.5.4.2",
+                "name": "Configure IPv6 ip6tables",
+                "report": [
+                  {
+                    "id": "3.5.4.2.1",
+                    "description": "Ensure IPv6 default deny firewall policy",
+                    "command_list": [
+                      {
+                        "command": "ip6tables,-L"
+                      },
+                      {
+                        "command": ""
+                      },
+                      {
+                        "command": ""
+                      }
+                    ],
+                    "operator": "OR",
+                    "level": "1WS,1SV",
+                    "type": "SHELL_RUN"
+                  },
+                  {
+                    "id": "3.5.4.2.2",
+                    "description": "Ensure IPv6 loopback traffic is configured",
+                    "command_list": [
+                      {
+                        "command": "ip6tables,-L,INPUT,-v,-n"
+                      },
+                      {
+                        "command": "ip6tables -L OUTPUT,-v,-n"
+                      },
+                      {
+                        "command": ""
+                      },
+                      {
+                        "command": ""
+                      }
+                    ],
+                    "operator": "",
+                    "level": "1WS,1SV",
+                    "type": "SHELL_RUN"
+                  },
+                  {
+                    "id": "3.6",
+                    "description": "Ensure wireless interfaces are disabled",
+                    "command_list": [
+                      {
+                        "command": "nmcli,radio,all"
+                      }
+                    ],
+                    "level": "2WS,1SV",
+                    "type": "SHELL_RUN"
+                  }
+                ]
               }
             ]
           }
