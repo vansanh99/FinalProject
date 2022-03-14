@@ -657,7 +657,7 @@
                 "command_list": [
                   {
                     "command": "dpkg[,]-s[,]xinetd",
-                    "expectationPattern" : "\\s*package 'xinetd' is not installed\\s*"
+                    "expectationPattern": "\\s*package 'xinetd' is not installed\\s*"
                   }
                 ],
                 "level": "1WS, 1SV",
@@ -695,7 +695,7 @@
                       },
                       {
                         "command": "dpkg[,]-s[,]chrony",
-                        "expectedPattern" : "\\s*package 'chrony' is not installed\\s*"
+                        "expectedPattern": "\\s*package 'chrony' is not installed\\s*"
                       },
                       {
                         "command": "dpkg[,]-s[,]ntp",
@@ -2137,6 +2137,376 @@
                     "type": "SHELL_RUN"
                   }
                 ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "6",
+        "name": "System Maintenance",
+        "categories": [
+          {
+            "id": "6.1",
+            "name": "System File Permissions",
+            "report": [
+              {
+                "id": "6.1.2",
+                "description": "Ensure permissions on /etc/passwd are configured",
+                "command_list": [
+                  {
+                    "command": "stat /etc/passwd",
+                    "expectationPattern": "Access: (0644/-rw-r--r--) Uid: ( 0/ root) Gid: ( 0/ root)"
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "6.1.3",
+                "description": "Ensure permissions on /etc/gshadow- are configured",
+                "command_list": [
+                  {
+                    "command": "stat /etc/gshadow",
+                    "expectationPattern": "Access: (0640/-rw-r-----) Uid: ( 0/ root) Gid: ( 0/ root)"
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "6.1.4",
+                "description": "Ensure permissions on /etc/shadow are configured",
+                "command_list": [
+                  {
+                    "command": "stat /etc/shadow",
+                    "expectationPattern": "Access: (0640/-rw-r-----) Uid: ( 0/ root) Gid: ( 42/ shadow)"
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "6.1.5",
+                "description": "Ensure permissions on /etc/group are configured",
+                "command_list": [
+                  {
+                    "command": "stat /etc/group",
+                    "expectationPattern": "Access: (0644/-rw-r--r--) Uid: ( 0/ root) Gid: ( 0/ root)"
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "6.1.6",
+                "description": "Ensure permissions on /etc/passwd- are configured",
+                "command_list": [
+                  {
+                    "command": "stat /etc/passwd",
+                    "expectationPattern": "Access: (0600/-rw-------) Uid: ( 0/ root) Gid: ( 0/ root)"
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "6.1.7",
+                "description": "Ensure permissions on /etc/shadow- are configured",
+                "command_list": [
+                  {
+                    "command": "stat /etc/shadow",
+                    "expectationPattern": "Access: (0600/-rw-------) Uid: ( 0/ root) Gid: ( 42/ shadow)"
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "6.1.8",
+                "description": "Ensure permissions on /etc/group- are configured",
+                "command_list": [
+                  {
+                    "command": "stat /etc/group",
+                    "expectationPattern": "Access: (0644/-rw-r--r--) Uid: ( 0/ root) Gid: ( 0/ root)"
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "6.1.9",
+                "description": "Ensure permissions on /etc/gshadow are configured",
+                "command_list": [
+                  {
+                    "command": "stat /etc/gshadow",
+                    "expectationPattern": "Access: (0640/-rw-r-----) Uid: ( 0/ root) Gid: ( 42/ shadow)"
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "6.1.10",
+                "description": "Ensure no world writable files exist",
+                "command_list": [
+                  {
+                    "command": ""
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "6.1.11",
+                "description": "Ensure no unowned files or directories exist",
+                "command_list": [
+                  {
+                    "command": ""
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "6.1.12",
+                "description": "Ensure no ungrouped files or directories exist",
+                "command_list": [
+                  {
+                    "command": ""
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              }
+            ]
+          },
+          {
+            "id": "6.2",
+            "name": "User and Group Settings",
+            "report": [
+              {
+                "id": "6.2.1",
+                "description": "Ensure password fields are not empty",
+                "command_list": [
+                  {
+                    "command": ""
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "6.2.2",
+                "description": "Ensure no legacy '+' entries exist in /etc/passwd",
+                "command_list": [
+                  {
+                    "command": ""
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "6.2.3",
+                "description": "Ensure all users' home directories exist",
+                "command_list": [
+                  {
+                    "command": ""
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "6.2.4",
+                "description": "Ensure no legacy '+' entries exist in /etc/shadow",
+                "command_list": [
+                  {
+                    "command": ""
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "6.2.5",
+                "description": "Ensure no legacy '+' entries exist in /etc/group",
+                "command_list": [
+                  {
+                    "command": ""
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "6.2.6",
+                "description": "Ensure root is the only UID 0 account",
+                "command_list": [
+                  {
+                    "command": ""
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "6.2.7",
+                "description": "Ensure root PATH Integrity",
+                "command_list": [
+                  {
+                    "command": ""
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "6.2.8",
+                "description": "Ensure users' home directories permissions are 750 or more restrictive",
+                "command_list": [
+                  {
+                    "command": ""
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "6.2.9",
+                "description": "",
+                "command_list": [
+                  {
+                    "command": ""
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "6.2.10",
+                "description": "Ensure users' dot files are not group or world writable",
+                "command_list": [
+                  {
+                    "command": ""
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "6.2.11",
+                "description": "Ensure no users have .forward files",
+                "command_list": [
+                  {
+                    "command": ""
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "6.2.12",
+                "description": "Ensure no users have .netrc files",
+                "command_list": [
+                  {
+                    "command": ""
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "6.2.13",
+                "description": "Ensure users' .netrc Files are not group or world accessible",
+                "command_list": [
+                  {
+                    "command": ""
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "6.2.14",
+                "description": "Ensure no users have .rhosts files",
+                "command_list": [
+                  {
+                    "command": ""
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "6.2.15",
+                "description": "Ensure all groups in /etc/passwd exist in /etc/group",
+                "command_list": [
+                  {
+                    "command": ""
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "6.2.16",
+                "description": "Ensure no duplicate UIDs exist",
+                "command_list": [
+                  {
+                    "command": ""
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "6.2.17",
+                "description": "Ensure no duplicate GIDs exist",
+                "command_list": [
+                  {
+                    "command": ""
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "6.2.18",
+                "description": "Ensure no duplicate user names exist",
+                "command_list": [
+                  {
+                    "command": ""
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "6.2.19",
+                "description": "Ensure no duplicate group names exist",
+                "command_list": [
+                  {
+                    "command": ""
+                  }
+                ],
+                "level": "1WS,1SV",
+                "type": "SHELL_RUN"
+              },
+              {
+                "id": "6.2.20",
+                "description": "Ensure shadow group is empty",
+                "command_list": [
+                  {
+                    "command" : ""
+                  }
+                ],
+                "level" : "1WS,1SV",
+                "type" : "SHELL_RUN"
+              },
+              {
+                
               }
             ]
           }
