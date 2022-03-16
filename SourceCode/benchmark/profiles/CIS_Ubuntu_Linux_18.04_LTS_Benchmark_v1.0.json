@@ -705,7 +705,7 @@
                         "expectationPattern": "\\s*package 'ntp' is not installed\\s*"
                       }
                     ],
-                    "operator": "AND",
+                    "operator": "1&&2&&3",
                     "level": "1WS,1SV",
                     "type": "SHELL_RUN"
                   },
@@ -714,10 +714,22 @@
                     "description": "Ensure chrony is configured",
                     "command_list": [
                       {
-                        "command": ""
+                          "id": "1",
+                        "command": "ls[,]/etc/chrony.conf",
+                        "expectationPattern": "/etc/chrony.conf"
+                      },
+                      {
+                        "id": "2",
+                        "command": "grep[,]-E[,]^(server|pool)[,]/etc/chrony.conf",
+                        "expectationPattern": "^\\s*(server|pool)\\s+\\S+"
+                      },
+                      {
+                        "id": "3",
+                        "command": "ps[,]-ef[|]grep[,]chronyd",
+                        "expectationPattern": "^chrony\\s++"
                       }
                     ],
-                    "operator": "AND",
+                    "operator": "1||2&&3",
                     "level": "1WS,1SV",
                     "type": "SHELL_RUN"
                   },
@@ -726,10 +738,57 @@
                     "description": "Ensure ntp is configured",
                     "command_list": [
                       {
-                        "command": ""
+                        "id": "1",
+                        "command": "ls[,]/etc/ntp.conf",
+                        "expectationPattern": "/etc/ntp.conf"
+                      },
+                      {
+                        "id": "2",
+                        "command": "grep[,]^restrict[,]/etc/ntp.conf",
+                        "expectationPattern": "^\\s*restrict\\s+-6\\s+default(\\s*\\bkod\\b\\s*|\\s*\\bnomodify\\b\\s*|\\s*\\bnotrap\\b\\s*|\\s*\\bnopeer\\b\\s*|\\s*\\bnoquery\\b\\s*)(\\s*\\bkod\\b\\s*|\\s*\\bnomodify\\b\\s*|\\s*\\bnotrap\\b\\s*|\\s*\\bnopeer\\b\\s*|\\s*\\bnoquery\\b\\s*)(\\s*\\bkod\\b\\s*|\\s*\\bnomodify\\b\\s*|\\s*\\bnotrap\\b\\s*|\\s*\\bnopeer\\b\\s*|\\s*\\bnoquery\\b\\s*)(\\s*\\bkod\\b\\s*|\\s*\\bnomodify\\b\\s*|\\s*\\bnotrap\\b\\s*|\\s*\\bnopeer\\b\\s*|\\s*\\bnoquery\\b\\s*)(\\s*\\bkod\\b\\s*|\\s*\\bnomodify\\b\\s*|\\s*\\bnotrap\\b\\s*|\\s*\\bnopeer\\b\\s*|\\s*\\bnoquery\\b\\s*)(?:#.*)?$"
+                      },
+                      {
+                        "id": "3",
+                        "command": "grep[,]^restrict[,]/etc/ntp.conf",
+                        "expectationPattern": "^\\s*restrict\\s+(-4\\s+)?default(\\s*\\bkod\\b\\s*|\\s*\\bnomodify\\b\\s*|\\s*\\bnotrap\\b\\s*|\\s*\\bnopeer\\b\\s*|\\s*\\bnoquery\\b\\s*)(\\s*\\bkod\\b\\s*|\\s*\\bnomodify\\b\\s*|\\s*\\bnotrap\\b\\s*|\\s*\\bnopeer\\b\\s*|\\s*\\bnoquery\\b\\s*)(\\s*\\bkod\\b\\s*|\\s*\\bnomodify\\b\\s*|\\s*\\bnotrap\\b\\s*|\\s*\\bnopeer\\b\\s*|\\s*\\bnoquery\\b\\s*)(\\s*\\bkod\\b\\s*|\\s*\\bnomodify\\b\\s*|\\s*\\bnotrap\\b\\s*|\\s*\\bnopeer\\b\\s*|\\s*\\bnoquery\\b\\s*)(\\s*\\bkod\\b\\s*|\\s*\\bnomodify\\b\\s*|\\s*\\bnotrap\\b\\s*|\\s*\\bnopeer\\b\\s*|\\s*\\bnoquery\\b\\s*)(?:#.*)?$"
+                      },
+                      {
+                        "id": "4",
+                        "command": "grep[,]^restrict[,]/etc/ntp.conf",
+                        "expectationPattern": "^\\s*(server|pool)\\s+\\S+"
+                      },
+                      {
+                        "id": "5",
+                        "command": "ls[,]/etc/sysconfig/ntp",
+                        "expectationPattern": "/etc/sysconfig/ntp"
+                      },
+                      {
+                        "id": "6",
+                        "command": "grep[,]^NTPD_OPTIONS[,]/etc/sysconfig/ntp",
+                        "expectationPattern": "^\\s*OPTIONS=\"[^\"]*-u ntp:ntp[^\"]*\"\\s*(?:#.*)?$"
+                      },
+                      {
+                        "id": "7",
+                        "command": "ls[,]/etc/sysconfig/ntpd",
+                        "expectationPattern": "/etc/sysconfig/ntpd"
+                      },
+                      {
+                        "id": "8",
+                        "command": "grep[,]^OPTIONS[,]/etc/sysconfig/ntpd",
+                        "expectationPattern": "^\\s*OPTIONS=\"[^\"]*-u ntp:ntp[^\"]*\"\\s*(?:#.*)?$"
+                      },
+                      {
+                        "id": "9",
+                        "command": "ls[,]/etc/init.d/ntp",
+                        "expectationPattern": "/etc/init.d/ntp"
+                      },
+                      {
+                        "id": "10",
+                        "command": "grep[,]RUNASUSER=ntp[,]/etc/init.d/ntp",
+                        "expectationPattern": "^\\s*RUNASUSER\\s*=\\s*ntp\\s*(?:#.*)?$"
                       }
                     ],
-                    "operator": "AND",
+                    "operator": "(1||2&&3&&4)&&(5||6)&&(7||8)&&(9||10)",
                     "level": "1WS,1SV",
                     "type": "SHELL_RUN"
                   },
@@ -738,8 +797,8 @@
                     "description": "Ensure X Window System is not installed",
                     "command_list": [
                       {
-                        "command": "dpkg[,]-l[,]xserver-xorg*",
-                        "expectationPattern": ""
+                        "command": "dpkg[,]-l[,]xserver-xorg*[|]grep[,]xserver-xorg[|]grep[,]-v[,]<none>",
+                        "expectationPattern": "^$"
                       }
                     ],
                     "level": "1SV",
@@ -751,7 +810,7 @@
                     "command_list": [
                       {
                         "command": "systemctl[,]is-enabled[,]avahi-daemon",
-                        "expectationPattern": "disabled"
+                        "expectationPattern": "^((?!enable)[\\s\\S])*$"
                       }
                     ],
                     "level": "1WS,1SV",
@@ -763,7 +822,7 @@
                     "command_list": [
                       {
                         "command": "systemctl[,]is-enabled[,]cups",
-                        "expectationPattern": "disabled"
+                        "expectationPattern": "^((?!enable)[\\s\\S])*$"
                       }
                     ],
                     "level": "2WS,1SV",
@@ -776,15 +835,15 @@
                       {
                         "id" : "1",
                         "command": "systemctl[,]is-enabled[,]isc-dhcp-server",
-                        "expectationPattern": "disabled"
+                        "expectationPattern": "^((?!enable)[\\s\\S])*$"
                       },
                       {
                         "id" : "2",
                         "command": "systemctl[,]is-enabled,isc-dhcp-server6",
-                        "expectationPattern": "disabled"
+                        "expectationPattern": "^((?!enable)[\\s\\S])*$"
                       }
                     ],
-                    "operator": "AND",
+                    "operator": "1&&2",
                     "level": "1WS,1SV",
                     "type": "SHELL_RUN"
                   },
@@ -794,7 +853,7 @@
                     "command_list": [
                       {
                         "command": "systemctl[,]is-enabled,slapd",
-                        "expectationPattern": "disabled"
+                        "expectationPattern": "^((?!enable)[\\s\\S])*$"
                       }
                     ],
                     "level": "1WS,1SV",
@@ -807,15 +866,15 @@
                       {
                         "id" : "1",
                         "command": "systemctl[,]is-enabled[,]nfs-server",
-                        "expectationPattern": "disabled"
+                        "expectationPattern": "^((?!enable)[\\s\\S])*$"
                       },
                       {
                         "id" : "2",
                         "command": "systemctl[,]is-enabled[,]rpcbind",
-                        "expectationPattern": "disabled"
+                        "expectationPattern": "^((?!enable)[\\s\\S])*$"
                       }
                     ],
-                    "operator": "AND",
+                    "operator": "1&&2",
                     "level": "1WS,1SV",
                     "type": "SHELL_RUN"
                   },
@@ -825,7 +884,7 @@
                     "command_list": [
                       {
                         "command": "systemctl[,]is-enabled[,]bind9",
-                        "expectationPattern": "disabled"
+                        "expectationPattern": "^((?!enable)[\\s\\S])*$"
                       }
                     ],
                     "level": "1WS,1SV",
@@ -837,7 +896,7 @@
                     "command_list": [
                       {
                         "command": "systemctl[,]is-enabled[,]vsftpd",
-                        "expectationPattern": "disabled"
+                        "expectationPattern": "^((?!enable)[\\s\\S])*$"
                       }
                     ],
                     "level": "1WS,1SV",
@@ -849,7 +908,7 @@
                     "command_list": [
                       {
                         "command": "systemctl[,]is-enabled[,]apache2",
-                        "expectationPattern": "disabled"
+                        "expectationPattern": "^((?!enable)[\\s\\S])*$"
                       }
                     ],
                     "level": "1WS,1SV",
@@ -861,7 +920,7 @@
                     "command_list": [
                       {
                         "command": "systemctl[,]is-enabled[,]dovecot",
-                        "expectationPattern": "disabled"
+                        "expectationPattern": "^((?!enable)[\\s\\S])*$"
                       }
                     ],
                     "level": "1WS,1SV",
@@ -873,7 +932,7 @@
                     "command_list": [
                       {
                         "command": "systemctl[,]is-enabled[,]smbd",
-                        "expectationPattern": "disabled"
+                        "expectationPattern": "^((?!enable)[\\s\\S])*$"
                       }
                     ],
                     "level": "1WS,1SV",
@@ -885,7 +944,7 @@
                     "command_list": [
                       {
                         "command": "systemctl[,]is-enabled[,]squid",
-                        "expectationPattern": "disabled"
+                        "expectationPattern": "^((?!enable)[\\s\\S])*$"
                       }
                     ],
                     "level": "1WS,1SV",
@@ -897,7 +956,7 @@
                     "command_list": [
                       {
                         "command": "systemctl[,]is-enabled[,]snmpd",
-                        "expectationPattern": "disabled"
+                        "expectationPattern": "^((?!enable)[\\s\\S])*$"
                       }
                     ],
                     "level": "1WS,1SV",
@@ -908,8 +967,8 @@
                     "description": "Ensure mail transfer agent is configured for local-only mode ",
                     "command_list": [
                       {
-                        "command": "",
-                        "expectationPattern": ""
+                        "command": "ss[,]-lntu[|]grep[,]-E[,]:25\\s[|]grep[,]-E[,]-v[,]\\s\\(127\\.0\\.0\\.1|::1\\):25\\s",
+                        "expectationPattern": "^$"
                       }
                     ],
                     "level": "1WS,1SV",
@@ -921,7 +980,7 @@
                     "command_list": [
                       {
                         "command": "systemctl[,]is-enabled[,]rsync",
-                        "expectationPattern": "disabled"
+                        "expectationPattern": "^((?!enable)[\\s\\S])*$"
                       }
                     ],
                     "level": "1WS,1SV",
@@ -933,7 +992,7 @@
                     "command_list": [
                       {
                         "command": "systemctl[,]is-enabled[,]nis",
-                        "expectationPattern": "disabled"
+                        "expectationPattern": "^((?!enable)[\\s\\S])*$"
                       }
                     ],
                     "level": "1WS,1SV",
@@ -1031,20 +1090,20 @@
                   {
                     "id" : "2",
                     "command": "sysctl[,]net.ipv4.conf.default.send_redirects",
-                    "expectationPattern": "\\s*net.ipv4.conf.all.send_redirects = 0\\s*"
+                    "expectationPattern": "\\s*net.ipv4.conf.default.send_redirects = 0\\s*"
                   },
                   {
                     "id" : "3",
-                    "command": "",
-                    "expectationPattern" : ""
+                    "command": "grep[,]-R[,]net\\.ipv4\\.conf\\.all\\.send_redirects[,]/etc/sysctl.conf[,]/etc/sysctl.d",
+                    "expectationPattern" : "\\s*net.ipv4.conf.all.send_redirects = 0\\s*"
                   },
                   {
                     "id" : "4",
-                    "command": "",
-                    "expectationPattern": ""
+                    "command": "grep[,]-R[,]net\\.ipv4\\.conf\\.default\\.send_redirects[,]/etc/sysctl.conf[,]/etc/sysctl.d",
+                    "expectationPattern": "net.ipv4.conf.default.send_redirects = 0"
                   }
                 ],
-                "operator": "AND",
+                "operator": "1&&2&&3&&4",
                 "level": "1WS,1SV",
                 "type": "SHELL_RUN"
               },
@@ -1059,21 +1118,21 @@
                   },
                   {
                     "id" : "2",
-                    "command": "",
-                    "expectationPattern": ""
+                    "command": "grep[,]-E[,]-R[,]-s[,]^\\s*net\\.ipv4\\.ip_forward\\s*=\\s*1[,]/etc/sysctl.conf[,]/etc/sysctl.d[,]/usr/lib/sysctl.d[,]/run/sysctl.d",
+                    "expectationPattern": "^$"
                   },
                   {
                     "id" : "3",
-                    "command": "",
-                    "expectationPattern": ""
+                    "command": "sysctl[,]net.ipv6.conf.all.forwarding",
+                    "expectationPattern": "^net.ipv6.conf.all.forwarding = 0\\s*$"
                   },
                   {
                     "id" : "4",
-                    "command": "",
-                    "expectationPattern": ""
+                    "command": "grep[,]-E[,]-R[,]-s[,]^\\s*net\\.ipv6\\.conf\\.all\\.forwarding\\s*=\\s*1[,]/etc/sysctl.conf[,]/etc/sysctl.d[,]/usr/lib/sysctl.d[,]/run/sysctl.d",
+                    "expectationPattern": "^$"
                   }
                 ],
-                "operator": "AND",
+                "operator": "1&&2&&3&&4",
                 "level": "1WS,1SV",
                 "type": "SHELL_RUN"
               }
@@ -1099,13 +1158,13 @@
                   },
                   {
                     "id" : "3",
-                    "command": "",
-                    "expectationPattern": ""
+                    "command": "grep[,]-R[,]net\\.ipv4\\.conf\\.all\\.accept_source_route[,]/etc/sysctl.conf[,]/etc/sysctl.d",
+                    "expectationPattern": "^net.ipv4.conf.all.accept_source_route= 0\\s*$"
                   },
                   {
                     "id" : "4",
-                    "command": "",
-                    "expectationPattern" : ""
+                    "command": "grep[,]-R[,]net\\.ipv4\\.conf\\.default\\.accept_source_route[,]/etc/sysctl.conf[,]/etc/sysctl.d",
+                    "expectationPattern" : "\\s*net.ipv4.conf.default.accept_source_route = 0\\s*"
                   },
                   {
                     "id" : "5",
@@ -1119,16 +1178,16 @@
                   },
                   {
                     "id" : "7",
-                    "command": "",
-                    "expectationPattern": ""
+                    "command": "grep[,]-R[,]net\\.ipv6\\.conf\\.all\\.accept_source_route[,]/etc/sysctl.conf[,]/etc/sysctl.d",
+                    "expectationPattern": "^net.ipv4.conf.all.accept_source_route= 0\\s*$"
                   },
                   {
                     "id" : "8",
-                    "command": "",
-                    "expectationPattern": ""
+                    "command": "grep[,]-R[,]net\\.ipv6\\.conf\\.default\\.accept_source_route[,]/etc/sysctl.conf[,]/etc/sysctl.d",
+                    "expectationPattern": "^net.ipv6.conf.default.accept_source_route= 0\\s*$"
                   }
                 ],
-                "operator": "AND",
+                "operator": "1&&2&&3&&4&&5&&6&&7&&8",
                 "level": "1WS,1SV",
                 "type": "SHELL_RUN"
               },
@@ -1363,7 +1422,8 @@
                 "description": "Ensure permissions on /etc/hosts.allow are configured",
                 "command_list": [
                   {
-                    "command": ""
+                    "command": "statp[,]/etc/hosts.allow",
+                    "expectationPattern": "\\s*Access:\\s+\\(0644/-rw-r--r--\\)\\s+Uid:\\s+\\(\\s+0\\/\\s+root\\)\\s+Gid:\\s+\\(\\s+0\\/\\s+root\\s*"
                   }
                 ],
                 "level": "1WS,1SV",
@@ -1374,7 +1434,9 @@
                 "description": "Ensure permissions on /etc/hosts.deny are configured",
                 "command_list": [
                   {
-                    "command": ""
+                    
+                    "command": "statp[,]/etc/hosts.deny",
+                    "expectationPattern": "\\s*Access:\\s+\\(0644/-rw-r--r--\\)\\s+Uid:\\s+\\(\\s+0\\/\\s+root\\)\\s+Gid:\\s+\\(\\s+0\\/\\s+root\\s*"
                   }
                 ],
                 "level": "1WS,1SV",
@@ -1398,10 +1460,10 @@
                   {
                     "id" : "2",
                     "command": "lsmod[,][|]grep[,]dccp",
-                    "expectationPattern": "\\s*<No output>\\s*"
+                    "expectationPattern": "^$"
                   }
                 ],
-                "operator": "AND",
+                "operator": "1&&2",
                 "level": "2WS,2SV",
                 "type": "SHELL_RUN"
               },
@@ -1417,10 +1479,10 @@
                   {
                     "id" : "2",
                     "command": "lsmod[,][|]grep[,]sctp",
-                    "expectationPattern": "\\s*<No output>\\s*"
+                    "expectationPattern": "^$"
                   }
                 ],
-                "operator": "AND",
+                "operator": "1&&2",
                 "level": "2WS,2SV",
                 "type": "SHELL_RUN"
               },
@@ -1436,10 +1498,10 @@
                   {
                     "id" : "2",
                     "command": "lsmod[,][|]grep[,]rds",
-                    "expectationPattern": "\\s*<No output>\\s*"
+                    "expectationPattern": "^$"
                   }
                 ],
-                "operator": "AND",
+                "operator": "1&&2",
                 "level": "2WS,2SV",
                 "type": "SHELL_RUN"
               },
@@ -1455,10 +1517,10 @@
                   {
                     "id" : "2",
                     "command": "lsmod[,][|]grep[,]tipc",
-                    "expectationPattern" : "\\s*<No output>\\s*"
+                    "expectationPattern" : "^$"
                   }
                 ],
-                "operator": "AND",
+                "operator": "1&&2",
                 "level": "2WS,2SV",
                 "type": "SHELL_RUN"
               }
@@ -1478,21 +1540,21 @@
                     "command_list": [
                       {
                         "id" : "1",
-                        "command": "dpkg[,]-s[,]ufw [|]grep[,]-i[,]status",
+                        "command": "dpkg[,]-s[,]ufw[|]grep[,]-i[,]status",
                         "expectationPattern": "\\s*Status: install ok installed\\s*"
                       },
                       {
                         "id" : "2",
-                        "command": "dpkg[,]-s[,]nftables[,][|]grep[,]-i[,]status",
-                        "expectationPattern" : "\\s*Status: install ok installed\\s*"
+                        "command": "dpkg[,]-s[,]nftables[|]grep[,]-i[,]status",
+                        "expectationPattern": "\\s*Status: install ok installed\\s*"
                       },
                       {
                         "id" : "3",
-                        "command": "dpkg[,]-s[,]iptables[,][|]grep[,]-i[,]status",
-                        "expectedPattern": "\\s*Status: install ok installed\\s*"
+                        "command": "dpkg[,]-s[,]iptables[|]grep[,]-i[,]status",
+                        "expectationPattern": "\\s*Status: install ok installed\\s*"
                       }
                     ],
-                    "operator": "AND",
+                    "operator": "1&&2&&3",
                     "level": "1WS,1SV",
                     "type": "SHELL_RUN"
                   }
@@ -1511,15 +1573,15 @@
                   {
                     "id" : "1",
                     "command": "systemctl[,]is-enabled[,]ufw",
-                    "expectationPattern": "\\s*enable\\s*"
+                    "expectationPattern": "enabled"
                   },
                   {
                     "id" : "2",
-                    "command": "ufw[,]status[,][|]grep[,]Status",
-                    "expectationPattern": "\\s*enable\\s*"
+                    "command": "ufw[,]status[|]grep[,]Status",
+                    "expectationPattern": "^Status: active$"
                   }
                 ],
-                "operator": "AND",
+                "operator": "1&&2",
                 "level": "1WS,1SV",
                 "type": "SHELL_RUN"
               },
@@ -1529,7 +1591,7 @@
                 "command_list": [
                   {
                     "command": "ufw[,]status[,]verbose",
-                    "expectationPattern": ""
+                    "expectationPattern": "^\\s*Default:\\s++(deny|reject)\\s++\\(incoming\\),\\s++(deny|reject)\\s++\\(outgoing\\),\\s++(deny|reject)\\s++\\(routed\\)$"
                   }
                 ],
                 "level": "1WS,1SV",
@@ -1538,14 +1600,8 @@
               {
                 "id": "3.5.2.3",
                 "description": "Ensure loopback traffic is configured",
-                "command_list": [
-                  {
-                    "command": "ufw[,]status[,]verbose",
-                    "expectationPattern": ""
-                  }
-                ],
                 "level": "1WS,1SV",
-                "type": "SHELL_RUN"
+                "type": "UNKNOWN"
               }
             ]
           },
@@ -1558,10 +1614,17 @@
                 "description": "Ensure a table exists",
                 "command_list": [
                   {
+                    "id": "1",
                     "command": "nft[,]list[,]tables",
-                    "expectationPattern": "\\s*table inet filter\\s*"
+                    "expectationPattern": "\\s*Command 'nft' not found\\s*"
+                  },
+                  {
+                    "id": "2",
+                    "command": "nft[,]list[,]tables",
+                    "expectationPattern": "\\s*table\\s*"
                   }
                 ],
+                "operator": "1||2",
                 "level": "1WS,1SV",
                 "type": "SHELL_RUN"
               },
