@@ -1858,7 +1858,8 @@
                     "description": "Ensure wireless interfaces are disabled",
                     "command_list": [
                       {
-                        "command": "nmcli,radio,all"
+                        "command": "nmcli[,]radio[,]all",
+                        "expectationPattern": ""
                       }
                     ],
                     "level": "2WS,1SV",
@@ -2508,7 +2509,8 @@
                 "description": "Ensure no world writable files exist",
                 "command_list": [
                   {
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   }
                 ],
                 "level": "1WS,1SV",
@@ -2519,7 +2521,8 @@
                 "description": "Ensure no unowned files or directories exist",
                 "command_list": [
                   {
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   }
                 ],
                 "level": "1WS,1SV",
@@ -2530,7 +2533,8 @@
                 "description": "Ensure no ungrouped files or directories exist",
                 "command_list": [
                   {
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   }
                 ],
                 "level": "1WS,1SV",
@@ -2547,7 +2551,8 @@
                 "description": "Ensure password fields are not empty",
                 "command_list": [
                   {
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   }
                 ],
                 "level": "1WS,1SV",
@@ -2558,7 +2563,8 @@
                 "description": "Ensure no legacy '+' entries exist in /etc/passwd",
                 "command_list": [
                   {
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   }
                 ],
                 "level": "1WS,1SV",
@@ -2569,7 +2575,8 @@
                 "description": "Ensure all users' home directories exist",
                 "command_list": [
                   {
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   }
                 ],
                 "level": "1WS,1SV",
@@ -2580,7 +2587,8 @@
                 "description": "Ensure no legacy '+' entries exist in /etc/shadow",
                 "command_list": [
                   {
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   }
                 ],
                 "level": "1WS,1SV",
@@ -2591,7 +2599,8 @@
                 "description": "Ensure no legacy '+' entries exist in /etc/group",
                 "command_list": [
                   {
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   }
                 ],
                 "level": "1WS,1SV",
@@ -2602,7 +2611,8 @@
                 "description": "Ensure root is the only UID 0 account",
                 "command_list": [
                   {
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   }
                 ],
                 "level": "1WS,1SV",
@@ -2613,7 +2623,8 @@
                 "description": "Ensure root PATH Integrity",
                 "command_list": [
                   {
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   }
                 ],
                 "level": "1WS,1SV",
@@ -2624,7 +2635,8 @@
                 "description": "Ensure users' home directories permissions are 750 or more restrictive",
                 "command_list": [
                   {
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   }
                 ],
                 "level": "1WS,1SV",
@@ -2635,7 +2647,8 @@
                 "description": "",
                 "command_list": [
                   {
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   }
                 ],
                 "level": "1WS,1SV",
@@ -2646,7 +2659,8 @@
                 "description": "Ensure users' dot files are not group or world writable",
                 "command_list": [
                   {
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   }
                 ],
                 "level": "1WS,1SV",
@@ -2657,7 +2671,8 @@
                 "description": "Ensure no users have .forward files",
                 "command_list": [
                   {
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   }
                 ],
                 "level": "1WS,1SV",
@@ -2668,7 +2683,8 @@
                 "description": "Ensure no users have .netrc files",
                 "command_list": [
                   {
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   }
                 ],
                 "level": "1WS,1SV",
@@ -2679,7 +2695,8 @@
                 "description": "Ensure users' .netrc Files are not group or world accessible",
                 "command_list": [
                   {
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   }
                 ],
                 "level": "1WS,1SV",
@@ -2690,7 +2707,8 @@
                 "description": "Ensure no users have .rhosts files",
                 "command_list": [
                   {
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   }
                 ],
                 "level": "1WS,1SV",
@@ -2701,7 +2719,8 @@
                 "description": "Ensure all groups in /etc/passwd exist in /etc/group",
                 "command_list": [
                   {
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   }
                 ],
                 "level": "1WS,1SV",
@@ -2712,7 +2731,8 @@
                 "description": "Ensure no duplicate UIDs exist",
                 "command_list": [
                   {
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   }
                 ],
                 "level": "1WS,1SV",
@@ -2723,7 +2743,8 @@
                 "description": "Ensure no duplicate GIDs exist",
                 "command_list": [
                   {
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   }
                 ],
                 "level": "1WS,1SV",
@@ -2734,7 +2755,8 @@
                 "description": "Ensure no duplicate user names exist",
                 "command_list": [
                   {
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   }
                 ],
                 "level": "1WS,1SV",
@@ -2745,7 +2767,8 @@
                 "description": "Ensure no duplicate group names exist",
                 "command_list": [
                   {
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   }
                 ],
                 "level": "1WS,1SV",
@@ -2756,7 +2779,8 @@
                 "description": "Ensure shadow group is empty",
                 "command_list": [
                   {
-                    "command" : ""
+                    "command" : "",
+                    "expectationPattern": ""
                   }
                 ],
                 "level" : "1WS,1SV",
