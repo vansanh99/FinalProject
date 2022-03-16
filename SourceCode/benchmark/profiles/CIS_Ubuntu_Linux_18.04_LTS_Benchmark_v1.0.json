@@ -1207,11 +1207,13 @@
                   },
                   {
                     "id" : "3",
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   },
                   {
                     "id" : "4",
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   },
                   {
                     "id" : "5",
@@ -1234,7 +1236,7 @@
                     "expectationPattern": ""
                   }
                 ],
-                "operator": "AND",
+                "operator": "1&&2&&3&&4&&5&&6&&7&&8",
                 "level": "1WS,1SV",
                 "type": "SHELL_RUN"
               },
@@ -1263,7 +1265,7 @@
                     "expectationPattern": ""
                   }
                 ],
-                "operator": "AND",
+                "operator": "1&&2&&3&&4",
                 "level": "1WS,1SV",
                 "type": "SHELL_RUN"
               },
@@ -1292,7 +1294,7 @@
                     "expectationPattern": ""
                   }
                 ],
-                "operator": "AND",
+                "operator": "1&&2&&3&&4",
                 "level": "1WS,1SV",
                 "type": "SHELL_RUN"
               },
@@ -1311,7 +1313,7 @@
                     "expectationPattern": ""
                   }
                 ],
-                "operator": "AND",
+                "operator": "1&&2",
                 "level": "1WS,1SV",
                 "type": "SHELL_RUN"
               },
@@ -1330,7 +1332,7 @@
                     "expectationPattern": ""
                   }
                 ],
-                "operator": "AND",
+                "operator": "1&&2",
                 "level": "1WS,1SV",
                 "type": "SHELL_RUN"
               },
@@ -1359,7 +1361,7 @@
                     "expectationPattern": ""
                   }
                 ],
-                "operator": "AND",
+                "operator": "1&&2&&3&&4",
                 "level": "1WS,1SV",
                 "type": "SHELL_RUN"
               },
@@ -1378,7 +1380,7 @@
                     "expectationPattern": ""
                   }
                 ],
-                "operator": "AND",
+                "operator": "1&&2",
                 "level": "1WS,1SV",
                 "type": "SHELL_RUN"
               },
@@ -1407,7 +1409,7 @@
                     "expectationPattern": ""
                   }
                 ],
-                "operator": "AND",
+                "operator": "1&&2&&3&&4",
                 "level": "1WS,1SV",
                 "type": "SHELL_RUN"
               }
@@ -1634,21 +1636,21 @@
                 "command_list": [
                   {
                     "id" : "1",
-                    "command": "",
-                    "expectationPattern": ""
+                    "command": "nft[,]list[,]ruleset[,][|][,]grep[,]'hook input'",
+                    "expectationPattern": "\\s*type filter hook input priority 0;\\s*"
                   },
                   {
                     "id" : "2",
-                    "command": "",
-                    "expectationPattern": ""
+                    "command": "nft[,]list[,]ruleset[,]|[,]grep[,]'hook forward'",
+                    "expectationPattern": "\\s*type filter hook forward priority 0;\\s*"
                   },
                   {
                     "id" : "3",
-                    "command": "",
-                    "expectationPattern": ""
+                    "command": "nft[,]list[,]ruleset[,][|][,]grep[,]'hook output'",
+                    "expectationPattern": "\\s*type filter hook output priority 0;\\s*"
                   }
                 ],
-                "operator": "AND",
+                "operator": "1&&2&&3",
                 "level": "1WS,1SV",
                 "type": "SHELL_RUN"
               },
@@ -1672,7 +1674,7 @@
                     "expectationPattern": ""
                   }
                 ],
-                "operator": "AND",
+                "operator": "1&&2&&3",
                 "level": "1WS,1SV",
                 "type": "SHELL_RUN"
               },
@@ -1696,7 +1698,7 @@
                     "expectationPattern": ""
                   }
                 ],
-                "operator": "AND",
+                "operator": "1&&2&&3",
                 "level": "1WS,1SV",
                 "type": "SHELL_RUN"
               },
@@ -1732,7 +1734,7 @@
                     "expectationPattern": ""
                   }
                 ],
-                "operator": "AND",
+                "operator": "1&&2&&3",
                 "level": "1WS,1SV",
                 "type": "SHELL_RUN"
               }
@@ -1773,7 +1775,7 @@
                         "expectationPattern": ""
                       }
                     ],
-                    "operator": "AND",
+                    "operator": "1&&2",
                     "level": "1WS,1SV",
                     "type": "SHELL_RUN"
                   },
@@ -1792,7 +1794,7 @@
                         "expectationPattern": ""
                       }
                     ],
-                    "operator": "AND",
+                    "operator": "1&&2",
                     "level": "1WS,1SV",
                     "type": "SHELL_RUN"
                   }
@@ -1822,7 +1824,7 @@
                         "expectationPattern": ""
                       }
                     ],
-                    "operator": "OR",
+                    "operator": "1||2||3",
                     "level": "1WS,1SV",
                     "type": "SHELL_RUN"
                   },
@@ -1842,14 +1844,16 @@
                       },
                       {
                         "id" : "3",
-                        "command": ""
+                        "command": "",
+                        "expectationPattern": ""
                       },
                       {
                         "id" : "4",
-                        "command": ""
+                        "command": "",
+                        "expectationPattern": ""
                       }
                     ],
-                    "operator": "",
+                    "operator": "(1&&2)||3||4",
                     "level": "1WS,1SV",
                     "type": "SHELL_RUN"
                   },
