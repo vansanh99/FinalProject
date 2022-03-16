@@ -1478,15 +1478,18 @@
                     "command_list": [
                       {
                         "id" : "1",
-                        "command": "dpkg,-s,ufw |grep,-i,status"
+                        "command": "dpkg[,]-s[,]ufw [|]grep[,]-i[,]status",
+                        "expectationPattern": "\\s*Status: install ok installed\\s*"
                       },
                       {
                         "id" : "2",
-                        "command": "dpkg,-s,nftables,|grep,-i,status"
+                        "command": "dpkg[,]-s[,]nftables[,][|]grep[,]-i[,]status",
+                        "expectationPattern" : "\\s*Status: install ok installed\\s*"
                       },
                       {
                         "id" : "3",
-                        "command": "dpkg,-s,iptables,|grep,-i,status"
+                        "command": "dpkg[,]-s[,]iptables[,][|]grep[,]-i[,]status",
+                        "expectedPattern": "\\s*Status: install ok installed\\s*"
                       }
                     ],
                     "operator": "AND",
@@ -1507,11 +1510,13 @@
                 "command_list": [
                   {
                     "id" : "1",
-                    "command": "systemctl,is-enabled,ufw"
+                    "command": "systemctl[,]is-enabled[,]ufw",
+                    "expectationPattern": "\\s*enable\\s*"
                   },
                   {
                     "id" : "2",
-                    "command": "ufw,status,|grep,Status"
+                    "command": "ufw[,]status[,][|]grep[,]Status",
+                    "expectationPattern": "\\s*enable\\s*"
                   }
                 ],
                 "operator": "AND",
@@ -1523,7 +1528,8 @@
                 "description": "Ensure default deny firewall policy",
                 "command_list": [
                   {
-                    "command": "ufw,status,verbose"
+                    "command": "ufw[,]status[,]verbose",
+                    "expectationPattern": ""
                   }
                 ],
                 "level": "1WS,1SV",
@@ -1534,7 +1540,8 @@
                 "description": "Ensure loopback traffic is configured",
                 "command_list": [
                   {
-                    "command": "ufw,status,verbose"
+                    "command": "ufw[,]status[,]verbose",
+                    "expectationPattern": ""
                   }
                 ],
                 "level": "1WS,1SV",
@@ -1551,7 +1558,8 @@
                 "description": "Ensure a table exists",
                 "command_list": [
                   {
-                    "command": "nft,list,tables"
+                    "command": "nft[,]list[,]tables",
+                    "expectationPattern": "\\s*table inet filter\\s*"
                   }
                 ],
                 "level": "1WS,1SV",
@@ -1563,15 +1571,18 @@
                 "command_list": [
                   {
                     "id" : "1",
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   },
                   {
                     "id" : "2",
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   },
                   {
                     "id" : "3",
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   }
                 ],
                 "operator": "AND",
@@ -1584,15 +1595,18 @@
                 "command_list": [
                   {
                     "id" : "1",
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   },
                   {
                     "id" : "2",
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   },
                   {
                     "id" : "3",
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   }
                 ],
                 "operator": "AND",
@@ -1605,15 +1619,18 @@
                 "command_list": [
                   {
                     "id" : "1",
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   },
                   {
                     "id" : "2",
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   },
                   {
                     "id" : "3",
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   }
                 ],
                 "operator": "AND",
@@ -1625,7 +1642,8 @@
                 "description": "Ensure nftables service is enabled",
                 "command_list": [
                   {
-                    "command": "systemctl,is-enabled,nftables"
+                    "command": "systemctl[,]is-enabled[,]nftables",
+                    "expectationPattern": "\\s*enable\\s*"
                   }
                 ],
                 "level": "1WS,1SV",
@@ -1637,15 +1655,18 @@
                 "command_list": [
                   {
                     "id" : "1",
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   },
                   {
                     "id" : "2",
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   },
                   {
                     "id" : "3",
-                    "command": ""
+                    "command": "",
+                    "expectationPattern": ""
                   }
                 ],
                 "operator": "AND",
@@ -1667,7 +1688,8 @@
                     "description": "Ensure default deny firewall policy",
                     "command_list": [
                       {
-                        "command": "iptables,-L"
+                        "command": "iptables[,]-L",
+                        "expectationPattern": ""
                       }
                     ],
                     "level": "1WS,1SV",
@@ -1679,11 +1701,13 @@
                     "command_list": [
                       {
                         "id" : "1",
-                        "command": "iptables,-L,INPUT,-v,-n"
+                        "command": "iptables[,]-L[,]INPUT[,]-v[,]-n",
+                        "expectationPattern": ""
                       },
                       {
                         "id" : "2",
-                        "command": "iptables,-L,OUTPUT,-v,-n"
+                        "command": "iptables[,]-L[,]OUTPUT[,]-v[,]-n",
+                        "expectationPattern": ""
                       }
                     ],
                     "operator": "AND",
@@ -1696,11 +1720,13 @@
                     "command_list": [
                       {
                         "id" : "1",
-                        "command": "ss,-4tuln"
+                        "command": "ss[,]-4tuln",
+                        "expectationPattern": ""
                       },
                       {
                         "id" : "2",
-                        "command": "iptables,-L,INPUT,-v,-n"
+                        "command": "iptables[,]-L[,]INPUT[,]-v[,]-n",
+                        "expectationPattern": ""
                       }
                     ],
                     "operator": "AND",
@@ -1719,15 +1745,18 @@
                     "command_list": [
                       {
                         "id" : "1",
-                        "command": "ip6tables,-L"
+                        "command": "ip6tables[,]-L",
+                        "expectationPattern": ""
                       },
                       {
                         "id" : "2",
-                        "command": ""
+                        "command": "",
+                        "expectationPattern": ""
                       },
                       {
                         "id" : "3",
-                        "command": ""
+                        "command": "",
+                        "expectationPattern": ""
                       }
                     ],
                     "operator": "OR",
@@ -1740,11 +1769,13 @@
                     "command_list": [
                       {
                         "id" : "1",
-                        "command": "ip6tables,-L,INPUT,-v,-n"
+                        "command": "ip6tables[,]-L[,]INPUT[,]-v[,]-n",
+                        "expectationPattern": ""
                       },
                       {
                         "id" : "2",
-                        "command": "ip6tables -L OUTPUT,-v,-n"
+                        "command": "ip6tables[,]-L[,]OUTPUT[,]-v[,]-n",
+                        "expectationPattern": ""
                       },
                       {
                         "id" : "3",
