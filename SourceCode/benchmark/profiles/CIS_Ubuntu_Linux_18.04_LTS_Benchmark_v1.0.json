@@ -21,22 +21,22 @@
         "level_list": [
             {
                 "name": "Level 1 - Workstation",
-                "description": "this is for <b>Workstation lvl1</b>",
+                "description": "<p>Items in this profile intend to:</p><ul><li>be practical and prudent;</li><li>provide a clear security benefit; and</li><li>not inhibit the utility of the technology beyond acceptable means.</li></ul><p>This profile is intended for workstations.</p>",
                 "id": "1WS"
             },
             {
                 "name": "Level 1 - Server",
-                "description": "this is for <b>Server lvl1</b>",
+                "description": "<p>Items in this profile intend to:</p><ul><li>be practical and prudent;</li><li>provide a clear security benefit; and</li><li>not inhibit the utility of the technology beyond acceptable means.</li></ul><p>This profile is intended for servers.</p>",
                 "id": "1SV"
             },
             {
                 "name": "Level 2 - Workstation",
-                "description": "this is for <b>Workstation lvl2</b>",
+                "description": "<p>This profile extends the \"Level 1 - Workstation\" profile. Items in this profile exhibit one or more of the following characteristics:</p><ul><li>are intended for environments or use cases where security is paramount.</li><li>acts as defense in depth measure.</li><li>may negatively inhibit the utility or performance of the technology.</li></ul><p>This profile is intended for workstations.</p>",
                 "id": "2WS"
             },
             {
                 "name": "Level 2 - Server",
-                "description": "this is for <b>server lvl2</b>",
+                "description": "<p>This profile extends the \"Level 1 - Server\" profile. Items in this profile exhibit one or more of the following characteristics:</p><ul><li>are intended for environments or use cases where security is paramount.</li><li>acts as defense in depth measure.</li><li>may negatively inhibit the utility or performance of the technology.</li></ul><p>This profile is intended for servers.</p>",
                 "id": "2SV"
             }
         ],

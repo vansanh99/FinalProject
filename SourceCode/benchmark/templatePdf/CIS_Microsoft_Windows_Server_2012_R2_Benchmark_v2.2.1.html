@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   <meta name="date" content="2022-01-05T01:01:51.454+07:00" />
+   <title>Benchmark Result </title>
+   <div th:replace="resources.html::css"></div>
+   <div th:replace="resources.html::js"></div>
+</head>
+
+<body>
+   <div id="reportContainer">
+      <div th:replace="resources.html::coverPage"></div>
+      <div id="detailsContainer">
+         <div>
+            <script type="text/javascript">
+               setState('w4583aa_xml', false);
+            </script>
+         </div>
+         <div id="profiles" class="profiles">
+            <h2 class="sectionTitle">Profiles</h2>
+            <p
+               th:utext="'This benchmark contains 4 profiles. The <b>' + ${level.name} + '</b> profile was used for this assessment.'">
+            </p>
+            <table class="profile" width="100%">
+               <thead>
+                  <tr>
+                     <th width="20%">Title</th>
+                     <th width="80%">Description</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr th:each="lvl : ${audit.levelList}" valign="top"
+                     th:class="${level.id == lvl.id ? ' selected-row' : ''} ">
+                     <td th:text="${lvl.name}"></td>
+                     <td th:utext="${lvl.description}"></td>
+                  </tr>
+               </tbody>
+            </table>
+            <div class="backtop">
+               <a href="#top" title="back to top">⇧</a>
+            </div>
+         </div>
+         <div id="checklist">
+            <h2 class="sectionTitle">Assessment Results</h2>
+            <div class="outerDiv">
+               <div class="innerDiv" id="toggleFailuresOnlyArea">
+                  <a href="#" onclick="hidePassAreas();return false;">Display Failures Only</a>
+               </div>
+            </div>
+            <table id="assessmentResultTable" width="100%">
+               <thead>
+                  <tr>
+                     <th title="weight" class="serif">w</th>
+                     <th>Benchmark Item</th>
+                     <th>Result</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <th:block th:each="chapter : ${audit.chapters}">
+                     <tr>
+                        <td id="checklist-w4583aad353" class="group sect" colspan="3">
+                           <a th:href="'#detail-' + ${chapter.id}" th:text="${chapter.id + ' ' + chapter.name}">1</a>
+                        </td>
+                     </tr>
+                     <th:block th:each="cat : ${chapter.categories}">
+                        <tr>
+                           <td id="checklist-w4583aad353b5" class="group sect" colspan="3">
+                              <a th:href="'#detail-' + ${cat.id}" th:text="${cat.id + ' ' + cat.name}">1.1</a>
+                           </td>
+                        </tr>
+                        <th:block th:each="gr : ${cat.groups}">
+
+                           <tr th:if="${cat.id != gr.id and gr.name != null}">
+                              <td id="checklist-w4583aad353b5b5" class="group sect" colspan="3">
+                                 <a th:href="'#detail-' + ${gr.id}" th:text="${gr.id + ' ' + gr.name}">1.1.1</a>
+                              </td>
+                           </tr>
+                           <th:block th:each="rep : ${gr.reports}">
+                              <tr th:id="'result-' + ${rep.id}"
+                                 th:class="${rep.status == true or rep.type == 'UNKNOWN'} ? 'failuresOnlyArea tableVisible' : ''">
+                                 <td>
+                                    <span class="weight">1.0</span>
+                                 </td>
+                                 <td>
+                                    <a th:href="'#detail-' + ${rep.id}" th:text="${rep.id + ' ' + rep.description}"></a>
+                                 </td>
+                                 <td class="numeric">
+                                    <span>
+                                       <a th:href="'#status-' + ${rep.id}">
+                                          <span
+                                             th:class="${rep.type == 'UNKNOWN'} ? 'unknown' : (${rep.status == false} ? 'fail' : 'pass')"
+                                             th:text="${rep.type == 'UNKNOWN'} ? 'Unknown' : (${rep.status == false} ? 'Fail' : 'Pass')"></span>
+                                       </a>
+                                    </span>
+                                 </td>
+                              </tr>
+                           </th:block>
+                        </th:block>
+                     </th:block>
+                  </th:block>
+               </tbody>
+            </table>
+            <div class="backtop">
+               <a href="#top" title="back to top">⇧</a>
+            </div>
+         </div>
+         <div id="assessmentDetailsArea">
+            <h2 id="details" class="sectionTitle">Assessment Details</h2>
+            <div id="front-matter" />
+            <th:block th:each="chapter : ${audit.chapters}">
+               <div th:id="'detail-' + ${chapter.id}" class="group" th:insert="CIS_Microsoft_Windows_Server_2012_R2_Benchmark_v2.2.1-Fragments.html::__${#strings.replace(chapter.id,'.','a')}__"></div>
+               <th:block th:each="cat : ${chapter.categories}">
+                  <div th:id="'detail-' + ${cat.id}" class="group" th:insert="CIS_Microsoft_Windows_Server_2012_R2_Benchmark_v2.2.1-Fragments.html::__${#strings.replace(cat.id,'.','a')}__"></div>
+                  <th:block th:each="gr : ${cat.groups}">
+                     <div th:if="${cat.id != gr.id and gr.name != null}" th:id="'detail-' + ${gr.id}" class="group" th:insert="CIS_Microsoft_Windows_Server_2012_R2_Benchmark_v2.2.1-Fragments.html::__${#strings.replace(gr.id,'.','a')}__"></div>
+                     <th:block th:each="rep : ${gr.reports}">
+                        <div th:id="'detail-' + ${rep.id}" class="Rule " th:classappend="${rep.status == true or rep.type == 'UNKNOWN'} ? 'failuresOnlyArea visible' : ''"th:insert="CIS_Microsoft_Windows_Server_2012_R2_Benchmark_v2.2.1-Fragments.html::__${#strings.replace(rep.id,'.','a')}__(rep=${rep})"></div>
+                     </th:block>
+                  </th:block>
+               </th:block>
+            </th:block>
+         </div>
+         <div id="rear-matter">
+            <div class="backtop">
+               <a href="#top" title="back to top">⇧</a>
+            </div>
+         </div>
+         <div class="footerBar">
+            <br />
+         </div>
+      </div>
+   </div>
+</body>
+
+</html>
