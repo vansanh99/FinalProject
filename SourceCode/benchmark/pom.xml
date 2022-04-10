@@ -126,6 +126,13 @@
             <version>${jupiter.version}</version>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.docx4j/docx4j-ImportXHTML -->
+        <dependency>
+            <groupId>org.docx4j</groupId>
+            <artifactId>docx4j-ImportXHTML</artifactId>
+            <version>8.3.2</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>

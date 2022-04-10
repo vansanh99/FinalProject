@@ -1,6 +1,20 @@
 {
-    "name": "Linux",
-    "version": "",
+    "family": "unix",
+    "OSCheck": {
+        "command_list" :  [
+            {
+                "id": "1",
+                "command": "cat[,]/etc/lsb-release[|]grep[,]DISTRIB_ID",
+                "expectationPattern": "^\\s*DISTRIB_ID\\s*=\\s*Ubuntu\\s*(#.*)?$"
+            },
+            {
+                "id": "2",
+                "command": "cat[,]/etc/lsb-release[|]grep[,]DISTRIB_RELEASE",
+                "expectationPattern": "^\\s*DISTRIB_RELEASE\\s*=\\s*18.04\\s*(#.*)?$"
+            }
+        ],
+        "operator": "1&&2"
+    },
     "description": "This document provides prescriptive guidance for establishing a secure configuration posture for <b>Ubuntu Linux 18.04 <br></br>LTS<b> systems running on x86 and x64 platforms.",
     "templateReport": "CIS_Ubuntu_Linux_18.04_LTS_Benchmark_v2.0.1",
     "audit": {
@@ -1700,7 +1714,7 @@
                                                 "expectationPattern": "^password\\s*requisite\\s*pam_pwquality.so\\s*retry=3\\s*(\\s+#.*)*$"
                                             }
                                         ],
-                                        "operator": "(1&&2)||((3&&4)",
+                                        "operator": "(1&&2)||(3&&4)",
                                         "level": "1WS,1SV",
                                         "type": "SHELL_RUN"
                                     },

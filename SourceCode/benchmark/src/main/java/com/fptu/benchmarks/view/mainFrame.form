@@ -28,7 +28,7 @@
               <Component id="cardContent" min="-2" pref="773" max="-2" attributes="0"/>
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
           </Group>
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="26" pref="26" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
@@ -39,11 +39,11 @@
                       <Component id="jLabel2" min="-2" pref="346" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="1" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Component id="btnBack" min="-2" pref="108" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="btnNext1" min="-2" pref="99" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="83" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -51,21 +51,21 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="107" max="-2" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblOS" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="cardContent" min="-2" pref="333" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="btnNext1" pref="35" max="32767" attributes="0"/>
-                  <Component id="btnBack" max="32767" attributes="0"/>
+              <Component id="cardContent" min="-2" pref="385" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="btnBack" pref="41" max="32767" attributes="0"/>
+                  <Component id="btnNext1" max="32767" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace pref="18" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -94,15 +94,15 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jScrollPane4" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="cbbBenchmark" min="-2" pref="580" max="-2" attributes="0"/>
+                              <Component id="cbbBenchmark" max="32767" attributes="0"/>
                           </Group>
                           <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                          <Component id="jScrollPane4" alignment="0" min="-2" pref="719" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="59" max="32767" attributes="0"/>
+                      <EmptySpace pref="28" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -114,10 +114,10 @@
                           <Component id="cbbBenchmark" pref="44" max="32767" attributes="0"/>
                           <Component id="jLabel3" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="59" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                       <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane4" min="-2" pref="188" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jScrollPane4" pref="267" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -185,15 +185,15 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jScrollPane2" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-                              <Component id="cbbLevel" min="-2" pref="593" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
+                              <Component id="cbbLevel" max="32767" attributes="0"/>
                           </Group>
                           <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jScrollPane2" alignment="0" min="-2" pref="716" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="58" max="32767" attributes="0"/>
+                      <EmptySpace pref="32" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -205,10 +205,10 @@
                           <Component id="jLabel4" alignment="3" min="-2" pref="43" max="-2" attributes="0"/>
                           <Component id="cbbLevel" alignment="3" min="-2" pref="43" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="55" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane2" min="-2" pref="193" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jScrollPane2" pref="266" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -274,17 +274,15 @@
                           <Component id="lblSaveReport" min="-2" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Component id="chkbHtmlReport" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="chkbPdfReport" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="chkbDocxReport" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                          <Component id="jScrollPane3" alignment="0" pref="714" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="539" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -297,11 +295,13 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="chkbHtmlReport" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="chkbPdfReport" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="chkbDocxReport" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                       <Component id="lblSaveReport" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jScrollPane3" min="-2" pref="272" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jScrollPane1" min="-2" pref="249" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -336,14 +336,59 @@
                 <Property name="text" type="java.lang.String" value="saving file to"/>
               </Properties>
             </Component>
-            <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+            <Component class="javax.swing.JCheckBox" name="chkbDocxReport">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="DOCX Report"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="chkbDocxReportMouseClicked"/>
+              </Events>
+            </Component>
+            <Container class="javax.swing.JScrollPane" name="jScrollPane3">
               <AuxValues>
                 <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
               </AuxValues>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTextPane" name="jsonPrint">
+                <Component class="javax.swing.JTable" name="tableResult">
+                  <Properties>
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                      <Table columnCount="4" rowCount="0">
+                        <Column editable="false" title="Number" type="java.lang.String"/>
+                        <Column editable="false" title="Title" type="java.lang.String"/>
+                        <Column editable="false" title="Time" type="java.lang.String"/>
+                        <Column editable="false" title="Result" type="java.lang.String"/>
+                      </Table>
+                    </Property>
+                    <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="TableModelListener l = new TableModelListener() {&#xa;&#xa;    @Override&#xa;    public void tableChanged(TableModelEvent e) {&#xa;        if (TableUtilities.isInsert(e)) {&#xa;            SwingUtilities.invokeLater(new Runnable() {&#xa;                public void run() {&#xa;                    int viewRow = tableResult.convertRowIndexToView(e.getFirstRow());&#xa;                    tableResult.scrollRectToVisible(tableResult.getCellRect(viewRow, 0, true));    &#xa;                }&#xa;            });&#xa;        }&#xa;    }&#xa;};&#xa;tableResult.getModel().addTableModelListener(l);">
+                      <TableColumnModel selectionModel="0">
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                      </TableColumnModel>
+                    </Property>
+                    <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+                      <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
+                    </Property>
+                  </Properties>
                 </Component>
               </SubComponents>
             </Container>

@@ -5,6 +5,7 @@
 package com.fptu.benchmarks.beans;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Data;
 
 /**
@@ -13,10 +14,10 @@ import lombok.Data;
  */
 @Data
 public class Profile {
-    @JsonProperty("name")
-    private String name;
-    @JsonProperty("version")
-    private String version;
+    @JsonProperty("family")
+    private String family;
+    @JsonProperty("OSCheck")
+    private OSCheck OSCheck;
     @JsonProperty("templateReport")
     private String templateReport;
     @JsonProperty("description")

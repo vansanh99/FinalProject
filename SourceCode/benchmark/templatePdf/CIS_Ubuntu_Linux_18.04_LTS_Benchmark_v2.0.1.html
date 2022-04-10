@@ -746,7 +746,7 @@
                            </tr>
                            <th:block th:each="rep : ${gr.reports}">
                               <tr th:id="'result-' + ${rep.id}"
-                                 th:class="${rep.status == true or rep.type == 'UNKNOWN'} ? '' : 'failuresOnlyArea tableVisible'">
+                                 th:class="${rep.status == true or rep.type == 'UNKNOWN'} ? 'failuresOnlyArea tableVisible' : ''">
                                  <td>
                                     <span class="weight">1.0</span>
                                  </td>

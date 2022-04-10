@@ -10,9 +10,13 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fptu.benchmarks.beans.Audit;
 import com.fptu.benchmarks.beans.Level;
+import com.fptu.benchmarks.beans.OSCheck;
+import com.fptu.benchmarks.business.CommonUtils;
 import com.fptu.benchmarks.business.LevelListCellRenderer;
-import com.fptu.benchmarks.business.PdfUtils;
+import com.fptu.benchmarks.business.ReportUtils;
 import com.fptu.benchmarks.business.ProfileHandler;
+import com.fptu.benchmarks.business.TableUtilities;
+import com.fptu.benchmarks.constant.Constants;
 import com.fptu.benchmarks.model.ProfileDetails;
 import java.awt.CardLayout;
 import java.awt.event.ItemEvent;
@@ -22,8 +26,15 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineFactory;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -71,8 +82,9 @@ public class mainFrame extends javax.swing.JFrame {
         chkbHtmlReport = new javax.swing.JCheckBox();
         chkbPdfReport = new javax.swing.JCheckBox();
         lblSaveReport = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jsonPrint = new javax.swing.JTextPane();
+        chkbDocxReport = new javax.swing.JCheckBox();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tableResult = new javax.swing.JTable();
         btnNext1 = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
         lblOS = new javax.swing.JLabel();
@@ -111,13 +123,13 @@ public class mainFrame extends javax.swing.JFrame {
             .addGroup(card1Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addGroup(card1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane4)
                     .addGroup(card1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
-                        .addComponent(cbbBenchmark, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel6))
-                .addContainerGap(59, Short.MAX_VALUE))
+                        .addComponent(cbbBenchmark, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel6)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 719, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         card1Layout.setVerticalGroup(
             card1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,10 +138,10 @@ public class mainFrame extends javax.swing.JFrame {
                 .addGroup(card1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(cbbBenchmark, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                .addGap(28, 28, 28)
                 .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -159,13 +171,13 @@ public class mainFrame extends javax.swing.JFrame {
             .addGroup(card2Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(card2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2)
                     .addGroup(card2Layout.createSequentialGroup()
                         .addComponent(jLabel4)
-                        .addGap(50, 50, 50)
-                        .addComponent(cbbLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 593, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel7))
-                .addContainerGap(58, Short.MAX_VALUE))
+                        .addGap(69, 69, 69)
+                        .addComponent(cbbLevel, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel7)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 716, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         card2Layout.setVerticalGroup(
             card2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,10 +186,10 @@ public class mainFrame extends javax.swing.JFrame {
                 .addGroup(card2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbbLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
                 .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -207,7 +219,56 @@ public class mainFrame extends javax.swing.JFrame {
 
         lblSaveReport.setText("saving file to");
 
-        jScrollPane1.setViewportView(jsonPrint);
+        chkbDocxReport.setText("DOCX Report");
+        chkbDocxReport.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                chkbDocxReportMouseClicked(evt);
+            }
+        });
+
+        tableResult.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Number", "Title", "Time", "Result"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(tableResult);
+        if (tableResult.getColumnModel().getColumnCount() > 0) {
+            tableResult.getColumnModel().getColumn(2).setResizable(false);
+            tableResult.getColumnModel().getColumn(3).setResizable(false);
+        }
+        TableModelListener l = new TableModelListener() {
+
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                if (TableUtilities.isInsert(e)) {
+                    SwingUtilities.invokeLater(new Runnable() {
+                        public void run() {
+                            int viewRow = tableResult.convertRowIndexToView(e.getFirstRow());
+                            tableResult.scrollRectToVisible(tableResult.getCellRect(viewRow, 0, true));
+                        }
+                    });
+                }
+            }
+        };
+        tableResult.getModel().addTableModelListener(l);
 
         javax.swing.GroupLayout card3Layout = new javax.swing.GroupLayout(card3);
         card3.setLayout(card3Layout);
@@ -219,14 +280,13 @@ public class mainFrame extends javax.swing.JFrame {
                     .addComponent(lblSaveReport)
                     .addGroup(card3Layout.createSequentialGroup()
                         .addComponent(chkbHtmlReport)
-                        .addGap(40, 40, 40)
-                        .addComponent(chkbPdfReport))
-                    .addComponent(jLabel5))
-                .addContainerGap(539, Short.MAX_VALUE))
-            .addGroup(card3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
+                        .addGap(18, 18, 18)
+                        .addComponent(chkbPdfReport)
+                        .addGap(18, 18, 18)
+                        .addComponent(chkbDocxReport))
+                    .addComponent(jLabel5)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 714, Short.MAX_VALUE))
+                .addGap(33, 33, 33))
         );
         card3Layout.setVerticalGroup(
             card3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -236,11 +296,13 @@ public class mainFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(card3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(chkbHtmlReport)
-                    .addComponent(chkbPdfReport))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(chkbPdfReport)
+                    .addComponent(chkbDocxReport))
+                .addGap(28, 28, 28)
                 .addComponent(lblSaveReport)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         cardContent.add(card3, "card3");
@@ -292,27 +354,27 @@ public class mainFrame extends javax.swing.JFrame {
                         .addGap(203, 203, 203)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnNext1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(58, 58, 58))))
+                        .addGap(83, 83, 83))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(107, 107, 107)
+                .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
                     .addComponent(lblOS))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cardContent, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnNext1, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(btnBack, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addComponent(cardContent, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnBack, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                    .addComponent(btnNext1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pack();
@@ -367,21 +429,31 @@ public class mainFrame extends javax.swing.JFrame {
                 enableBtnNext(card3.getName());
                 btnBack.setEnabled(true);
             } else if (lblSaveReport.isShowing()) {
+                Context context = new Context();
+                context.setVariable("audit", ProfileDetails.getProfile().getAudit());
+                context.setVariable("level", ProfileDetails.getProfileLevel());
+                context.setVariable("htmlReport", chkbHtmlReport.isSelected());
+                context.setVariable("pdfReport", chkbPdfReport.isSelected());
+                context.setVariable("docxReport", chkbDocxReport.isSelected());
+                ProfileDetails.setContext(context);
                 ObjectMapper obm = new ObjectMapper();
-                ph.proccessProfile(ProfileDetails.getProfile().getAudit());
+                Thread t = new Thread(() -> {
+                    ph.proccessProfile(ProfileDetails.getProfile().getAudit(), tableResult);
+                    ReportUtils.generateReportFromHtml(context, ProfileDetails.getProfile().getTemplateReport(), "reports", tableResult);
+                });
+                t.start();
                 String jsonText = "";
                 try {
                     jsonText = obm.writerWithDefaultPrettyPrinter().writeValueAsString(ProfileDetails.getProfile());
                 } catch (JsonProcessingException ex) {
                     log.error("error json {}", ex);
                 }
-                Context context = new Context();
-                context.setVariable("audit", ProfileDetails.getProfile().getAudit());
-                context.setVariable("level", ProfileDetails.getProfileLevel());
-                context.setVariable("htmlReport", chkbHtmlReport.isSelected());
-                context.setVariable("pdfReport", chkbPdfReport.isSelected());
-                File f = PdfUtils.generatePdfFromHtml(context, ProfileDetails.getProfile().getTemplateReport(), "reports/test.pdf");
-                jsonPrint.setText(jsonText);
+
+                //ReportUtils repUtil = new ReportUtils(context, ProfileDetails.getProfile().getTemplateReport(), "reports");
+                //Thread t = new Thread(repUtil);
+                //t.start();
+                //ReportUtils.generateReportFromHtml(context, ProfileDetails.getProfile().getTemplateReport(), "reports");
+                //jsonPrint.setText(jsonText);
             }
             log.info("btnNext1 done");
         }
@@ -423,12 +495,68 @@ public class mainFrame extends javax.swing.JFrame {
                         new TypeReference<Profile>() {
                 });
                 if (null != p) {
-                    ProfileDetails.setName(cbbBenchmark.getSelectedItem().toString());
-                    ProfileDetails.setProfile(p);
-                    log.info("profile loaded!!!");
-                    txtDescpCard1.setText(p.getDescription());
+                    log.info("checking OS...");
+                    OSCheck osc = p.getOSCheck();
+                    osc.getCommandList().stream().forEach(cmd -> {
+                        log.debug("command: {}, type: {}, expect: {}", cmd.getCommand(), "run command", cmd.getExpectationPattern());
+                        String result = CommonUtils.runPipeCommand(cmd.getCommand());
+                        if (result != null) {
+                            if (CommonUtils.ismatchPattern(result, cmd.getExpectationPattern())) {
+                                if (osc.getCommandList().size() > 1) {
+                                    osc.setOperator(StringUtils.replace(osc.getOperator(), cmd.getId(), "true"));
+                                } else {
+                                    osc.setStatus(Constants.TRUE);
+                                }
+                            } else {
+                                if (osc.getCommandList().size() > 1) {
+                                    osc.setOperator(StringUtils.replace(osc.getOperator(), cmd.getId(), "false"));
+                                } else {
+                                    osc.setStatus(Constants.FALSE);
+                                }
+                            }
+                        }
+                    });
+                    if (osc.getCommandList().size() > 1) {
+                        if (StringUtils.isNoneEmpty(osc.getOperator())) {
+                            String languageName = "ECMAScript";
+                            String languageVersion = "ECMAScript 262 Edition 11";
+                            ScriptEngineManager manager = new ScriptEngineManager();
+                            List<ScriptEngineFactory> factories = manager.getEngineFactories();
+
+                            ScriptEngine engine = null;
+                            for (ScriptEngineFactory factory : factories) {
+                                String language = factory.getLanguageName();
+                                String version = factory.getLanguageVersion();
+
+                                if (language.equals(languageName)
+                                        && version.equals(languageVersion)) {
+                                    engine = factory.getScriptEngine();
+                                    break;
+                                }
+                            }
+
+                            if (engine != null) {
+                                try {
+                                    osc.setStatus(((Boolean) engine.eval(osc.getOperator())));
+                                } catch (ScriptException e) {
+                                    log.error("Scripte err {}", e);
+                                }
+                            }
+                            log.info("operator after: {}, status {}", osc.getOperator(), osc.isStatus());
+                        } else {
+                            log.error("operator can not be empty");
+                        }
+                    }
+                    if (osc.isStatus()) {
+                        ProfileDetails.setName(cbbBenchmark.getSelectedItem().toString());
+                        ProfileDetails.setProfile(p);
+                        log.info("profile loaded!!!");
+                        txtDescpCard1.setText(p.getDescription());
+                        enableBtnNext(card1.getName());
+                    } else {
+                        txtDescpCard1.setText("Wrong OS version!!!");
+                    }
                 }
-                enableBtnNext(card1.getName());
             } catch (JsonProcessingException e1) {
                 if (cbbBenchmark.getSelectedIndex() != 0) {
                     log.error("loi json :: {}", e1);
@@ -444,8 +572,8 @@ public class mainFrame extends javax.swing.JFrame {
             } finally {
                 if (cbbBenchmark.getSelectedIndex() == 0) {
                     ProfileDetails.clearProfileDetails();
+                    enableBtnNext(card1.getName());
                 }
-                enableBtnNext(card1.getName());
             }
         }
     }//GEN-LAST:event_cbbBenchmarkItemStateChanged
@@ -456,6 +584,10 @@ public class mainFrame extends javax.swing.JFrame {
             epProfile.setText(lvl.getDescription());
         }
     }//GEN-LAST:event_cbbLevelItemStateChanged
+
+    private void chkbDocxReportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chkbDocxReportMouseClicked
+        enableBtnNext(card3.getName());
+    }//GEN-LAST:event_chkbDocxReportMouseClicked
     private void enableBtnNext(String card) {
         if (card1.isShowing() && cbbBenchmark.getSelectedIndex() == 0 && StringUtils.equals(card, card1.getName())
                 || card3.isShowing() && !isReportTypeSelect() && StringUtils.equals(card, card3.getName())
@@ -506,6 +638,7 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel cardContent;
     private javax.swing.JComboBox<String> cbbBenchmark;
     private javax.swing.JComboBox<Level> cbbLevel;
+    private javax.swing.JCheckBox chkbDocxReport;
     private javax.swing.JCheckBox chkbHtmlReport;
     private javax.swing.JCheckBox chkbPdfReport;
     private javax.swing.JEditorPane epProfile;
@@ -516,12 +649,12 @@ public class mainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTextPane jsonPrint;
     private javax.swing.JLabel lblOS;
     private javax.swing.JLabel lblSaveReport;
+    private javax.swing.JTable tableResult;
     private javax.swing.JEditorPane txtDescpCard1;
     // End of variables declaration//GEN-END:variables
 }

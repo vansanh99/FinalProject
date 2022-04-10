@@ -18,4 +18,6 @@ public class Constants {
     public static final String COMMAND_SEP = "\\[;\\]";
     public static final String COMMA_SEP = "\\[,\\]";
     
+    public static final String START_MEDTH="Start method";
+    public static final String END_MEDTH="END method";
 }
