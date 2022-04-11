@@ -35,6 +35,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -429,6 +430,8 @@ public class mainFrame extends javax.swing.JFrame {
                 enableBtnNext(card3.getName());
                 btnBack.setEnabled(true);
             } else if (lblSaveReport.isShowing()) {
+                DefaultTableModel dtm = (DefaultTableModel) tableResult.getModel();
+                dtm.setRowCount(0);
                 Context context = new Context();
                 context.setVariable("audit", ProfileDetails.getProfile().getAudit());
                 context.setVariable("level", ProfileDetails.getProfileLevel());

@@ -31,8 +31,7 @@
                   </tr>
                </thead>
                <tbody>
-                  <tr th:each="lvl : ${audit.levelList}" valign="top"
-                     th:class="${level.id == lvl.id ? ' selected-row' : ''} ">
+                  <tr th:each="lvl : ${audit.levelList}" valign="top" th:class="${level.id == lvl.id ? ' selected-row' : ''} ">
                      <td th:text="${lvl.name}"></td>
                      <td th:utext="${lvl.description}"></td>
                   </tr>
