@@ -51,7 +51,7 @@ public class CommonUtils {
     public static Properties loadProp() {
         Properties props = null;
         try {
-            try (FileReader reader = new FileReader(FILE_CONFIG)) {
+            try ( FileReader reader = new FileReader(FILE_CONFIG)) {
                 props = new Properties();
                 props.load(reader);
             }
@@ -63,7 +63,6 @@ public class CommonUtils {
     public static String runPipeCommand(String command) {
         log.info("command befor {}", command);
         String[] cmds = command.split(Constants.COMMAND_SEP);
-        String output = "";
         List<Command> commandLst = new ArrayList<>();
         for (int i = 0; i < cmds.length; i++) {
             log.info("command {}: {}", i, command);
@@ -82,7 +81,7 @@ public class CommonUtils {
                 commandLst.add(com);
             }
         }
-        output = runCommand(commandLst);
+        String output = runCommand(commandLst);
         return output;
     }
 

@@ -22,6 +22,8 @@ import java.awt.CardLayout;
 import java.awt.event.ItemEvent;
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -415,6 +417,7 @@ public class mainFrame extends javax.swing.JFrame {
                     Fragment.errMsgUI(cardContent, "No audit selected", "Error");
                 }
             } else if (cbbLevel.isShowing()) {
+                btnNext1.setText("Start Audit");
                 Level level = (Level) cbbLevel.getSelectedItem();
                 ProfileDetails.setProfileLevel(level);
                 Audit audit = ProfileDetails.getProfile().getAudit();
@@ -430,9 +433,17 @@ public class mainFrame extends javax.swing.JFrame {
                 enableBtnNext(card3.getName());
                 btnBack.setEnabled(true);
             } else if (lblSaveReport.isShowing()) {
+                btnNext1.setEnabled(false);
                 DefaultTableModel dtm = (DefaultTableModel) tableResult.getModel();
                 dtm.setRowCount(0);
+                InetAddress IP = null;
+                try {
+                    IP = InetAddress.getLocalHost();
+                } catch (UnknownHostException ex) {
+                    log.error("loi host {}", ex);
+                }
                 Context context = new Context();
+                context.setVariable("hostIP", null != IP ? IP.getHostAddress() : "");
                 context.setVariable("audit", ProfileDetails.getProfile().getAudit());
                 context.setVariable("level", ProfileDetails.getProfileLevel());
                 context.setVariable("htmlReport", chkbHtmlReport.isSelected());
@@ -463,6 +474,7 @@ public class mainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNext1MouseClicked
 
     private void btnBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBackMouseClicked
+        btnNext1.setText("Next");
         enableBtnNext(card2.getName());
         enableBtnNext(card1.getName());
         if (btnBack.isEnabled()) {
