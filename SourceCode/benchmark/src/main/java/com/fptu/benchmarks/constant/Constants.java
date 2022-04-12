@@ -20,4 +20,6 @@ public class Constants {
     
     public static final String START_MEDTH="Start method";
     public static final String END_MEDTH="END method";
+    
+    public static final String OUT_FOLDER = "OUT_FOLDER";
 }

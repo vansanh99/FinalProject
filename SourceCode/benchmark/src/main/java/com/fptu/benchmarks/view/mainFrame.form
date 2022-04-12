@@ -42,6 +42,8 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="btnBack" min="-2" pref="108" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
+                      <Component id="btnShowReport" min="-2" pref="117" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="btnNext1" min="-2" pref="99" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="83" max="-2" attributes="0"/>
                   </Group>
@@ -64,6 +66,7 @@
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="btnBack" pref="41" max="32767" attributes="0"/>
                   <Component id="btnNext1" max="32767" attributes="0"/>
+                  <Component id="btnShowReport" alignment="1" max="32767" attributes="0"/>
               </Group>
               <EmptySpace pref="18" max="32767" attributes="0"/>
           </Group>
@@ -437,6 +440,17 @@
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jLabel2.setText(&quot;JRE : &quot; + System.getProperty(&quot;java.specification.vendor&quot;) + &quot; &quot; + System.getProperty(&quot;java.runtime.version&quot;));"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnShowReport">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="View Reports"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnShowReportMouseClicked"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnShowReport.setVisible(false);"/>
       </AuxValues>
     </Component>
   </SubComponents>

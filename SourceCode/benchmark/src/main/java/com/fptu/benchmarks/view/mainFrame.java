@@ -19,6 +19,7 @@ import com.fptu.benchmarks.business.TableUtilities;
 import com.fptu.benchmarks.constant.Constants;
 import com.fptu.benchmarks.model.ProfileDetails;
 import java.awt.CardLayout;
+import java.awt.Desktop;
 import java.awt.event.ItemEvent;
 import java.io.File;
 import java.io.IOException;
@@ -93,6 +94,7 @@ public class mainFrame extends javax.swing.JFrame {
         lblOS = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        btnShowReport = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -340,6 +342,14 @@ public class mainFrame extends javax.swing.JFrame {
         jLabel2.setText("runtimejv");
         jLabel2.setText("JRE : " + System.getProperty("java.specification.vendor") + " " + System.getProperty("java.runtime.version"));
 
+        btnShowReport.setText("View Reports");
+        btnShowReport.setVisible(false);
+        btnShowReport.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnShowReportMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -360,6 +370,8 @@ public class mainFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnShowReport, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
                         .addComponent(btnNext1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(83, 83, 83))))
         );
@@ -376,7 +388,8 @@ public class mainFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnBack, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-                    .addComponent(btnNext1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnNext1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnShowReport, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
@@ -420,19 +433,27 @@ public class mainFrame extends javax.swing.JFrame {
                 btnNext1.setText("Start Audit");
                 Level level = (Level) cbbLevel.getSelectedItem();
                 ProfileDetails.setProfileLevel(level);
-                Audit audit = ProfileDetails.getProfile().getAudit();
-                ph.LevelFilter(audit, level);
-                /*ProfileDetails.getProfile().setAudit(Lists.newArrayList(ProfileDetails.getProfile().getAudit().stream()
-                        .filter(a -> a.getLevel().equalsIgnoreCase(level))//set lever
-                        .findAny()
-                        .orElse(null)
-                ));*/
                 File file = new File("reports");
                 lblSaveReport.setText("Saving to " + file.getAbsolutePath());
+                ProfileDetails.getMetadataMap().put(Constants.OUT_FOLDER, file.getAbsolutePath());
                 cardLayout.show(cardContent, card3.getName());
                 enableBtnNext(card3.getName());
                 btnBack.setEnabled(true);
             } else if (lblSaveReport.isShowing()) {
+                if (StringUtils.equals(btnNext1.getText(), "Re-run Audit")) {
+                    log.info("profile reloaded");
+                    String path = "profiles/" + cbbBenchmark.getSelectedItem().toString();
+                    try {
+                        String jsonString = new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
+                        Profile p = new ObjectMapper().readValue(jsonString,
+                                new TypeReference<Profile>() {
+                        });
+                        ProfileDetails.setProfile(p);
+                    } catch (IOException ex) {
+                        log.error("loi json: {}", ex);
+                    }
+                }
+                ph.LevelFilter(ProfileDetails.getProfile().getAudit(), ProfileDetails.getProfileLevel());
                 btnNext1.setEnabled(false);
                 DefaultTableModel dtm = (DefaultTableModel) tableResult.getModel();
                 dtm.setRowCount(0);
@@ -450,24 +471,28 @@ public class mainFrame extends javax.swing.JFrame {
                 context.setVariable("pdfReport", chkbPdfReport.isSelected());
                 context.setVariable("docxReport", chkbDocxReport.isSelected());
                 ProfileDetails.setContext(context);
-                ObjectMapper obm = new ObjectMapper();
                 Thread t = new Thread(() -> {
                     ph.proccessProfile(ProfileDetails.getProfile().getAudit(), tableResult);
-                    ReportUtils.generateReportFromHtml(context, ProfileDetails.getProfile().getTemplateReport(), "reports", tableResult);
+                    ReportUtils.generateReportFromHtml(context, ProfileDetails.getProfile().getTemplateReport(),
+                            ProfileDetails.getMetadataMap().get(Constants.OUT_FOLDER), tableResult);
+                    btnNext1.setText("Re-run Audit");
+                    btnNext1.setEnabled(true);
+                    btnShowReport.setVisible(true);
                 });
                 t.start();
-                String jsonText = "";
+                /*String jsonText = "";
+                ObjectMapper obm = new ObjectMapper();
                 try {
                     jsonText = obm.writerWithDefaultPrettyPrinter().writeValueAsString(ProfileDetails.getProfile());
                 } catch (JsonProcessingException ex) {
                     log.error("error json {}", ex);
                 }
 
-                //ReportUtils repUtil = new ReportUtils(context, ProfileDetails.getProfile().getTemplateReport(), "reports");
-                //Thread t = new Thread(repUtil);
-                //t.start();
-                //ReportUtils.generateReportFromHtml(context, ProfileDetails.getProfile().getTemplateReport(), "reports");
-                //jsonPrint.setText(jsonText);
+                ReportUtils repUtil = new ReportUtils(context, ProfileDetails.getProfile().getTemplateReport(), "reports");
+                Thread t = new Thread(repUtil);
+                t.start();
+                ReportUtils.generateReportFromHtml(context, ProfileDetails.getProfile().getTemplateReport(), "reports");
+                jsonPrint.setText(jsonText);*/
             }
             log.info("btnNext1 done");
         }
@@ -475,6 +500,7 @@ public class mainFrame extends javax.swing.JFrame {
 
     private void btnBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBackMouseClicked
         btnNext1.setText("Next");
+        btnShowReport.setVisible(false);
         enableBtnNext(card2.getName());
         enableBtnNext(card1.getName());
         if (btnBack.isEnabled()) {
@@ -563,13 +589,13 @@ public class mainFrame extends javax.swing.JFrame {
                         }
                     }
                     if (osc.isStatus()) {
-                        ProfileDetails.setName(cbbBenchmark.getSelectedItem().toString());
                         ProfileDetails.setProfile(p);
                         log.info("profile loaded!!!");
                         txtDescpCard1.setText(p.getDescription());
                         enableBtnNext(card1.getName());
                     } else {
                         txtDescpCard1.setText("Wrong OS version!!!");
+                        btnNext1.setEnabled(false);
                     }
                 }
             } catch (JsonProcessingException e1) {
@@ -603,6 +629,14 @@ public class mainFrame extends javax.swing.JFrame {
     private void chkbDocxReportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chkbDocxReportMouseClicked
         enableBtnNext(card3.getName());
     }//GEN-LAST:event_chkbDocxReportMouseClicked
+
+    private void btnShowReportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnShowReportMouseClicked
+        try {
+            Desktop.getDesktop().open(new File(ProfileDetails.getMetadataMap().get(Constants.OUT_FOLDER)));
+        } catch (IOException ex) {
+            log.error("khong tim thay thu muc luu template {}", ex);
+        }
+    }//GEN-LAST:event_btnShowReportMouseClicked
     private void enableBtnNext(String card) {
         if (card1.isShowing() && cbbBenchmark.getSelectedIndex() == 0 && StringUtils.equals(card, card1.getName())
                 || card3.isShowing() && !isReportTypeSelect() && StringUtils.equals(card, card3.getName())
@@ -647,6 +681,7 @@ public class mainFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnNext1;
+    private javax.swing.JButton btnShowReport;
     private javax.swing.JPanel card1;
     private javax.swing.JPanel card2;
     private javax.swing.JPanel card3;

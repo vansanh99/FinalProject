@@ -6,6 +6,8 @@ package com.fptu.benchmarks.model;
 
 import com.fptu.benchmarks.beans.Level;
 import com.fptu.benchmarks.beans.Profile;
+import java.util.HashMap;
+import java.util.Map;
 import org.thymeleaf.context.Context;
 
 /**
@@ -13,10 +15,12 @@ import org.thymeleaf.context.Context;
  * @author sanh
  */
 public class ProfileDetails {
+
     public static Profile profile;
     public static Level profileLevel;
-    public static String name;
+    public static int totalItem;
     public static Context context;
+    public static Map<String, String> metadataMap = new HashMap<>();
 
     public static int getTotalItem() {
         return totalItem;
@@ -25,7 +29,7 @@ public class ProfileDetails {
     public static void setTotalItem(int totalItem) {
         ProfileDetails.totalItem = totalItem;
     }
-    public static int totalItem;
+
     public static Context getContext() {
         return context;
     }
@@ -50,18 +54,19 @@ public class ProfileDetails {
         ProfileDetails.profileLevel = profileLevel;
     }
 
-    public static String getName() {
-        return name;
+    public static Map<String, String> getMetadataMap() {
+        return metadataMap;
     }
 
-    public static void setName(String name) {
-        ProfileDetails.name = name;
+    public static void setMetadataMap(Map<String, String> metadataMap) {
+        ProfileDetails.metadataMap = metadataMap;
     }
 
     public ProfileDetails() {
     }
+
     public static void clearProfileDetails() {
-        setName(null);
+        setMetadataMap(null);
         setProfile(null);
         setProfileLevel(null);
     }
