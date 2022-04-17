@@ -167,5 +167,6 @@ public class ProfileHandler {
         } else {
             //return errror herer
         }
+        log.info("level selected: {} - total {}", selLevel, index);
     }
 }

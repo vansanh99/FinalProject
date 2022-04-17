@@ -66,7 +66,7 @@ public class ProfileDetails {
     }
 
     public static void clearProfileDetails() {
-        setMetadataMap(null);
+        setMetadataMap(new HashMap<>());
         setProfile(null);
         setProfileLevel(null);
     }

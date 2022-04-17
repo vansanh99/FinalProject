@@ -1,7 +1,7 @@
 {
     "family": "unix",
     "OSCheck": {
-        "command_list" :  [
+        "command_list": [
             {
                 "id": "1",
                 "command": "cat[,]/etc/lsb-release[|]grep[,]DISTRIB_ID",
@@ -64,7 +64,6 @@
                                     {
                                         "id": "1.1.1.2",
                                         "description": "Ensure mounting of freevxfs filesystems is disabled",
-                                        "permission": "",
                                         "pattern": "^\\s*install\\s+freevxfs\\s+\/bin\/true\\s*$",
                                         "path": "/etc/modprobe.d/freevxfs.conf",
                                         "level": "1WS,1SV",
@@ -73,7 +72,6 @@
                                     {
                                         "id": "1.1.1.3",
                                         "description": "Ensure mounting of jffs2 filesystems is disabled",
-                                        "permission": "",
                                         "pattern": "^\\s*install\\s+jffs2\\s+\/bin\/true\\s*$",
                                         "path": "/etc/modprobe.d/jffs2.conf",
                                         "level": "1WS,1SV",
@@ -82,7 +80,6 @@
                                     {
                                         "id": "1.1.1.4",
                                         "description": "Ensure mounting of hfs filesystems is disabled",
-                                        "permission": "",
                                         "pattern": "^\\s*install\\s+hfs\\s+\/bin\/true\\s*$",
                                         "path": "/etc/modprobe.d/hfs.conf",
                                         "level": "1WS,1SV",
@@ -91,7 +88,6 @@
                                     {
                                         "id": "1.1.1.5",
                                         "description": "Ensure mounting of hfsplus filesystems is disabled",
-                                        "permission": "",
                                         "pattern": "^\\s*install\\s+hfsplus\\s+\/bin\/true\\s*$",
                                         "path": "/etc/modprobe.d/hfsplus.conf",
                                         "level": "1WS,1SV",
@@ -100,7 +96,6 @@
                                     {
                                         "id": "1.1.1.6",
                                         "description": "Ensure mounting of squashfs filesystems is disabled",
-                                        "permission": "",
                                         "pattern": "^\\s*install\\s+squashfs\\s+\/bin\/true\\s*$",
                                         "path": "/etc/modprobe.d/squashfs.conf",
                                         "level": "1WS,1SV",
@@ -109,7 +104,6 @@
                                     {
                                         "id": "1.1.1.7",
                                         "description": "Ensure mounting of udf filesystems is disabled",
-                                        "permission": "",
                                         "pattern": "^\\s*install\\s+udf\\s+\/bin\/true\\s*$",
                                         "path": "/etc/modprobe.d/udf.conf",
                                         "level": "1WS,1SV",
@@ -724,6 +718,908 @@
                                         ],
                                         "operator": "1&&2&&3&&4",
                                         "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "2",
+                "name": "Services",
+                "categories": [
+                    {
+                        "id": "2.1",
+                        "name": "inetd Services",
+                        "groups": [
+                            {
+                                "id": "2.1",
+                                "report": [
+                                    {
+                                        "id": "2.1.1",
+                                        "description": "Ensure xinetd is not installed",
+                                        "command_list": [
+                                            {
+                                                "command": "dpkg[,]-s[,]xinetd",
+                                                "expectationPattern": "\\s*package 'xinetd' is not installed\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "2.1.2",
+                                        "description": "Ensure openbsd-inetd is not installed",
+                                        "command_list": [
+                                            {
+                                                "command": "dpkg[,]-s[,]openbsd-inetd",
+                                                "expectationPattern": "\\s*package 'openbsd-inetd' is not installed\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "2.2",
+                        "name": "Special Purpose Services",
+                        "groups": [
+                            {
+                                "id": "2.2.1",
+                                "name": " Time Synchronization",
+                                "report": [
+                                    {
+                                        "id": "2.2.1.1",
+                                        "description": "Ensure time synchronization is in use",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "systemctl[,]is-enabled[,]systemd-timesyncd",
+                                                "expectationPattern": "enabled"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "dpkg[,]-s[,]chrony",
+                                                "expectationPattern": "\\s*package 'chrony' is not installed\\s*"
+                                            },
+                                            {
+                                                "id": "3",
+                                                "command": "dpkg[,]-s[,]ntp",
+                                                "expectationPattern": "\\s*package 'ntp' is not installed\\s*"
+                                            }
+                                        ],
+                                        "operator": "1&&2&&3",
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "2.2.1.3",
+                                        "description": "Ensure chrony is configured",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "ls[,]/etc/chrony.conf",
+                                                "expectationPattern": "/etc/chrony.conf"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "grep[,]-E[,]^(server|pool)[,]/etc/chrony.conf",
+                                                "expectationPattern": "^\\s*(server|pool)\\s+\\S+"
+                                            },
+                                            {
+                                                "id": "3",
+                                                "command": "ps[,]-ef[|]grep[,]chronyd",
+                                                "expectationPattern": "^chrony\\s++"
+                                            }
+                                        ],
+                                        "operator": "1||2&&3",
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "2.2.1.4",
+                                        "description": "Ensure ntp is configured",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "ls[,]/etc/ntp.conf",
+                                                "expectationPattern": "/etc/ntp.conf"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "grep[,]^restrict[,]/etc/ntp.conf",
+                                                "expectationPattern": "^\\s*restrict\\s+-6\\s+default(\\s*\\bkod\\b\\s*|\\s*\\bnomodify\\b\\s*|\\s*\\bnotrap\\b\\s*|\\s*\\bnopeer\\b\\s*|\\s*\\bnoquery\\b\\s*)(\\s*\\bkod\\b\\s*|\\s*\\bnomodify\\b\\s*|\\s*\\bnotrap\\b\\s*|\\s*\\bnopeer\\b\\s*|\\s*\\bnoquery\\b\\s*)(\\s*\\bkod\\b\\s*|\\s*\\bnomodify\\b\\s*|\\s*\\bnotrap\\b\\s*|\\s*\\bnopeer\\b\\s*|\\s*\\bnoquery\\b\\s*)(\\s*\\bkod\\b\\s*|\\s*\\bnomodify\\b\\s*|\\s*\\bnotrap\\b\\s*|\\s*\\bnopeer\\b\\s*|\\s*\\bnoquery\\b\\s*)(\\s*\\bkod\\b\\s*|\\s*\\bnomodify\\b\\s*|\\s*\\bnotrap\\b\\s*|\\s*\\bnopeer\\b\\s*|\\s*\\bnoquery\\b\\s*)(?:#.*)?$"
+                                            },
+                                            {
+                                                "id": "3",
+                                                "command": "grep[,]^restrict[,]/etc/ntp.conf",
+                                                "expectationPattern": "^\\s*restrict\\s+(-4\\s+)?default(\\s*\\bkod\\b\\s*|\\s*\\bnomodify\\b\\s*|\\s*\\bnotrap\\b\\s*|\\s*\\bnopeer\\b\\s*|\\s*\\bnoquery\\b\\s*)(\\s*\\bkod\\b\\s*|\\s*\\bnomodify\\b\\s*|\\s*\\bnotrap\\b\\s*|\\s*\\bnopeer\\b\\s*|\\s*\\bnoquery\\b\\s*)(\\s*\\bkod\\b\\s*|\\s*\\bnomodify\\b\\s*|\\s*\\bnotrap\\b\\s*|\\s*\\bnopeer\\b\\s*|\\s*\\bnoquery\\b\\s*)(\\s*\\bkod\\b\\s*|\\s*\\bnomodify\\b\\s*|\\s*\\bnotrap\\b\\s*|\\s*\\bnopeer\\b\\s*|\\s*\\bnoquery\\b\\s*)(\\s*\\bkod\\b\\s*|\\s*\\bnomodify\\b\\s*|\\s*\\bnotrap\\b\\s*|\\s*\\bnopeer\\b\\s*|\\s*\\bnoquery\\b\\s*)(?:#.*)?$"
+                                            },
+                                            {
+                                                "id": "4",
+                                                "command": "grep[,]^restrict[,]/etc/ntp.conf",
+                                                "expectationPattern": "^\\s*(server|pool)\\s+\\S+"
+                                            },
+                                            {
+                                                "id": "5",
+                                                "command": "ls[,]/etc/sysconfig/ntp",
+                                                "expectationPattern": "/etc/sysconfig/ntp"
+                                            },
+                                            {
+                                                "id": "6",
+                                                "command": "grep[,]^NTPD_OPTIONS[,]/etc/sysconfig/ntp",
+                                                "expectationPattern": "^\\s*OPTIONS=\"[^\"]*-u ntp:ntp[^\"]*\"\\s*(?:#.*)?$"
+                                            },
+                                            {
+                                                "id": "7",
+                                                "command": "ls[,]/etc/sysconfig/ntpd",
+                                                "expectationPattern": "/etc/sysconfig/ntpd"
+                                            },
+                                            {
+                                                "id": "8",
+                                                "command": "grep[,]^OPTIONS[,]/etc/sysconfig/ntpd",
+                                                "expectationPattern": "^\\s*OPTIONS=\"[^\"]*-u ntp:ntp[^\"]*\"\\s*(?:#.*)?$"
+                                            },
+                                            {
+                                                "id": "9",
+                                                "command": "ls[,]/etc/init.d/ntp",
+                                                "expectationPattern": "/etc/init.d/ntp"
+                                            },
+                                            {
+                                                "id": "10",
+                                                "command": "grep[,]RUNASUSER=ntp[,]/etc/init.d/ntp",
+                                                "expectationPattern": "^\\s*RUNASUSER\\s*=\\s*ntp\\s*(?:#.*)?$"
+                                            }
+                                        ],
+                                        "operator": "(1||2&&3&&4)&&(5||6)&&(7||8)&&(9||10)",
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "2.2.2",
+                                        "description": "Ensure X Window System is not installed",
+                                        "command_list": [
+                                            {
+                                                "command": "dpkg[,]-l[,]xserver-xorg*[|]grep[,]xserver-xorg[|]grep[,]-v[,]<none>",
+                                                "expectationPattern": "^$"
+                                            }
+                                        ],
+                                        "level": "1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "2.2.3",
+                                        "description": "Ensure Avahi Server is not enabled",
+                                        "command_list": [
+                                            {
+                                                "command": "systemctl[,]is-enabled[,]avahi-daemon",
+                                                "expectationPattern": "^((?!enable)[\\s\\S])*$"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "2.2.4",
+                                        "description": "Ensure CUPS is not enabled",
+                                        "command_list": [
+                                            {
+                                                "command": "systemctl[,]is-enabled[,]cups",
+                                                "expectationPattern": "^((?!enable)[\\s\\S])*$"
+                                            }
+                                        ],
+                                        "level": "2WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "2.2.5",
+                                        "description": "Ensure DHCP Server is not enabled",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "systemctl[,]is-enabled[,]isc-dhcp-server",
+                                                "expectationPattern": "^((?!enable)[\\s\\S])*$"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "systemctl[,]is-enabled,isc-dhcp-server6",
+                                                "expectationPattern": "^((?!enable)[\\s\\S])*$"
+                                            }
+                                        ],
+                                        "operator": "1&&2",
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "2.2.6",
+                                        "description": "Ensure LDAP server is not enabled",
+                                        "command_list": [
+                                            {
+                                                "command": "systemctl[,]is-enabled,slapd",
+                                                "expectationPattern": "^((?!enable)[\\s\\S])*$"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "2.2.7",
+                                        "description": "Ensure NFS and RPC are not enabled",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "systemctl[,]is-enabled[,]nfs-server",
+                                                "expectationPattern": "^((?!enable)[\\s\\S])*$"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "systemctl[,]is-enabled[,]rpcbind",
+                                                "expectationPattern": "^((?!enable)[\\s\\S])*$"
+                                            }
+                                        ],
+                                        "operator": "1&&2",
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "2.2.8",
+                                        "description": "Ensure DNS Server is not enabled",
+                                        "command_list": [
+                                            {
+                                                "command": "systemctl[,]is-enabled[,]bind9",
+                                                "expectationPattern": "^((?!enable)[\\s\\S])*$"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "2.2.9",
+                                        "description": "Ensure FTP Server is not enabled",
+                                        "command_list": [
+                                            {
+                                                "command": "systemctl[,]is-enabled[,]vsftpd",
+                                                "expectationPattern": "^((?!enable)[\\s\\S])*$"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "2.2.10",
+                                        "description": "Ensure HTTP server is not enabled",
+                                        "command_list": [
+                                            {
+                                                "command": "systemctl[,]is-enabled[,]apache2",
+                                                "expectationPattern": "^((?!enable)[\\s\\S])*$"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "2.2.11",
+                                        "description": "Ensure email services are not enabled",
+                                        "command_list": [
+                                            {
+                                                "command": "systemctl[,]is-enabled[,]dovecot",
+                                                "expectationPattern": "^((?!enable)[\\s\\S])*$"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "2.2.12",
+                                        "description": "Ensure Samba is not enabled",
+                                        "command_list": [
+                                            {
+                                                "command": "systemctl[,]is-enabled[,]smbd",
+                                                "expectationPattern": "^((?!enable)[\\s\\S])*$"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "2.2.13",
+                                        "description": "Ensure HTTP Proxy Server is not enabled",
+                                        "command_list": [
+                                            {
+                                                "command": "systemctl[,]is-enabled[,]squid",
+                                                "expectationPattern": "^((?!enable)[\\s\\S])*$"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "2.2.14",
+                                        "description": "Ensure SNMP Server is not enabled",
+                                        "command_list": [
+                                            {
+                                                "command": "systemctl[,]is-enabled[,]snmpd",
+                                                "expectationPattern": "^((?!enable)[\\s\\S])*$"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "2.2.15",
+                                        "description": "Ensure mail transfer agent is configured for local-only mode ",
+                                        "command_list": [
+                                            {
+                                                "command": "ss[,]-lntu[|]grep[,]-E[,]:25\\s[|]grep[,]-E[,]-v[,]\\s\\(127\\.0\\.0\\.1|::1\\):25\\s",
+                                                "expectationPattern": "^$"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "2.2.16",
+                                        "description": "Ensure rsync service is not enabled",
+                                        "command_list": [
+                                            {
+                                                "command": "systemctl[,]is-enabled[,]rsync",
+                                                "expectationPattern": "^((?!enable)[\\s\\S])*$"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "2.2.17",
+                                        "description": "Ensure NIS Server is not enabled",
+                                        "command_list": [
+                                            {
+                                                "command": "systemctl[,]is-enabled[,]nis",
+                                                "expectationPattern": "^((?!enable)[\\s\\S])*$"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "2.3",
+                        "name": "Service Clients",
+                        "groups": [
+                            {
+                                "id": "2.3",
+                                "report": [
+                                    {
+                                        "id": "2.3.1",
+                                        "description": "Ensure NIS Client is not installed",
+                                        "command_list": [
+                                            {
+                                                "command": "dpkg[,]-s[,]nis",
+                                                "expectationPattern": "\\s*package 'nis' is not installed\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "2.3.2",
+                                        "description": "Ensure rsh client is not installed",
+                                        "command_list": [
+                                            {
+                                                "command": "dpkg[,]-s[,]rsh-client",
+                                                "expectationPattern": "\\s*package 'rsh-client' is not installed\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "2.3.3",
+                                        "description": "Ensure talk client is not installed",
+                                        "command_list": [
+                                            {
+                                                "command": "dpkg[,]-s[,]talk",
+                                                "expectationPattern": "\\s*package 'talk' is not installed\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "2.3.4",
+                                        "description": "Ensure telnet client is not installed",
+                                        "command_list": [
+                                            {
+                                                "command": "dpkg[,]-s[,]telnet",
+                                                "expectationPattern": "\\s*package 'telnet' is not installed\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "2.3.5",
+                                        "description": "Ensure LDAP client is not installed",
+                                        "command_list": [
+                                            {
+                                                "command": "dpkg[,]-s[,]ldap-utils",
+                                                "expectationPattern": "\\s*package 'ldap-utils' is not installed\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "3",
+                "name": "Network Configuration",
+                "categories": [
+                    {
+                        "id": "3.1",
+                        "name": "Network Parameters(Host Only)",
+                        "groups": [
+                            {
+                                "id": "3.1",
+                                "report": [
+                                    {
+                                        "id": "3.1.1",
+                                        "description": "Ensure packet redirect sending is disabled",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "sysctl[,]net.ipv4.conf.all.send_redirects",
+                                                "expectationPattern": "\\s*net.ipv4.conf.all.send_redirects = 0\\s*"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "sysctl[,]net.ipv4.conf.default.send_redirects",
+                                                "expectationPattern": "\\s*net.ipv4.conf.default.send_redirects = 0\\s*"
+                                            },
+                                            {
+                                                "id": "3",
+                                                "command": "grep[,]-R[,]net\\.ipv4\\.conf\\.all\\.send_redirects[,]/etc/sysctl.conf[,]/etc/sysctl.d",
+                                                "expectationPattern": "\\s*net.ipv4.conf.all.send_redirects = 0\\s*"
+                                            },
+                                            {
+                                                "id": "4",
+                                                "command": "grep[,]-R[,]net\\.ipv4\\.conf\\.default\\.send_redirects[,]/etc/sysctl.conf[,]/etc/sysctl.d",
+                                                "expectationPattern": "net.ipv4.conf.default.send_redirects = 0"
+                                            }
+                                        ],
+                                        "operator": "1&&2&&3&&4",
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "3.1.2",
+                                        "description": "Ensure IP forwarding is disabled",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "sysctl[,]net.ipv4.ip_forward",
+                                                "expectationPattern": "\\s*net.ipv4.ip_forward = 0\\s*"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "grep[,]-E[,]-R[,]-s[,]^\\s*net\\.ipv4\\.ip_forward\\s*=\\s*1[,]/etc/sysctl.conf[,]/etc/sysctl.d[,]/usr/lib/sysctl.d[,]/run/sysctl.d",
+                                                "expectationPattern": "^$"
+                                            },
+                                            {
+                                                "id": "3",
+                                                "command": "sysctl[,]net.ipv6.conf.all.forwarding",
+                                                "expectationPattern": "^net.ipv6.conf.all.forwarding = 0\\s*$"
+                                            },
+                                            {
+                                                "id": "4",
+                                                "command": "grep[,]-E[,]-R[,]-s[,]^\\s*net\\.ipv6\\.conf\\.all\\.forwarding\\s*=\\s*1[,]/etc/sysctl.conf[,]/etc/sysctl.d[,]/usr/lib/sysctl.d[,]/run/sysctl.d",
+                                                "expectationPattern": "^$"
+                                            }
+                                        ],
+                                        "operator": "1&&2&&3&&4",
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "3.2",
+                        "name": "Network Parameters (Host and Router)",
+                        "groups": [
+                            {
+                                "id": "3.2",
+                                "report": [
+                                    {
+                                        "id": "3.2.1",
+                                        "description": "Ensure source routed packets are not accepted",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "sysctl[,]net.ipv4.conf.all.accept_source_route",
+                                                "expectationPattern": "\\s*net.ipv4.conf.all.accept_source_route = 0\\s*"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "sysctl[,]net.ipv4.conf.default.accept_source_route",
+                                                "expectationPattern": "\\s*net.ipv4.conf.default.accept_source_route = 0\\s*"
+                                            },
+                                            {
+                                                "id": "3",
+                                                "command": "grep[,]-R[,]net\\.ipv4\\.conf\\.all\\.accept_source_route[,]/etc/sysctl.conf[,]/etc/sysctl.d",
+                                                "expectationPattern": "^net.ipv4.conf.all.accept_source_route= 0\\s*$"
+                                            },
+                                            {
+                                                "id": "4",
+                                                "command": "grep[,]-R[,]net\\.ipv4\\.conf\\.default\\.accept_source_route[,]/etc/sysctl.conf[,]/etc/sysctl.d",
+                                                "expectationPattern": "\\s*net.ipv4.conf.default.accept_source_route = 0\\s*"
+                                            },
+                                            {
+                                                "id": "5",
+                                                "command": "sysctl[,]net.ipv6.conf.all.accept_source_route",
+                                                "expectationPattern": "\\s*net.ipv6.conf.all.accept_source_route = 0\\s*"
+                                            },
+                                            {
+                                                "id": "6",
+                                                "command": "sysctl[,]net.ipv6.conf.default.accept_source_route",
+                                                "expectationPattern": "\\s*net.ipv6.conf.default.accept_source_route = 0\\s*"
+                                            },
+                                            {
+                                                "id": "7",
+                                                "command": "grep[,]-R[,]net\\.ipv6\\.conf\\.all\\.accept_source_route[,]/etc/sysctl.conf[,]/etc/sysctl.d",
+                                                "expectationPattern": "^net.ipv4.conf.all.accept_source_route= 0\\s*$"
+                                            },
+                                            {
+                                                "id": "8",
+                                                "command": "grep[,]-R[,]net\\.ipv6\\.conf\\.default\\.accept_source_route[,]/etc/sysctl.conf[,]/etc/sysctl.d",
+                                                "expectationPattern": "^net.ipv6.conf.default.accept_source_route= 0\\s*$"
+                                            }
+                                        ],
+                                        "operator": "1&&2&&3&&4&&5&&6&&7&&8",
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "3.3",
+                        "name": "TCP Wrappers",
+                        "groups": [
+                            {
+                                "id": "3.3",
+                                "report": [
+                                    {
+                                        "id": "3.3.4",
+                                        "description": "Ensure permissions on /etc/hosts.allow are configured",
+                                        "command_list": [
+                                            {
+                                                "command": "statp[,]/etc/hosts.allow",
+                                                "expectationPattern": "\\s*Access:\\s+\\(0644/-rw-r--r--\\)\\s+Uid:\\s+\\(\\s+0\\/\\s+root\\)\\s+Gid:\\s+\\(\\s+0\\/\\s+root\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "3.3.5",
+                                        "description": "Ensure permissions on /etc/hosts.deny are configured",
+                                        "command_list": [
+                                            {
+                                                "command": "statp[,]/etc/hosts.deny",
+                                                "expectationPattern": "\\s*Access:\\s+\\(0644/-rw-r--r--\\)\\s+Uid:\\s+\\(\\s+0\\/\\s+root\\)\\s+Gid:\\s+\\(\\s+0\\/\\s+root\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "3.4",
+                        "name": "Uncommon Network Protocols",
+                        "groups": [
+                            {
+                                "id": "3.4",
+                                "report": [
+                                    {
+                                        "id": "3.4.1",
+                                        "description": "Ensure DCCP is disabled",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "modprobe[,]-n[,]-v[,]dccp",
+                                                "expectationPattern": "\\s*install /bin/true\\s*"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "lsmod[,][|]grep[,]dccp",
+                                                "expectationPattern": "^$"
+                                            }
+                                        ],
+                                        "operator": "1&&2",
+                                        "level": "2WS,2SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "3.4.2",
+                                        "description": "Ensure SCTP is disabled",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "modprobe[,]-n[,]-v[,]sctp",
+                                                "expectationPattern": "\\s*install /bin/true\\s*"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "lsmod[,][|]grep[,]sctp",
+                                                "expectationPattern": "^$"
+                                            }
+                                        ],
+                                        "operator": "1&&2",
+                                        "level": "2WS,2SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "3.4.3",
+                                        "description": "Ensure RDS is disabled",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "modprobe[,]-n[,]-v[,]rds",
+                                                "expectationPattern": "\\s*install /bin/true\\s*"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "lsmod[,][|]grep[,]rds",
+                                                "expectationPattern": "^$"
+                                            }
+                                        ],
+                                        "operator": "1&&2",
+                                        "level": "2WS,2SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "3.4.4",
+                                        "description": "Ensure TIPC is disabled",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "modprobe[,]-n[,]-v[,]tipc",
+                                                "expectationPattern": "\\s*install /bin/true\\s*"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "lsmod[,][|]grep[,]tipc",
+                                                "expectationPattern": "^$"
+                                            }
+                                        ],
+                                        "operator": "1&&2",
+                                        "level": "2WS,2SV",
+                                        "type": "SHELL_RUN"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "3.5",
+                        "name": "Firewall Configuration",
+                        "groups": [
+                            {
+                                "id": "3.5.1",
+                                "name": "Ensure Firewall software is installed",
+                                "report": [
+                                    {
+                                        "id": "3.5.1.1",
+                                        "description": "Ensure a Firewall package is installed",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "dpkg[,]-s[,]ufw[|]grep[,]-i[,]status",
+                                                "expectationPattern": "\\s*Status: install ok installed\\s*"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "dpkg[,]-s[,]nftables[|]grep[,]-i[,]status",
+                                                "expectationPattern": "\\s*Status: install ok installed\\s*"
+                                            },
+                                            {
+                                                "id": "3",
+                                                "command": "dpkg[,]-s[,]iptables[|]grep[,]-i[,]status",
+                                                "expectationPattern": "\\s*Status: install ok installed\\s*"
+                                            }
+                                        ],
+                                        "operator": "1&&2&&3",
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "3.5.2",
+                                "name": "Configure UncomplicatedFirewall",
+                                "report": [
+                                    {
+                                        "id": "3.5.2.1",
+                                        "description": "Ensure ufw service is enabled",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "systemctl[,]is-enabled[,]ufw",
+                                                "expectationPattern": "enabled"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "ufw[,]status[|]grep[,]Status",
+                                                "expectationPattern": "^Status: active$"
+                                            }
+                                        ],
+                                        "operator": "1&&2",
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "3.5.2.2",
+                                        "description": "Ensure default deny firewall policy",
+                                        "command_list": [
+                                            {
+                                                "command": "ufw[,]status[,]verbose",
+                                                "expectationPattern": "^\\s*Default:\\s++(deny|reject)\\s++\\(incoming\\),\\s++(deny|reject)\\s++\\(outgoing\\),\\s++(deny|reject)\\s++\\(routed\\)$"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "3.5.2.3",
+                                        "description": "Ensure loopback traffic is configured",
+                                        "level": "1WS,1SV",
+                                        "type": "UNKNOWN"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "3.5.3",
+                                "name": "Configure nftables",
+                                "report": [
+                                    {
+                                        "id": "3.5.3.2",
+                                        "description": "Ensure a table exists",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "nft[,]list[,]tables",
+                                                "expectationPattern": "\\s*Command 'nft' not found\\s*"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "nft[,]list[,]tables",
+                                                "expectationPattern": "\\s*table\\s*"
+                                            }
+                                        ],
+                                        "operator": "1||2",
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "3.5.3.3",
+                                        "description": "Ensure base chains exist",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "nft[,]list[,]ruleset[|]grep[,]hook input",
+                                                "expectationPattern": "\\s*type filter hook input priority 0;\\s*"
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "nft[,]list[,]ruleset[|]grep[,]hook forward",
+                                                "expectationPattern": "\\s*type filter hook forward priority 0;\\s*"
+                                            },
+                                            {
+                                                "id": "3",
+                                                "command": "nft[,]list[,]ruleset[|]grep[,]hook output",
+                                                "expectationPattern": "\\s*type filter hook output priority 0;\\s*"
+                                            }
+                                        ],
+                                        "operator": "1&&2&&3",
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "3.5.3.7",
+                                        "description": "Ensure nftables service is enabled",
+                                        "command_list": [
+                                            {
+                                                "command": "systemctl[,]is-enabled[,]nftables",
+                                                "expectationPattern": "\\s*enable\\s*"
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": "3.5.4",
+                                "name": "Configure iptables",
+                                "report": [
+                                    {
+                                        "id": "3.5.4.1.1",
+                                        "description": "Ensure default deny firewall policy",
+                                        "command_list": [
+                                            {
+                                                "command": "iptables[,]-L",
+                                                "expectationPattern": ""
+                                            }
+                                        ],
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "3.5.4.1.2",
+                                        "description": "Ensure loopback traffic is configured",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "iptables[,]-L[,]INPUT[,]-v[,]-n",
+                                                "expectationPattern": ""
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "iptables[,]-L[,]OUTPUT[,]-v[,]-n",
+                                                "expectationPattern": ""
+                                            }
+                                        ],
+                                        "operator": "1&&2",
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "3.5.4.1.4",
+                                        "description": "Ensure firewall rules exist for all open ports",
+                                        "command_list": [
+                                            {
+                                                "id": "1",
+                                                "command": "ss[,]-4tuln",
+                                                "expectationPattern": ""
+                                            },
+                                            {
+                                                "id": "2",
+                                                "command": "iptables[,]-L[,]INPUT[,]-v[,]-n",
+                                                "expectationPattern": ""
+                                            }
+                                        ],
+                                        "operator": "1&&2",
+                                        "level": "1WS,1SV",
+                                        "type": "SHELL_RUN"
+                                    },
+                                    {
+                                        "id": "3.6",
+                                        "description": "Ensure wireless interfaces are disabled",
+                                        "command_list": [
+                                            {
+                                                "command": "nmcli[,]radio[,]all",
+                                                "expectationPattern": ""
+                                            }
+                                        ],
+                                        "level": "2WS,1SV",
                                         "type": "SHELL_RUN"
                                     }
                                 ]

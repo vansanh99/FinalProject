@@ -17,9 +17,11 @@ public class Constants {
     public static final String PIPE = "\\[\\|\\]";
     public static final String COMMAND_SEP = "\\[;\\]";
     public static final String COMMA_SEP = "\\[,\\]";
-    
-    public static final String START_MEDTH="Start method";
-    public static final String END_MEDTH="END method";
-    
+
+    public static final String START_MEDTH = "Start method";
+    public static final String END_MEDTH = "END method";
+
     public static final String OUT_FOLDER = "OUT_FOLDER";
+    public static final String PROFILE_FOLDER = "profileFolder";
+    public static final String REPORT_FOLDER = "reportFolder";
 }
