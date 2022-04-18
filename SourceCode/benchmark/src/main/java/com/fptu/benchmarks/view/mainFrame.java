@@ -66,7 +66,7 @@ public class mainFrame extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         cardContent = new javax.swing.JPanel();
@@ -106,7 +106,7 @@ public class mainFrame extends javax.swing.JFrame {
 
         cbbBenchmark.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "please select" }));
         File[] files = new File("profiles").listFiles();
-        for (File f : files) {
+        for(File f : files) {
             cbbBenchmark.addItem(f.getName());
         }
         cbbBenchmark.addItemListener(new java.awt.event.ItemListener() {
@@ -125,35 +125,31 @@ public class mainFrame extends javax.swing.JFrame {
         javax.swing.GroupLayout card1Layout = new javax.swing.GroupLayout(card1);
         card1.setLayout(card1Layout);
         card1Layout.setHorizontalGroup(
-                card1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(card1Layout.createSequentialGroup()
-                                .addGap(26, 26, 26)
-                                .addGroup(card1Layout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(card1Layout.createSequentialGroup()
-                                                .addComponent(jLabel3)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(cbbBenchmark, 0, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                        Short.MAX_VALUE))
-                                        .addComponent(jLabel6)
-                                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 719,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(28, Short.MAX_VALUE)));
+            card1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(card1Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(card1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(card1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(cbbBenchmark, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel6)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 719, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(28, Short.MAX_VALUE))
+        );
         card1Layout.setVerticalGroup(
-                card1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(card1Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(card1Layout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(cbbBenchmark, javax.swing.GroupLayout.DEFAULT_SIZE, 44,
-                                                Short.MAX_VALUE)
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(28, 28, 28)
-                                .addComponent(jLabel6)
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
-                                .addContainerGap()));
+            card1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(card1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(card1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cbbBenchmark, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(28, 28, 28)
+                .addComponent(jLabel6)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         cardContent.add(card1, "card1");
         card1.getAccessibleContext().setAccessibleName("");
@@ -177,34 +173,31 @@ public class mainFrame extends javax.swing.JFrame {
         javax.swing.GroupLayout card2Layout = new javax.swing.GroupLayout(card2);
         card2.setLayout(card2Layout);
         card2Layout.setHorizontalGroup(
-                card2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(card2Layout.createSequentialGroup()
-                                .addGap(25, 25, 25)
-                                .addGroup(card2Layout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(card2Layout.createSequentialGroup()
-                                                .addComponent(jLabel4)
-                                                .addGap(69, 69, 69)
-                                                .addComponent(cbbLevel, 0, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                        Short.MAX_VALUE))
-                                        .addComponent(jLabel7)
-                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 716,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(32, Short.MAX_VALUE)));
+            card2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(card2Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(card2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(card2Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(69, 69, 69)
+                        .addComponent(cbbLevel, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel7)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 716, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(32, Short.MAX_VALUE))
+        );
         card2Layout.setVerticalGroup(
-                card2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(card2Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(card2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 43,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(cbbLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 43,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(30, 30, 30)
-                                .addComponent(jLabel7)
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
-                                .addContainerGap()));
+            card2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(card2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(card2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbbLevel, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addComponent(jLabel7)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         cardContent.add(card2, "card2");
         card2.getAccessibleContext().setAccessibleName("");
@@ -238,27 +231,33 @@ public class mainFrame extends javax.swing.JFrame {
                 chkbDocxReportMouseClicked(evt);
             }
         });
+        chkbDocxReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkbDocxReportActionPerformed(evt);
+            }
+        });
 
         tableResult.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][] {
+            new Object [][] {
 
-                },
-                new String[] {
-                        "Number", "Title", "Time", "Result"
-                }) {
-            Class[] types = new Class[] {
-                    java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            },
+            new String [] {
+                "Number", "Title", "Time", "Result"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
-            boolean[] canEdit = new boolean[] {
-                    false, false, false, false
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
-                return types[columnIndex];
+                return types [columnIndex];
             }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit[columnIndex];
+                return canEdit [columnIndex];
             }
         });
         jScrollPane3.setViewportView(tableResult);
@@ -285,37 +284,37 @@ public class mainFrame extends javax.swing.JFrame {
         javax.swing.GroupLayout card3Layout = new javax.swing.GroupLayout(card3);
         card3.setLayout(card3Layout);
         card3Layout.setHorizontalGroup(
-                card3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(card3Layout.createSequentialGroup()
-                                .addGap(26, 26, 26)
-                                .addGroup(card3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(lblSaveReport)
-                                        .addGroup(card3Layout.createSequentialGroup()
-                                                .addComponent(chkbHtmlReport)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(chkbPdfReport)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(chkbDocxReport))
-                                        .addComponent(jLabel5)
-                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 714,
-                                                Short.MAX_VALUE))
-                                .addGap(33, 33, 33)));
+            card3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(card3Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(card3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblSaveReport)
+                    .addGroup(card3Layout.createSequentialGroup()
+                        .addComponent(chkbHtmlReport)
+                        .addGap(18, 18, 18)
+                        .addComponent(chkbPdfReport)
+                        .addGap(18, 18, 18)
+                        .addComponent(chkbDocxReport))
+                    .addComponent(jLabel5)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 714, Short.MAX_VALUE))
+                .addGap(33, 33, 33))
+        );
         card3Layout.setVerticalGroup(
-                card3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(card3Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(card3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(chkbHtmlReport)
-                                        .addComponent(chkbPdfReport)
-                                        .addComponent(chkbDocxReport))
-                                .addGap(28, 28, 28)
-                                .addComponent(lblSaveReport)
-                                .addGap(18, 18, 18)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 272,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+            card3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(card3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(card3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(chkbHtmlReport)
+                    .addComponent(chkbPdfReport)
+                    .addComponent(chkbDocxReport))
+                .addGap(28, 28, 28)
+                .addComponent(lblSaveReport)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         cardContent.add(card3, "card3");
 
@@ -347,8 +346,7 @@ public class mainFrame extends javax.swing.JFrame {
         jLabel1.setText("version: " + System.getProperty("os.version"));
 
         jLabel2.setText("runtimejv");
-        jLabel2.setText("JRE : " + System.getProperty("java.specification.vendor") + " "
-                + System.getProperty("java.runtime.version"));
+        jLabel2.setText("JRE : " + System.getProperty("java.specification.vendor") + " " + System.getProperty("java.runtime.version"));
 
         btnShowReport.setText("View Reports");
         btnShowReport.setVisible(false);
@@ -361,57 +359,52 @@ public class mainFrame extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addComponent(cardContent, javax.swing.GroupLayout.PREFERRED_SIZE, 773,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                        .addGroup(layout.createSequentialGroup()
-                                .addGap(26, 26, 26)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addComponent(lblOS)
-                                                .addGap(65, 65, 65)
-                                                .addComponent(jLabel1)
-                                                .addGap(203, 203, 203)
-                                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 346,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 108,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(btnShowReport, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                        117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(40, 40, 40)
-                                                .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 99,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(83, 83, 83)))));
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(cardContent, javax.swing.GroupLayout.PREFERRED_SIZE, 773, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblOS)
+                        .addGap(65, 65, 65)
+                        .addComponent(jLabel1)
+                        .addGap(203, 203, 203)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnShowReport, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
+                        .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(83, 83, 83))))
+        );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addGap(25, 25, 25)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel1)
-                                        .addComponent(jLabel2)
-                                        .addComponent(lblOS))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cardContent, javax.swing.GroupLayout.PREFERRED_SIZE, 385,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(btnBack, javax.swing.GroupLayout.DEFAULT_SIZE, 41,
-                                                Short.MAX_VALUE)
-                                        .addComponent(btnNext, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnShowReport, javax.swing.GroupLayout.Alignment.TRAILING,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addContainerGap(18, Short.MAX_VALUE)));
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(lblOS))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cardContent, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnBack, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                    .addComponent(btnNext, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnShowReport, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void chkbDocxReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkbDocxReportActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chkbDocxReportActionPerformed
 
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnNextActionPerformed
         // TODO add your handling code here:
@@ -681,7 +674,7 @@ public class mainFrame extends javax.swing.JFrame {
     }
 
     private boolean isReportTypeSelect() {
-        return chkbHtmlReport.isSelected() || chkbPdfReport.isSelected();
+        return chkbHtmlReport.isSelected() || chkbPdfReport.isSelected() || chkbDocxReport.isSelected();
     }
 
     /**

@@ -80,7 +80,7 @@
                               <tr th:id="'result-' + ${rep.id}"
                                  th:class="${rep.status == true or rep.type == 'UNKNOWN'} ? 'failuresOnlyArea tableVisible' : ''">
                                  <td>
-                                    <span class="weight">1.0</span>
+                                    <span class="weight"></span>
                                  </td>
                                  <td>
                                     <a th:href="'#detail-' + ${rep.id}" th:text="${rep.id + ' ' + rep.description}"></a>

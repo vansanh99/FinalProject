@@ -2523,6 +2523,7 @@
     <div class="description">
         <p>inetd is a super-server daemon that provides internet services and passes connections to configured services.
             While not commonly used inetd and any unneeded inetd based services should be disabled if possible.</p>
+    </div>
 </th:block>
 <th:block th:fragment="2a1a1(rep)"> <span th:replace="this::statusDetail(rep=${rep})"></span>
     <h3 class="ruleTitle"> 2.1.1 Ensure xinetd is not installed</h3>
@@ -4168,7 +4169,6 @@
     </div>
 </th:block>
 <th:block th:fragment="3a4a1(rep)"> <span th:replace="this::statusDetail(rep=${rep})"></span>
-    <h3 class="ruleTitle">
         <h3 class="ruleTitle" title="xccdf_org.cisecurity.benchmarks_rule_3.4.1_Ensure_DCCP_is_disabled"> 3.4.1 Ensure
             DCCP is disabled</h3>
         <div class="description">
