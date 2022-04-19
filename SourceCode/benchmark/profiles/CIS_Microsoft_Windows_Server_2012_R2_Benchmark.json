@@ -5,7 +5,7 @@
             {
                 "id": "1",
                 "command": "REG[,]query[,]HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion[,]/v[,]ProductName",
-                "expectationPattern": "[a-zA-Z0-9\\(\\)\\s+\\n]*2012\\s[rR]2[a-zA-Z0-9\\(\\)\\s]*$"
+                "expectationPattern": "[a-zA-Z0-9\\(\\)\\s+\\n]*2012\\s[rR]2[a-zA-Z0-9\\(\\)\\s]*$|.*"
             }
         ]
     },
@@ -160,6 +160,262 @@
                         ]
                     }
                 ]
+            },
+            {
+                "id": "2",
+                "name": "Local Policies",
+                "categories": [
+                    {
+                        "id" : "2.1",
+                        "name" : "Audit Policy",
+                        "groups" : []
+                    },
+                    {
+                        "id" : "2.2",
+                        "name" : "User Rights Assignment",
+                        "groups" : [
+                            {
+                                "id" : "2.2",
+                                "report" : [
+                                    {
+                                        "id" : "2.2.1",
+                                        "description" : "(L1) Ensure 'Access Credential Manager as a trusted caller' is set to 'No One'",
+                                        "command_list" : [
+                                            {
+                                                "command" : "",
+                                                "expectationPattern" : ""
+                                            }
+                                        ],
+                                        "level" : "1DC,1MS",
+                                        "type": "UNKNOWN"
+                                    },
+                                    {
+                                        "id" : "2.2.2",
+                                        "description" : "(L1) Configure 'Access this computer from the network'",
+                                        "command_list" : [
+                                            {
+                                                "command" : "",
+                                                "expectationPattern" : ""
+                                            }
+                                        ],
+                                        "level" : "1DC,1MS",
+                                        "type": "UNKNOWN"
+                                    },
+                                    {
+                                        "id" : "2.2.3",
+                                        "description" : "(L1) Ensure 'Act as part of the operating system' is set to 'No One'",
+                                        "command_list" : [
+                                            {
+                                                "command" : "",
+                                                "expectationPattern" : ""
+                                            }
+                                        ],
+                                        "level" : "1DC,1MS",
+                                        "type": "UNKNOWN"
+                                    },
+                                    {
+                                        "id" : "2.2.4",
+                                        "description" : "(L1) Ensure 'Add workstations to domain' is set to 'Administrators' (DC only)",
+                                        "command_list" : [
+                                            {
+                                                "command" : "",
+                                                "expectationPattern" : ""
+                                            }
+                                        ],
+                                        "level" : "1DC",
+                                        "type": "UNKNOWN"
+                                    },
+                                    {
+                                        "id" : "2.2.5",
+                                        "description" : "(L1) Ensure 'Adjust memory quotas for a process' is set to 'Administrators, LOCAL SERVICE, NETWORK SERVICE' ",
+                                        "command_list" : [
+                                            {
+                                                "command" : "",
+                                                "expectationPattern" : ""
+                                            }
+                                        ],
+                                        "level" : "1DC,1MS",
+                                        "type": "UNKNOWN"
+                                    },
+                                    {
+                                        "id" : "2.2.6",
+                                        "description" : "(L1) Configure 'Allow log on locally'",
+                                        "command_list" : [
+                                            {
+                                                "command" : "",
+                                                "expectationPattern" : ""
+                                            }
+                                        ],
+                                        "level" : "1DC,1MS",
+                                        "type": "UNKNOWN"
+                                    },
+                                    {
+                                        "id" : "2.2.7",
+                                        "description" : "(L1) Configure 'Allow log on through Remote Desktop Services'",
+                                        "command_list" : [
+                                            {
+                                                "command" : "",
+                                                "expectationPattern" : ""
+                                            }
+                                        ],
+                                        "level" : "1DC,1MS",
+                                        "type": "UNKNOWN"
+                                    },
+                                    {
+                                        "id" : "2.2.8",
+                                        "description" : "(L1) Ensure 'Back up files and directories' is set to 'Administrators'",
+                                        "command_list" : [
+                                            {
+                                                "command" : "",
+                                                "expectationPattern" : ""
+                                            }
+                                        ],
+                                        "level" : "1DC,1MS",
+                                        "type": "UNKNOWN"
+                                    },
+                                    {
+                                        "id" : "2.2.9",
+                                        "description" : "(L1) Ensure 'Change the system time' is set to 'Administrators, LOCAL SERVICE'",
+                                        "command_list" : [
+                                            {
+                                                "command" : "",
+                                                "expectationPattern" : ""
+                                            }
+                                        ],
+                                        "level" : "1DC,1MS",
+                                        "type": "UNKNOWN"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id" : "9",
+                "name" : "Windows Firewall With Advanced Security",
+                "categories" : [
+                    {
+                        "id" : "9.1",
+                        "name" : "Domain Profile",
+                        "groups" : [
+                            {
+                                "id" : "9.1",
+                                "report" : [
+                                    {
+                                        "id" : "9.1.1",
+                                        "description" : "(L1) Ensure 'Windows Firewall: Domain: Firewall state' is set to 'On",
+                                        "command_list" : [
+                                            {
+                                                "command" : "REG[,]query[,]HKLM\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\DomainProfile[,]/v[,]EnableFirewall",
+                                                "expectationPattern" : "EnableFirewall\\s+REG_DWORD\\s+0x1"
+                                            }
+                                        ],
+                                        "level" : "1DC,1MS",
+                                        "type" : "SHELL_RUN"
+                                    },
+                                    {
+                                        "id" : "9.1.2",
+                                        "description" : "(L1) Ensure 'Windows Firewall: Domain: Inbound connections' is set to 'Block (default)'",
+                                        "command_list" : [
+                                            {
+                                                "command" : "REG[,]query[,]HKLM\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\DomainProfile[,]/v[,]DefaultInboundAction",
+                                                "expectationPattern" : "DefaultInboundAction\\s+REG_DWORD\\s+0x1"
+                                            }
+                                        ],
+                                        "level" : "1DC,1MS",
+                                        "type" : "SHELL_RUN"
+                                    },
+                                    {
+                                        "id" : "9.1.3",
+                                        "description" : "(L1) Ensure 'Windows Firewall: Domain: Outbound connections' is set to 'Allow (default)'",
+                                        "command_list" : [
+                                            {
+                                                "command" : "REG[,]query[,]HKLM\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\DomainProfile[,]/v[,]DefaultOutboundAction",
+                                                "expectationPattern" : "DefaultOutboundAction\\s+REG_DWORD\\s+0x1"
+                                            }
+                                        ],
+                                        "level" : "1DC,1MS",
+                                        "type" : "SHELL_RUN"
+                                    },
+                                    {
+                                        "id" : "9.1.4",
+                                        "description" : "Ensure 'Windows Firewall: Domain: Settings: Display a notification' is set to 'No'",
+                                        "command_list" : [
+                                            {
+                                                "command" : "REG[,]query[,]HKLM\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\DomainProfile[,]/v[,]DisableNotifications",
+                                                "expectationPattern" : "DisableNotifications\\s+REG_DWORD\\s+0x1"
+                                            }
+                                        ],
+                                        "level" : "1DC,1MS",
+                                        "type" : "SHELL_RUN"
+                                    },
+                                    {
+                                        "id" : "9.1.5",
+                                        "description" : "(L1) Ensure 'Windows Firewall: Domain: Settings: Apply local, firewall rules' is set to 'Yes (default)'",
+                                        "command_list" : [
+                                            {
+                                                "command" : "REG[,]query[,]HKLM\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\DomainProfile[,]/v[,]AllowLocalPolicyMerge",
+                                                "expectationPattern" : "AllowLocalPolicyMerge\\s+REG_DWORD\\s+0x1"
+                                            }
+                                        ],
+                                        "level" : "1DC,1MS",
+                                        "type" : "SHELL_RUN"
+                                    },
+                                    {
+                                        "id" : "9.1.6",
+                                        "description" : "(L1) Ensure 'Windows Firewall: Domain: Settings: Apply local connection security rules' is set to 'Yes (default)'",
+                                        "command_list" : [
+                                            {
+                                                "command" : "REG[,]query[,]HKLM\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\DomainProfile[,]/v[,]AllowLocalIPsecPolicyMerge",
+                                                "expectationPattern" : "AllowLocalIPsecPolicyMerge\\s+REG_DWORD\\s+0x1"
+                                            }
+                                        ],
+                                        "level" : "1DC,1MS",
+                                        "type" : "SHELL_RUN"
+                                    },
+                                    {
+                                        "id" : "9.1.7",
+                                        "description" : "(L1) Ensure 'Windows Firewall: Domain: Logging: Name' is set to '%SYSTEMROOT%\\System32\\logfiles\\firewall\\domainfw.log'",
+                                        "command_list" : [
+                                            {
+                                                "command" : "REG[,]query[,]HKLM\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\DomainProfile\\Logging[,]/v[,]LogFilePath",
+                                                "expectationPattern" : "LogFilePath\\s+REG_SZ"
+                                            }
+                                        ],
+                                        "level" : "1DC,1MS",
+                                        "type" : "SHELL_RUN"
+                                    },
+                                    {
+                                        "id" : "9.1.8",
+                                        "description" : "(L1) Ensure 'Windows Firewall: Domain: Logging: Size limit (KB)' is set to '16,384 KB or greater'",
+                                        "command_list" : [
+                                            {
+                                                "command" : "REG[,]query[,]HKLM\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\DomainProfile\\Logging[,]/v[,]LogFileSize",
+                                                "expectationPattern" : "LogFileSize\\s+REG_DWORD\\s+0x1000"
+                                            }
+                                        ],
+                                        "level" : "1DC,1MS",
+                                        "type" : "SHELL_RUN"
+                                    },
+                                    {
+                                        "id" : "9.1.9",
+                                        "description" : "(L1) Ensure 'Windows Firewall: Domain: Logging: Log dropped packets' is set to 'Yes'",
+                                        "command_list" : [
+                                            {
+                                                "command" : "REG[,]query[,]HKLM\\SOFTWARE\\Policies\\Microsoft\\WindowsFirewall\\DomainProfile\\Logging[,]/v[,]LogDroppedPackets",
+                                                "expectationPattern" : "LogDroppedPackets\\s+REG_DWORD\\s+0x1"
+                                            }
+                                        ],
+                                        "level" : "1DC,1MS",
+                                        "type" : "SHELL_RUN"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+
             }
         ]
     }
