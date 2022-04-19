@@ -5,7 +5,7 @@
             {
                 "id": "1",
                 "command": "REG[,]query[,]HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion[,]/v[,]ProductName",
-                "expectationPattern": "[a-zA-Z0-9\\(\\)\\s+\\n]*2012\\s[rR]2[a-zA-Z0-9\\(\\)\\s]*$|.*"
+                "expectationPattern": "[a-zA-Z0-9\\(\\)\\s+\\n]*2012\\s[rR]2[a-zA-Z0-9\\(\\)\\s]*$"
             }
         ]
     },
